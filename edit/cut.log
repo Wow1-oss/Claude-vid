@@ -1,0 +1,4 @@
+Preparing background-removal pipeline...
+installing onnxruntime-node for background removal, once
+Removed background from 79 frames in 45.9s (1.7 fps, CPU) → /home/user/Claude-vid/edit/cut_hook.webm
+done
