@@ -78,6 +78,9 @@ html,body{width:1080px;height:1920px;overflow:hidden;background:#000}
 #tapring{position:absolute;left:845px;top:1415px;width:120px;height:120px;border-radius:50%;border:6px solid var(--lime);opacity:0}
 #flash{position:absolute;inset:0;background:#fffaf0;opacity:0}
 #bar{position:absolute;left:0;bottom:0;height:8px;width:1080px;background:var(--lime);transform-origin:0 50%;opacity:.9}
+#wm1{position:absolute;left:0;right:0;margin:0 auto;width:fit-content;top:1095px;font-size:64px;letter-spacing:.5px;color:#fff;opacity:0.3;white-space:nowrap;pointer-events:none;text-shadow:0 3px 6px rgba(0,0,0,.45),0 0 2px rgba(0,0,0,.3);transform-origin:50% 50%}
+#wmtile{position:absolute;inset:-300px;transform:rotate(-24deg);opacity:0.045;display:flex;flex-wrap:wrap;gap:90px 140px;align-content:flex-start;color:#fff;font-size:40px;pointer-events:none}
+#wmend{position:absolute;left:0;right:0;margin:0 auto;width:fit-content;top:1500px;font-size:38px;color:#3c4a1c;opacity:.85}
 </style>
 </head>
 <body>
@@ -129,8 +132,10 @@ html,body{width:1080px;height:1920px;overflow:hidden;background:#000}
     <img class="hero" src="img/hero_end.jpg">
     <div class="q"><span class="f-anton">MAKEUP TEBAL?</span> <span class="f-instrument-serif">Relaks.</span></div>
     <div class="s f-bricolage-grotesque">Dapatkan kat link di bawah<svg viewBox="0 0 40 40" width="44" height="44"><path d="M20 6v24M9 20l11 11 11-11" fill="none" stroke="#1f2610" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div id="wmend" class="f-wm">by @wanderlogika</div>
     <div id="tapring"></div><div id="tap"></div>
   </div>
+  <div id="wmtile" class="f-wm"><span>wanderlogika</span><span>wanderlogika</span><span>wanderlogika</span><span>wanderlogika</span><span>wanderlogika</span><span>wanderlogika</span><span>wanderlogika</span><span>wanderlogika</span><span>wanderlogika</span><span>wanderlogika</span><span>wanderlogika</span><span>wanderlogika</span><span>wanderlogika</span><span>wanderlogika</span><span>wanderlogika</span><span>wanderlogika</span><span>wanderlogika</span><span>wanderlogika</span><span>wanderlogika</span><span>wanderlogika</span><span>wanderlogika</span><span>wanderlogika</span><span>wanderlogika</span><span>wanderlogika</span><span>wanderlogika</span><span>wanderlogika</span><span>wanderlogika</span><span>wanderlogika</span><span>wanderlogika</span><span>wanderlogika</span><span>wanderlogika</span><span>wanderlogika</span><span>wanderlogika</span><span>wanderlogika</span><span>wanderlogika</span><span>wanderlogika</span><span>wanderlogika</span><span>wanderlogika</span><span>wanderlogika</span><span>wanderlogika</span><span>wanderlogika</span><span>wanderlogika</span><span>wanderlogika</span><span>wanderlogika</span><span>wanderlogika</span><span>wanderlogika</span><span>wanderlogika</span><span>wanderlogika</span><span>wanderlogika</span><span>wanderlogika</span><span>wanderlogika</span><span>wanderlogika</span><span>wanderlogika</span><span>wanderlogika</span><span>wanderlogika</span><span>wanderlogika</span><span>wanderlogika</span><span>wanderlogika</span><span>wanderlogika</span><span>wanderlogika</span></div><div id="wm1" class="f-wm">Wanderlogika</div>
   <div id="flash"></div>
   <div id="bar"></div>
 
@@ -267,6 +272,12 @@ CAPS.forEach(c => {
     tl.fromTo("#"+id, { scale:1.25 }, { scale:1, duration:F(6), ease:E.snap, immediateRender:false }, t);
   });
   tl.to("#"+c.id, { opacity:0, y:-20, duration:F(4), ease:E.exit }, Math.max(c.s + 0.2, c.e - F(4)));
+});
+
+// wanderlogika watermark: slow zoom x2 every 5s, repeat
+[0.0, 2.5, 5.0, 7.5].forEach(t => {
+  tl.to('#wm1', { scale:1.12, duration:1.25, ease:'power2.inOut' }, t);
+  tl.to('#wm1', { scale:1, duration:1.25, ease:'power2.inOut' }, t + 1.25);
 });
 
 // ---------- progress ----------

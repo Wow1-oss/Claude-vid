@@ -1,13 +1,17 @@
 """Builds index.html (HyperFrames composition) for the Cymbo Cleansing Oil UGC ad.
 Style: Premium UGC Ad (same system as edit/build.py SimHome), new font set:
 Bricolage Grotesque 800 (UI/captions) + Instrument Serif italic (emotion) + Anton (hook/CTA)."""
-import json
+import json, sys
+sys.path.insert(0, "..")
+from brand.watermark import watermark, install_font
 
 W = json.load(open("words.json"))
 VID_END = 8.875          # cut footage length
 TOTAL = 10.075           # + 1.2s end card
 CHUNKS = [2, 1, 2, 3, 2, 3, 3, 2, 2, 2, 2]
 EMPH = {"tebal?", "Relaks!", "Cymbo", "makeup", "kotoran.", "Vitamin", "E,", "serai", "fresh.", "double", "cleansing."}
+install_font(".")
+WM = watermark(TOTAL)
 assert sum(CHUNKS) == len(W), (sum(CHUNKS), len(W))
 
 # ---------- captions ----------
@@ -126,7 +130,7 @@ html,body{{width:1080px;height:1920px;overflow:hidden;background:#000}}
 #tapring{{position:absolute;left:845px;top:1415px;width:120px;height:120px;border-radius:50%;border:6px solid var(--lime);opacity:0}}
 #flash{{position:absolute;inset:0;background:#fffaf0;opacity:0}}
 #bar{{position:absolute;left:0;bottom:0;height:8px;width:1080px;background:var(--lime);transform-origin:0 50%;opacity:.9}}
-</style>
+{WM['css']}</style>
 </head>
 <body>
 <div id="root" data-composition-id="main" data-start="0" data-duration="{TOTAL}" data-width="1080" data-height="1920">
@@ -177,8 +181,10 @@ html,body{{width:1080px;height:1920px;overflow:hidden;background:#000}}
     <img class="hero" src="img/hero_end.jpg">
     <div class="q"><span class="f-anton">MAKEUP TEBAL?</span> <span class="f-instrument-serif">Relaks.</span></div>
     <div class="s f-bricolage-grotesque">Dapatkan kat link di bawah{ARROW}</div>
+    {WM['end_html']}
     <div id="tapring"></div><div id="tap"></div>
   </div>
+  {WM['html']}
   <div id="flash"></div>
   <div id="bar"></div>
 
@@ -297,6 +303,7 @@ CAPS.forEach(c => {{
   tl.to("#"+c.id, {{ opacity:0, y:-20, duration:F(4), ease:E.exit }}, Math.max(c.s + 0.2, c.e - F(4)));
 }});
 
+{WM['js']}
 // ---------- progress ----------
 tl.fromTo("#bar", {{ scaleX:0 }}, {{ scaleX:1, duration:{TOTAL}, ease:"none" }}, 0);
 
