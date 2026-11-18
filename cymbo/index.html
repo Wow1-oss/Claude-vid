@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="ms" data-resolution="portrait">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1080, height=1920" />
+<link rel="stylesheet" href="fonts/fonts.css">
+<script src="vendor/gsap.min.js"></script>
+<style>
+:root{--cream:#fbf7ee;--ink:#1f2610;--olive:#3c4a1c;--lime:#c9db3f;--oil:#f3dc6b;--blush:#f2c6bd}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#000}
+#root{position:relative;width:1080px;height:1920px;overflow:hidden;font-family:"F Bricolage Grotesque",sans-serif}
+#ground{position:absolute;inset:0;background:radial-gradient(120% 80% at 50% 40%,#efe6d2,#cbbd9f)}
+#cam{position:absolute;inset:0;transform-origin:50% 40%}
+#stage{position:absolute;inset:0;overflow:hidden}
+#stage video{position:absolute;inset:0;width:1080px;height:1920px;object-fit:cover}
+#tint{position:absolute;inset:0;background:#2b3a44;mix-blend-mode:soft-light;opacity:0}
+#light{position:absolute;inset:0;mix-blend-mode:soft-light;opacity:.5;
+  background:radial-gradient(520px 620px at var(--lx,560px) var(--ly,760px),rgba(255,240,222,.8),rgba(255,240,222,0) 70%)}
+#glow{position:absolute;inset:0;mix-blend-mode:screen;opacity:0;
+  background:radial-gradient(900px 760px at 82% 8%,rgba(255,226,160,.55),rgba(255,226,160,0) 70%)}
+#fresh{position:absolute;inset:0;mix-blend-mode:soft-light;opacity:0;
+  background:radial-gradient(1000px 900px at 30% 30%,rgba(214,236,120,.7),rgba(214,236,120,0) 70%)}
+#vig{position:absolute;inset:0;pointer-events:none;background:radial-gradient(130% 95% at 50% 45%,rgba(0,0,0,0) 58%,rgba(30,22,10,.38) 100%)}
+#grain{position:absolute;inset:-50%;opacity:.05;mix-blend-mode:overlay;
+  background-image:repeating-radial-gradient(circle at 17% 32%,#fff 0 1px,transparent 1px 3px),repeating-radial-gradient(circle at 73% 61%,#000 0 1px,transparent 1px 4px)}
+/* hook headline (pre-hook, over hands) */
+#hk{position:absolute;left:0;right:0;margin:0 auto;width:fit-content;top:250px;font-size:250px;line-height:.9;color:#fff;opacity:0;
+  letter-spacing:4px;text-shadow:0 12px 50px rgba(40,25,10,.45)}
+/* text behind body */
+.bt{position:absolute;left:0;right:0;margin:0 auto;width:fit-content;color:var(--cream);opacity:0;white-space:nowrap;
+  text-shadow:0 10px 40px rgba(70,50,20,.35)}
+#bt1{top:150px;font-size:360px;line-height:1;letter-spacing:6px}
+#bt2{top:150px;font-size:300px;line-height:1;color:#fff6dc}
+#bt3{top:330px;font-size:300px;line-height:1;letter-spacing:6px}
+#bt4{top:190px;font-size:150px;line-height:1;color:#fff6dc}
+/* captions */
+#captions{position:absolute;left:0;right:0;top:1230px;height:200px}
+.cap{position:absolute;left:0;right:0;margin:0 auto;width:fit-content;max-width:980px;text-align:center;opacity:0;
+  font-size:74px;line-height:1.1;color:#fff;letter-spacing:-1px;
+  text-shadow:0 4px 0 rgba(0,0,0,.3),0 0 24px rgba(0,0,0,.42),0 2px 3px rgba(0,0,0,.55)}
+.w{display:inline-block;margin:0 9px;color:rgba(255,255,255,.62)}
+.w.emph{background:var(--lime);color:var(--ink);padding:2px 16px 6px;border-radius:14px;text-shadow:none;
+  box-shadow:0 10px 30px rgba(40,50,10,.35)}
+/* brand wordmark on bottle reveal */
+#wm{position:absolute;left:0;right:0;margin:0 auto;width:fit-content;top:205px;text-align:center;opacity:0}
+#wm .shop{font-size:40px;color:var(--olive);letter-spacing:1px;opacity:.9}
+#wm .nm{font-size:200px;line-height:.95;color:var(--ink);letter-spacing:-6px}
+#wm .sub{display:inline-block;margin-top:6px;font-size:66px;color:var(--olive);background:rgba(251,247,238,.82);padding:2px 28px 8px;border-radius:40px}
+.star{position:absolute;width:64px;height:64px;opacity:0}
+.star svg{width:100%;height:100%;filter:drop-shadow(0 0 12px rgba(255,240,180,.9))}
+/* checklist pills */
+.pill{position:absolute;left:60px;height:104px;padding:0 40px 0 24px;border-radius:52px;display:flex;align-items:center;gap:18px;
+  background:rgba(251,247,238,.94);color:var(--ink);font-size:56px;opacity:0;box-shadow:0 18px 40px rgba(40,30,10,.25)}
+.pill svg{flex:0 0 46px}
+#pl1{top:300px} #pl2{top:430px}
+/* ingredient badges */
+.ing{position:absolute;left:60px;display:flex;align-items:center;gap:22px;opacity:0;padding:18px 40px 18px 26px;border-radius:30px;
+  background:rgba(251,247,238,.94);box-shadow:0 18px 40px rgba(40,30,10,.25)}
+.ing svg{flex:0 0 auto}
+.ing .t1{font-size:62px;color:var(--ink);line-height:1}
+.ing .t2{font-size:40px;color:var(--olive);line-height:1.1}
+#ing1{top:290px} #ing2{top:470px}
+/* fresh word */
+#fw{position:absolute;left:0;right:0;margin:0 auto;width:fit-content;top:640px;font-size:300px;line-height:1;color:#fffbe8;opacity:0;
+  text-shadow:0 10px 50px rgba(120,140,20,.45)}
+.sp{position:absolute;width:30px;height:30px;opacity:0;background:radial-gradient(circle,#fff 0 20%,rgba(240,250,190,.9) 30%,rgba(240,250,190,0) 70%)}
+/* end card */
+#end{position:absolute;inset:0;background:var(--cream);opacity:0;overflow:hidden}
+#end .bg{position:absolute;inset:0;background:radial-gradient(90% 60% at 50% 40%,#fffdf6,#efe8d4)}
+#end img.hero{position:absolute;left:150px;top:300px;width:780px;height:910px;object-fit:cover;border-radius:44px;box-shadow:0 40px 90px rgba(60,50,20,.25)}
+#end .logo{position:absolute;left:0;right:0;margin:0 auto;top:195px;width:fit-content;font-size:46px;color:var(--olive);letter-spacing:1px}
+#end .q{position:absolute;left:0;right:0;margin:0 auto;top:1250px;width:fit-content;white-space:nowrap;font-size:96px;color:var(--ink)}
+#end .s{position:absolute;left:0;right:0;margin:0 auto;top:1385px;width:fit-content;font-size:50px;color:var(--ink);display:flex;align-items:center;gap:14px;
+  background:var(--lime);padding:16px 38px 16px 28px;border-radius:50px;box-shadow:0 14px 30px rgba(120,140,20,.35)}
+#end .s svg{flex:0 0 44px}
+#tap{position:absolute;left:870px;top:1440px;width:70px;height:70px;border-radius:50%;background:rgba(255,255,255,.85);border:5px solid var(--ink);opacity:0}
+#tapring{position:absolute;left:845px;top:1415px;width:120px;height:120px;border-radius:50%;border:6px solid var(--lime);opacity:0}
+#flash{position:absolute;inset:0;background:#fffaf0;opacity:0}
+#bar{position:absolute;left:0;bottom:0;height:8px;width:1080px;background:var(--lime);transform-origin:0 50%;opacity:.9}
+</style>
+</head>
+<body>
+<div id="root" data-composition-id="main" data-start="0" data-duration="10.075" data-width="1080" data-height="1920">
+  <div id="ground" class="clip" data-start="0" data-duration="10.075"></div>
+  <div id="cam">
+    <div id="stage">
+      <video id="vid" class="clip" src="footage.mp4" data-start="0" data-duration="8.875" data-has-audio="true"></video>
+      <div id="tint"></div>
+      <div id="bt1" class="bt f-anton">TEBAL?</div>
+      <div id="bt2" class="bt f-instrument-serif">relaks.</div>
+      <video id="cut" class="clip" src="cut_hook.webm" muted data-start="0.4583" data-duration="1.125"></video>
+      <div id="bt3" class="bt f-anton">DOUBLE</div>
+      <div id="bt4" class="bt f-instrument-serif">cleansing</div>
+      <video id="cut2" class="clip" src="cut_end.webm" muted data-start="7.3333" data-duration="1.5417"></video>
+      <div id="light"></div>
+      <div id="glow"></div>
+      <div id="fresh"></div>
+    </div>
+  </div>
+  <div id="vig"></div>
+  <div id="grain"></div>
+
+  <div id="hk" class="f-anton">MAKEUP</div>
+
+  <div id="wm"><div class="shop f-instrument-serif">the pastels shop</div><div class="nm f-bricolage-grotesque">Cymbo</div>
+    <div class="sub f-instrument-serif">Cleansing Oil</div></div>
+  <div id="st0" class="star" style="left:300px;top:760px"><svg viewBox="0 0 40 40"><path d="M20 0C21 13 27 19 40 20 27 21 21 27 20 40 19 27 13 21 0 20 13 19 19 13 20 0z" fill="#fffbe8"/></svg></div>
+  <div id="st1" class="star" style="left:700px;top:900px;width:44px;height:44px"><svg viewBox="0 0 40 40"><path d="M20 0C21 13 27 19 40 20 27 21 21 27 20 40 19 27 13 21 0 20 13 19 19 13 20 0z" fill="#fffbe8"/></svg></div>
+  <div id="st2" class="star" style="left:380px;top:1080px;width:36px;height:36px"><svg viewBox="0 0 40 40"><path d="M20 0C21 13 27 19 40 20 27 21 21 27 20 40 19 27 13 21 0 20 13 19 19 13 20 0z" fill="#fffbe8"/></svg></div>
+
+  <div id="pl1" class="pill f-bricolage-grotesque"><svg viewBox="0 0 40 40" width="46" height="46"><circle cx="20" cy="20" r="19" fill="#c9db3f"/><path class="tk" d="M11 20.5l6 6 12-13" fill="none" stroke="#1f2610" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="30" stroke-dashoffset="30"/></svg>Angkat makeup</div>
+  <div id="pl2" class="pill f-bricolage-grotesque"><svg viewBox="0 0 40 40" width="46" height="46"><circle cx="20" cy="20" r="19" fill="#c9db3f"/><path class="tk" d="M11 20.5l6 6 12-13" fill="none" stroke="#1f2610" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="30" stroke-dashoffset="30"/></svg>Buang kotoran</div>
+
+  <div id="ing1" class="ing"><svg viewBox="0 0 40 52" width="44" height="58"><path d="M20 3C14 14 6 23 6 33a14 14 0 0 0 28 0C34 23 26 14 20 3z" fill="#f3dc6b"/><path d="M13 34a7 7 0 0 0 7 7" stroke="#fffaf0" stroke-width="3.5" fill="none" stroke-linecap="round"/></svg><div><div class="t1 f-bricolage-grotesque">Vitamin E</div><div class="t2 f-instrument-serif">nourish &amp; protect</div></div></div>
+  <div id="ing2" class="ing"><svg viewBox="0 0 60 90" width="56" height="84"><path class="lf" d="M30 86C30 60 22 30 8 6M30 86C31 58 40 34 54 12M30 86V20" fill="none" stroke="#9fbf2a" stroke-width="5" stroke-linecap="round" stroke-dasharray="120" stroke-dashoffset="120"/></svg><div><div class="t1 f-bricolage-grotesque">Serai</div><div class="t2 f-instrument-serif">lemongrass oil, fresh</div></div></div>
+
+  <div id="fw" class="f-instrument-serif">fresh</div>
+  <div id="sp0" class="sp" style="left:240px;top:660px"></div><div id="sp1" class="sp" style="left:830px;top:650px"></div>
+  <div id="sp2" class="sp" style="left:300px;top:900px"></div><div id="sp3" class="sp" style="left:780px;top:920px"></div>
+
+  <div id="captions">
+    <div id="cap0" class="cap f-bricolage-grotesque"><span id="c0w0" class="w">Makeup</span><span id="c0w1" class="w emph">tebal?</span></div><div id="cap1" class="cap f-bricolage-grotesque"><span id="c1w0" class="w emph">Relaks!</span></div><div id="cap2" class="cap f-bricolage-grotesque" style="top:215px"><span id="c2w0" class="w">Cuba</span><span id="c2w1" class="w emph">Cymbo</span></div><div id="cap3" class="cap f-bricolage-grotesque" style="top:215px"><span id="c3w0" class="w">Cleansing</span><span id="c3w1" class="w">Oil</span><span id="c3w2" class="w">ni.</span></div><div id="cap4" class="cap f-bricolage-grotesque"><span id="c4w0" class="w">Bantu</span><span id="c4w1" class="w">bersihkan</span></div><div id="cap5" class="cap f-bricolage-grotesque"><span id="c5w0" class="w emph">makeup</span><span id="c5w1" class="w">dan</span><span id="c5w2" class="w emph">kotoran.</span></div><div id="cap6" class="cap f-bricolage-grotesque"><span id="c6w0" class="w">Ada</span><span id="c6w1" class="w emph">Vitamin</span><span id="c6w2" class="w emph">E,</span></div><div id="cap7" class="cap f-bricolage-grotesque"><span id="c7w0" class="w">bau</span><span id="c7w1" class="w emph">serai</span></div><div id="cap8" class="cap f-bricolage-grotesque"><span id="c8w0" class="w">pun</span><span id="c8w1" class="w emph">fresh.</span></div><div id="cap9" class="cap f-bricolage-grotesque"><span id="c9w0" class="w">Best</span><span id="c9w1" class="w">untuk</span></div><div id="cap10" class="cap f-bricolage-grotesque"><span id="c10w0" class="w emph">double</span><span id="c10w1" class="w emph">cleansing.</span></div>
+  </div>
+
+  <div id="end">
+    <div class="bg"></div>
+    <div class="logo f-instrument-serif">the pastels shop</div>
+    <img class="hero" src="img/hero_end.jpg">
+    <div class="q"><span class="f-anton">MAKEUP TEBAL?</span> <span class="f-instrument-serif">Relaks.</span></div>
+    <div class="s f-bricolage-grotesque">Dapatkan kat link di bawah<svg viewBox="0 0 40 40" width="44" height="44"><path d="M20 6v24M9 20l11 11 11-11" fill="none" stroke="#1f2610" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div id="tapring"></div><div id="tap"></div>
+  </div>
+  <div id="flash"></div>
+  <div id="bar"></div>
+
+  <audio id="music" class="clip" src="audio/music.wav" data-start="0" data-duration="10.075" data-volume="0.2"></audio>
+  <audio id="sfx0" class="clip" src="audio/whoosh.wav" data-start="0.0" data-duration="1.2" data-volume="0.55"></audio>
+  <audio id="sfx1" class="clip" src="audio/hit.wav" data-start="0.08" data-duration="1.2" data-volume="0.55"></audio>
+  <audio id="sfx2" class="clip" src="audio/boom.wav" data-start="0.46" data-duration="1.2" data-volume="0.6"></audio>
+  <audio id="sfx3" class="clip" src="audio/swish.wav" data-start="1.04" data-duration="1.2" data-volume="0.45"></audio>
+  <audio id="sfx4" class="clip" src="audio/sparkle.wav" data-start="1.08" data-duration="1.2" data-volume="0.35"></audio>
+  <audio id="sfx5" class="clip" src="audio/whoosh.wav" data-start="1.56" data-duration="1.2" data-volume="0.4"></audio>
+  <audio id="sfx6" class="clip" src="audio/sparkle.wav" data-start="1.99" data-duration="1.2" data-volume="0.45"></audio>
+  <audio id="sfx7" class="clip" src="audio/swish.wav" data-start="2.95" data-duration="1.2" data-volume="0.4"></audio>
+  <audio id="sfx8" class="clip" src="audio/drip.wav" data-start="3.1" data-duration="1.2" data-volume="0.5"></audio>
+  <audio id="sfx9" class="clip" src="audio/tick.wav" data-start="3.98" data-duration="1.2" data-volume="0.55"></audio>
+  <audio id="sfx10" class="clip" src="audio/tick.wav" data-start="4.55" data-duration="1.2" data-volume="0.55"></audio>
+  <audio id="sfx11" class="clip" src="audio/swish.wav" data-start="4.79" data-duration="1.2" data-volume="0.35"></audio>
+  <audio id="sfx12" class="clip" src="audio/pop.wav" data-start="5.26" data-duration="1.2" data-volume="0.5"></audio>
+  <audio id="sfx13" class="clip" src="audio/pop.wav" data-start="6.12" data-duration="1.2" data-volume="0.45"></audio>
+  <audio id="sfx14" class="clip" src="audio/swish.wav" data-start="6.33" data-duration="1.2" data-volume="0.35"></audio>
+  <audio id="sfx15" class="clip" src="audio/chime.wav" data-start="7.0" data-duration="1.2" data-volume="0.4"></audio>
+  <audio id="sfx16" class="clip" src="audio/whoosh.wav" data-start="7.31" data-duration="1.2" data-volume="0.4"></audio>
+  <audio id="sfx17" class="clip" src="audio/hit.wav" data-start="8.02" data-duration="1.2" data-volume="0.45"></audio>
+  <audio id="sfx18" class="clip" src="audio/whoosh.wav" data-start="8.8" data-duration="1.2" data-volume="0.5"></audio>
+  <audio id="sfx19" class="clip" src="audio/click.wav" data-start="9.45" data-duration="0.62" data-volume="0.6"></audio>
+  <audio id="sfx20" class="clip" src="audio/chime.wav" data-start="9.48" data-duration="0.59" data-volume="0.35"></audio>
+</div>
+<script>
+const FPS = 30, F = n => n / FPS;
+const E = { land:"power3.out", soft:"power2.out", snap:"expo.out", settle:"back.out(1.15)", exit:"power2.in", throw:"power4.in", move:"power2.inOut" };
+const tl = gsap.timeline({ paused: true });
+const CAPS = [{"id": "cap0", "s": 0.04, "e": 1.04, "w": [["c0w0", 0.08, false], ["c0w1", 0.4, true]]}, {"id": "cap1", "s": 1.0, "e": 1.66, "w": [["c1w0", 1.04, true]]}, {"id": "cap2", "s": 1.62, "e": 2.36, "w": [["c2w0", 1.66, false], ["c2w1", 1.99, true]]}, {"id": "cap3", "s": 2.32, "e": 3.18, "w": [["c3w0", 2.36, false], ["c3w1", 2.71, false], ["c3w2", 2.92, false]]}, {"id": "cap4", "s": 3.14, "e": 3.98, "w": [["c4w0", 3.18, false], ["c4w1", 3.5, false]]}, {"id": "cap5", "s": 3.94, "e": 5.07, "w": [["c5w0", 3.98, true], ["c5w1", 4.32, false], ["c5w2", 4.55, true]]}, {"id": "cap6", "s": 5.03, "e": 6.1, "w": [["c6w0", 5.07, false], ["c6w1", 5.26, true], ["c6w2", 5.74, true]]}, {"id": "cap7", "s": 6.06, "e": 6.72, "w": [["c7w0", 6.1, false], ["c7w1", 6.25, true]]}, {"id": "cap8", "s": 6.68, "e": 7.48, "w": [["c8w0", 6.72, false], ["c8w1", 7.0, true]]}, {"id": "cap9", "s": 7.44, "e": 8.02, "w": [["c9w0", 7.48, false], ["c9w1", 7.72, false]]}, {"id": "cap10", "s": 7.98, "e": 8.88, "w": [["c10w0", 8.02, true], ["c10w1", 8.32, true]]}];
+
+// ---------- camera: per-shot origin + key light; punch-in on every cut ----------
+const SHOTS = [ // t, origin, light x/y, scale-from
+  [0.000, "50% 55%", 560, 900, 1.16], [0.458, "52% 36%", 570, 720, 1.12], [1.583, "50% 45%", 520, 800, 1.10],
+  [2.958, "50% 60%", 540, 1200, 1.08], [4.792, "55% 55%", 640, 1000, 1.08], [6.333, "45% 55%", 480, 1000, 1.08],
+  [7.333, "50% 38%", 540, 760, 1.10] ];
+SHOTS.forEach(([t,o,lx,ly,s]) => {
+  tl.set("#cam", { transformOrigin:o, x:0, y:0 }, t);
+  tl.set("#light", { "--lx": lx+"px", "--ly": ly+"px" }, t);
+  tl.fromTo("#cam", { scale:s }, { scale:1.0, duration:F(10), ease:E.snap, immediateRender:false }, t);
+});
+// slow push on bottle + closing
+tl.to("#cam", { scale:1.06, duration:1.0, ease:"none" }, 1.92);
+tl.to("#cam", { scale:1.04, duration:0.38, ease:"none" }, 7.62);
+
+// ---------- 0.00 pre-hook: hands + MAKEUP ----------
+tl.fromTo("#flash", { opacity:.95 }, { opacity:0, duration:F(6), ease:E.exit }, 0);
+tl.fromTo("#hk", { opacity:0, scale:2.2 }, { opacity:1, scale:1, duration:F(7), ease:E.snap }, 0.06);
+tl.to("#hk", { opacity:0, y:-80, duration:F(4), ease:E.throw }, 0.40);
+
+// ---------- 0.46 face: TEBAL? behind head + shake ----------
+tl.fromTo("#flash", { opacity:.5 }, { opacity:0, duration:F(4), ease:E.exit, immediateRender:false }, 0.458);
+tl.to("#tint", { opacity:.5, duration:F(6), ease:E.soft }, 0.458);
+tl.to("#stage", { filter:"saturate(0.85) brightness(0.97)", duration:F(6), ease:E.soft }, 0.458);
+tl.fromTo("#bt1", { opacity:0, scale:1.9, y:-30 }, { opacity:1, scale:1, y:0, duration:F(7), ease:E.snap }, 0.46);
+tl.to("#cam", { x:12, duration:F(2), ease:"none", yoyo:true, repeat:5 }, 0.62);
+tl.to("#bt1", { opacity:0, y:-70, duration:F(5), ease:E.throw }, 0.86);
+
+// ---------- 1.04 Relaks! : mood lifts warm, serif behind head ----------
+tl.to("#tint", { opacity:0, duration:F(5), ease:E.exit }, 1.0);
+tl.to("#stage", { filter:"saturate(1.04) brightness(1.03)", duration:F(6), ease:E.soft }, 1.0);
+tl.to("#glow", { opacity:.45, duration:F(12), ease:E.soft }, 1.04);
+tl.fromTo("#bt2", { opacity:0, x:-180 }, { opacity:1, x:0, duration:F(11), ease:E.land }, 1.04);
+tl.to("#cam", { scale:1.07, duration:F(7), ease:E.snap }, 1.04);
+tl.to("#bt2", { opacity:0, x:140, duration:F(6), ease:E.throw }, 1.40);
+tl.to("#glow", { opacity:.2, duration:F(8), ease:E.exit }, 1.50);
+
+// ---------- 1.58 bottle reveal: wordmark + glints ----------
+tl.fromTo("#flash", { opacity:.55 }, { opacity:0, duration:F(5), ease:E.exit, immediateRender:false }, 1.583);
+tl.fromTo("#wm .shop", { opacity:0, y:30 }, { opacity:.9, y:0, duration:F(10), ease:E.land }, 1.70);
+tl.fromTo("#wm", { opacity:0, y:-160 }, { opacity:1, y:0, duration:F(11), ease:E.land }, 1.68);
+tl.fromTo("#wm .nm", { scale:1.5 }, { scale:1, duration:F(8), ease:E.snap, immediateRender:false }, 1.99);
+tl.fromTo("#wm .sub", { opacity:0, x:-120 }, { opacity:1, x:0, duration:F(9), ease:E.land }, 2.36);
+[0,1,2].forEach(k => {
+  const t = 2.0 + k*F(4);
+  tl.set("#st"+k, { opacity:1, scale:.4, rotation:0 }, t);
+  tl.to("#st"+k, { opacity:0, scale:1.4, rotation:90, duration:F(16), ease:E.soft }, t);
+});
+tl.to("#wm", { opacity:0, y:-140, duration:F(6), ease:E.throw }, 2.80);
+
+// ---------- 2.96 pour: checklist pills ----------
+[["#pl1",3.98],["#pl2",4.55]].forEach(([id,t]) => {
+  tl.fromTo(id, { opacity:0, x:-320 }, { opacity:1, x:0, duration:F(10), ease:E.land }, t - 0.12);
+  tl.to(id + " .tk", { attr:{ "stroke-dashoffset":0 }, duration:F(7), ease:E.snap }, t);
+  tl.fromTo(id, { scale:1.12 }, { scale:1, duration:F(7), ease:E.snap, immediateRender:false }, t);
+});
+tl.to(["#pl1","#pl2"], { opacity:0, x:-300, duration:F(6), ease:E.throw, stagger:F(2) }, 4.95);
+
+// ---------- 4.79 rub: Vitamin E, 6.10 serai ----------
+tl.fromTo("#ing1", { opacity:0, x:-340 }, { opacity:1, x:0, duration:F(10), ease:E.land }, 5.16);
+tl.fromTo("#ing1 svg", { y:-60 }, { y:0, duration:F(9), ease:E.snap }, 5.26);
+tl.fromTo("#ing2", { opacity:0, x:-340 }, { opacity:1, x:0, duration:F(10), ease:E.land }, 6.08);
+tl.to("#ing2 .lf", { attr:{ "stroke-dashoffset":0 }, duration:F(14), ease:E.soft }, 6.15);
+tl.to(["#ing1","#ing2"], { opacity:0, x:-320, duration:F(6), ease:E.throw, stagger:F(2) }, 6.80);
+
+// ---------- 6.33 pad wipe: fresh ----------
+tl.to("#fresh", { opacity:.6, duration:F(14), ease:E.soft }, 6.40);
+tl.fromTo("#fw", { opacity:0, y:90, scale:1.3 }, { opacity:1, y:0, scale:1, duration:F(12), ease:E.settle }, 6.92);
+[0,1,2,3].forEach(k => {
+  const t = 7.0 + k*F(3);
+  tl.set("#sp"+k, { opacity:1, scale:.6 }, t);
+  tl.to("#sp"+k, { opacity:0, scale:2.2, y:-60, duration:F(12), ease:E.soft }, t);
+});
+tl.to("#fw", { opacity:0, y:-90, duration:F(5), ease:E.throw }, 7.20);
+tl.to("#fresh", { opacity:0, duration:F(8), ease:E.exit }, 7.25);
+
+// ---------- 7.33 closing: DOUBLE cleansing behind head ----------
+tl.fromTo("#flash", { opacity:.45 }, { opacity:0, duration:F(5), ease:E.exit, immediateRender:false }, 7.333);
+tl.to("#glow", { opacity:.35, duration:F(14), ease:E.soft }, 7.40);
+tl.fromTo("#bt3", { opacity:0, scale:1.8 }, { opacity:1, scale:1, duration:F(8), ease:E.snap }, 8.02);
+tl.fromTo("#bt4", { opacity:0, x:-200 }, { opacity:1, x:0, duration:F(10), ease:E.land }, 8.30);
+tl.to("#cam", { scale:1.1, duration:F(7), ease:E.snap }, 8.02);
+
+// ---------- 8.875 end card (loops back to hook) ----------
+tl.fromTo("#end", { opacity:1, y:1920 }, { opacity:1, y:0, duration:F(8), ease:E.land }, 8.805);
+tl.fromTo("#end img.hero", { scale:1.12 }, { scale:1.0, duration:1.2, ease:E.soft }, 8.805);
+tl.fromTo("#end .q", { opacity:0, y:60 }, { opacity:1, y:0, duration:F(9), ease:E.land }, 8.995);
+tl.fromTo("#end .s", { opacity:0, y:60 }, { opacity:1, y:0, duration:F(9), ease:E.land }, 9.125);
+tl.fromTo("#tap", { opacity:0, x:200, y:160 }, { opacity:1, x:0, y:0, duration:F(10), ease:E.land }, 9.10);
+tl.to("#tap", { scale:.78, duration:F(3), ease:E.exit }, 9.42);
+tl.to("#tap", { scale:1, duration:F(5), ease:E.land }, 9.52);
+tl.set("#tapring", { opacity:1, scale:.5 }, 9.45);
+tl.to("#tapring", { opacity:0, scale:2.2, duration:F(14), ease:E.soft }, 9.45);
+tl.fromTo("#end .s", { scale:1.12 }, { scale:1, duration:F(8), ease:E.snap, immediateRender:false }, 9.45);
+tl.to("#end .s svg", { y:8, duration:F(6), ease:E.move, yoyo:true, repeat:3 }, 9.55);
+tl.set(["#captions","#bt3","#bt4"], { opacity:0 }, 9.075);
+
+// ---------- captions (karaoke) ----------
+CAPS.forEach(c => {
+  tl.fromTo("#"+c.id, { opacity:0, y:40 }, { opacity:1, y:0, duration:F(6), ease:E.land }, c.s);
+  c.w.forEach(([id, t, em]) => {
+    tl.to("#"+id, { color: em ? "#1f2610" : "#ffffff", duration:F(2), ease:"none" }, t);
+    tl.fromTo("#"+id, { scale:1.25 }, { scale:1, duration:F(6), ease:E.snap, immediateRender:false }, t);
+  });
+  tl.to("#"+c.id, { opacity:0, y:-20, duration:F(4), ease:E.exit }, Math.max(c.s + 0.2, c.e - F(4)));
+});
+
+// ---------- progress ----------
+tl.fromTo("#bar", { scaleX:0 }, { scaleX:1, duration:10.075, ease:"none" }, 0);
+
+window.__timelines = window.__timelines || {};
+window.__timelines['main'] = tl;
+tl.seek(0);
+</script>
+</body>
+</html>

@@ -10,3 +10,10 @@ edit/work-*/
 edit/.render.*/
 edit/.hyperframes/
 edit/renders/
+cymbo/snaps/
+cymbo/chk/
+cymbo/*.log
+cymbo/render.mp4
+cymbo/.render.*/
+cymbo/.hyperframes/
+cymbo/renders/
