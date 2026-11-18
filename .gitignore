@@ -17,3 +17,5 @@ cymbo/render.mp4
 cymbo/.render.*/
 cymbo/.hyperframes/
 cymbo/renders/
+__pycache__/
+cymbo/work-*/
