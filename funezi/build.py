@@ -3,8 +3,8 @@ Builds index.html (HyperFrames composition) from words.json + cutlist.json."""
 import json
 
 W = json.load(open("words.json"))
-TOTAL = 20.0
-VID_END = 18.8333
+TOTAL = 20.70
+VID_END = 19.5333
 # captions start after the cold open (words 0-2 are shown as big hook type)
 CHUNKS = [2, 2, 2, 3, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 3, 3, 2, 2, 2, 1]
 CW = W[3:]
@@ -25,16 +25,16 @@ for gi, g in enumerate(groups):
                     "w": [[f"c{gi}w{wi}", w["s"], w["w"] in EMPH] for wi, w in enumerate(g)]})
 
 SFX = [  # file, start, volume
-    ("whoosh", 0.00, 0.55), ("hit", 0.04, 0.6), ("swish", 0.36, 0.4), ("shimmer", 1.00, 0.5),
-    ("whoosh", 1.42, 0.5), ("hit", 1.52, 0.45), ("pop", 2.36, 0.45), ("buzz", 2.72, 0.35),
-    ("boom", 3.14, 0.7), ("swish", 3.66, 0.4), ("chime", 3.70, 0.3),
-    ("whoosh", 4.74, 0.45), ("tick", 6.02, 0.5), ("tick", 6.12, 0.45), ("tick", 6.22, 0.45), ("tick", 6.32, 0.5),
-    ("click", 6.62, 0.5), ("swish", 7.34, 0.45), ("pop", 7.76, 0.45),
-    ("riser", 8.30, 0.35), ("shimmer", 8.90, 0.45), ("chime", 9.46, 0.3),
-    ("whoosh", 9.88, 0.45), ("pop", 10.26, 0.45), ("pop", 10.98, 0.45), ("pop", 11.64, 0.45), ("pop", 12.20, 0.45),
-    ("swish", 13.12, 0.45), ("whoosh", 13.72, 0.4), ("tick", 14.20, 0.45), ("click", 15.14, 0.45),
-    ("whoosh", 15.80, 0.45), ("pop", 16.72, 0.4), ("swish", 17.30, 0.45),
-    ("click", 18.32, 0.6), ("chime", 18.36, 0.4), ("whoosh", 18.74, 0.5), ("shimmer", 18.95, 0.4),
+    ("whoosh", 0.0, 0.55), ("hit", 0.06, 0.6), ("swish", 0.4, 0.4), ("shimmer", 1.18, 0.5),
+    ("whoosh", 1.67, 0.5), ("hit", 1.8, 0.45), ("pop", 2.58, 0.45), ("buzz", 2.92, 0.35),
+    ("boom", 3.33, 0.7), ("swish", 4.04, 0.4), ("chime", 4.08, 0.3),
+    ("whoosh", 5.11, 0.45), ("tick", 6.4, 0.5), ("tick", 6.5, 0.45), ("tick", 6.6, 0.45), ("tick", 6.7, 0.5),
+    ("click", 7.0, 0.5), ("swish", 7.72, 0.45), ("pop", 8.14, 0.45),
+    ("riser", 8.67, 0.35), ("shimmer", 9.28, 0.45), ("chime", 9.84, 0.3),
+    ("whoosh", 10.25, 0.45), ("pop", 10.66, 0.45), ("pop", 11.36, 0.45), ("pop", 12.02, 0.45), ("pop", 12.58, 0.45),
+    ("swish", 13.5, 0.45), ("whoosh", 14.09, 0.4), ("tick", 14.62, 0.45), ("click", 15.52, 0.45),
+    ("whoosh", 16.22, 0.45), ("pop", 17.12, 0.4), ("swish", 17.7, 0.45),
+    ("click", 18.94, 0.6), ("chime", 18.99, 0.4), ("whoosh", 19.43, 0.5), ("shimmer", 19.65, 0.4),
 ]
 sfx_html = "\n".join(
     f'  <audio id="sfx{k}" class="clip" src="audio/{f}.wav" data-start="{t}" data-duration="{min(1.4, round(TOTAL - t, 2))}" data-volume="{v}"></audio>'
@@ -103,9 +103,9 @@ html,body{{width:1080px;height:1920px;overflow:hidden;background:#000}}
 .w.emph{{background:var(--navy);color:var(--cream);padding:2px 18px 8px;border-radius:16px;text-shadow:none;
   box-shadow:0 10px 30px rgba(5,10,25,.45),inset 0 -4px 0 var(--led)}}
 /* reveal tag */
-#ring{{position:absolute;left:600px;top:640px;width:300px;height:300px;border-radius:50%;border:6px solid var(--led);opacity:0;
+#ring{{position:absolute;left:98px;top:810px;width:300px;height:300px;border-radius:50%;border:6px solid var(--led);opacity:0;
   box-shadow:0 0 40px rgba(90,184,255,.85),inset 0 0 30px rgba(90,184,255,.45)}}
-#tag{{position:absolute;left:70px;top:990px;opacity:0}}
+#tag{{position:absolute;left:56px;top:520px;opacity:0}}
 #tag .b{{font-size:112px;color:var(--cream);line-height:.9;letter-spacing:3px;text-shadow:0 8px 30px rgba(0,0,0,.5)}}
 #tag .s{{margin-top:12px;display:inline-block;font-size:34px;color:var(--ink);background:var(--cream);padding:8px 22px;border-radius:30px}}
 /* 4 USB */
@@ -194,7 +194,7 @@ html,body{{width:1080px;height:1920px;overflow:hidden;background:#000}}
       <div id="bt1" class="bt f-anton">TRAVEL</div>
       <div id="bt2" class="bt f-anton">GADGET</div>
       <div id="bt3" class="bt f-instrument-serif">banyak?</div>
-      <video id="cut" class="clip" src="cut_hook.webm" muted data-start="1.5" data-duration="1.6"></video>
+      <video id="cut" class="clip" src="cut_hook.webm" muted data-start="1.7667" data-duration="1.5333"></video>
       <div id="light"></div>
       <div id="glow"></div>
       <div id="coolglow"></div>
@@ -270,118 +270,118 @@ const CAPS = {json.dumps(caps_js)};
 
 // ---------- camera: per-shot origin + key light ----------
 const SHOTS = [ // t, origin, light x/y, base scale
-  [1.50, "50% 35%", 520, 620, 1.0], [3.10, "60% 40%", 480, 560, 1.0], [4.77, "45% 45%", 480, 820, 1.0],
-  [7.37, "50% 45%", 560, 700, 1.0], [8.30, "50% 45%", 560, 700, 1.0], [9.90, "40% 45%", 520, 860, 1.0],
-  [13.73, "50% 30%", 540, 520, 1.0], [15.33, "45% 35%", 540, 560, 1.0], [17.33, "35% 70%", 420, 1150, 1.0] ];
+  [1.77, "50% 35%", 520, 620, 1.0], [3.3, "30% 48%", 560, 640, 1.0], [5.14, "45% 45%", 480, 820, 1.0],
+  [7.75, "50% 45%", 560, 700, 1.0], [8.67, "50% 45%", 560, 700, 1.0], [10.27, "40% 45%", 520, 860, 1.0],
+  [14.1, "50% 30%", 540, 520, 1.0], [15.73, "45% 35%", 540, 560, 1.0], [17.73, "35% 70%", 420, 1150, 1.0] ];
 SHOTS.forEach(([t,o,lx,ly,s]) => {{
   tl.set("#cam", {{ transformOrigin:o, scale:s, x:0, y:0 }}, t);
   tl.set("#light", {{ "--lx": lx+"px", "--ly": ly+"px" }}, t);
 }});
-const PUNCH = [[1.50,1.14,1.0],[3.16,1.10,1.0],[4.77,1.12,1.0],[6.02,1.06,null],[7.37,1.10,1.0],[8.90,1.06,null],
-  [9.90,1.10,1.0],[12.20,1.05,null],[13.73,1.10,1.0],[15.33,1.08,1.0],[17.33,1.10,1.0],[18.32,1.07,null]];
+const PUNCH = [[1.77,1.14,1.0],[3.34,1.10,1.0],[5.14,1.12,1.0],[6.4,1.06,null],[7.75,1.10,1.0],[9.28,1.06,null],
+  [10.27,1.10,1.0],[12.58,1.05,null],[14.1,1.10,1.0],[15.73,1.08,1.0],[17.73,1.10,1.0],[18.94,1.07,null]];
 PUNCH.forEach(([t,s,to]) => {{
   if (to !== null) tl.fromTo("#cam", {{ scale:s }}, {{ scale:to, duration:F(12), ease:E.snap, immediateRender:false }}, t);
   else tl.to("#cam", {{ scale:s, duration:F(8), ease:E.snap }}, t);
 }});
 // slow push on marble beauty shot
-tl.to("#cam", {{ scale:1.12, duration:1.5, ease:"none" }}, 8.36);
+tl.to("#cam", {{ scale:1.12, duration:1.5, ease:"none" }}, 8.74);
 
 // ---------- 0.00 cold open ----------
 tl.fromTo("#flash", {{ opacity:.95 }}, {{ opacity:0, duration:F(6), ease:E.exit }}, 0);
 tl.fromTo("#co img", {{ scale:1.9, rotation:-14, y:120 }}, {{ scale:1, rotation:0, y:0, duration:F(14), ease:E.snap }}, 0);
-tl.to("#co img", {{ rotation:4, y:-24, duration:1.0, ease:E.move }}, 0.5);
+tl.to("#co img", {{ rotation:4, y:-24, duration:1.0, ease:E.move }}, 0.57);
 tl.fromTo("#co .ring2", {{ rotation:0 }}, {{ rotation:120, duration:1.5, ease:"none" }}, 0);
 tl.fromTo("#co .halo", {{ scale:.7, opacity:0 }}, {{ scale:1, opacity:1, duration:F(16), ease:E.soft }}, 0);
-tl.fromTo("#co1", {{ opacity:0, y:-120 }}, {{ opacity:1, y:0, duration:F(8), ease:E.snap }}, 0.04);
-tl.fromTo("#co2", {{ opacity:0, x:-260 }}, {{ opacity:1, x:0, duration:F(8), ease:E.snap }}, 0.36);
-tl.fromTo("#co .t2", {{ opacity:0, scale:1.7 }}, {{ opacity:1, scale:1, duration:F(9), ease:E.snap }}, 1.00);
-tl.fromTo("#co .pill", {{ opacity:0, y:40 }}, {{ opacity:.85, y:0, duration:F(8), ease:E.land }}, 0.70);
-tl.to("#co", {{ opacity:0, scale:1.15, duration:F(4), ease:E.throw }}, 1.42);
-tl.set("#co", {{ display:"none" }}, 1.50);
-tl.fromTo("#flash", {{ opacity:.85 }}, {{ opacity:0, duration:F(6), ease:E.exit, immediateRender:false }}, 1.50);
+tl.fromTo("#co1", {{ opacity:0, y:-120 }}, {{ opacity:1, y:0, duration:F(8), ease:E.snap }}, 0.06);
+tl.fromTo("#co2", {{ opacity:0, x:-260 }}, {{ opacity:1, x:0, duration:F(8), ease:E.snap }}, 0.4);
+tl.fromTo("#co .t2", {{ opacity:0, scale:1.7 }}, {{ opacity:1, scale:1, duration:F(9), ease:E.snap }}, 1.18);
+tl.fromTo("#co .pill", {{ opacity:0, y:40 }}, {{ opacity:.85, y:0, duration:F(8), ease:E.land }}, 0.81);
+tl.to("#co", {{ opacity:0, scale:1.15, duration:F(4), ease:E.throw }}, 1.67);
+tl.set("#co", {{ display:"none" }}, 1.77);
+tl.fromTo("#flash", {{ opacity:.85 }}, {{ opacity:0, duration:F(6), ease:E.exit, immediateRender:false }}, 1.77);
 
 // ---------- 1.50 problem hook: text behind body ----------
-tl.to("#tint", {{ opacity:.55, duration:F(8), ease:E.soft }}, 1.50);
-tl.to("#stage", {{ filter:"saturate(0.82) brightness(0.97)", duration:F(8), ease:E.soft }}, 1.50);
-tl.fromTo("#bt1", {{ opacity:0, scale:1.7, y:-40 }}, {{ opacity:1, scale:1, y:0, duration:F(8), ease:E.snap }}, 1.52);
-tl.to("#bt1", {{ opacity:0, x:-200, duration:F(5), ease:E.throw }}, 2.28);
-tl.fromTo("#bt2", {{ opacity:0, x:260 }}, {{ opacity:1, x:0, duration:F(7), ease:E.snap }}, 2.34);
-tl.to("#bt2", {{ opacity:0, y:-80, duration:F(4), ease:E.exit }}, 2.66);
-tl.fromTo("#bt3", {{ opacity:0, scale:1.6 }}, {{ opacity:1, scale:1, duration:F(8), ease:E.snap }}, 2.72);
-tl.to("#cam", {{ x:10, duration:F(2), ease:"none", yoyo:true, repeat:5 }}, 2.72);
-tl.to("#bt3", {{ opacity:0, scale:.92, duration:F(4), ease:E.exit }}, 2.98);
+tl.to("#tint", {{ opacity:.55, duration:F(8), ease:E.soft }}, 1.77);
+tl.to("#stage", {{ filter:"saturate(0.82) brightness(0.97)", duration:F(8), ease:E.soft }}, 1.77);
+tl.fromTo("#bt1", {{ opacity:0, scale:1.7, y:-40 }}, {{ opacity:1, scale:1, y:0, duration:F(8), ease:E.snap }}, 1.8);
+tl.to("#bt1", {{ opacity:0, x:-200, duration:F(5), ease:E.throw }}, 2.5);
+tl.fromTo("#bt2", {{ opacity:0, x:260 }}, {{ opacity:1, x:0, duration:F(7), ease:E.snap }}, 2.56);
+tl.to("#bt2", {{ opacity:0, y:-80, duration:F(4), ease:E.exit }}, 2.86);
+tl.fromTo("#bt3", {{ opacity:0, scale:1.6 }}, {{ opacity:1, scale:1, duration:F(8), ease:E.snap }}, 2.92);
+tl.to("#cam", {{ x:10, duration:F(2), ease:"none", yoyo:true, repeat:5 }}, 2.92);
+tl.to("#bt3", {{ opacity:0, scale:.92, duration:F(4), ease:E.exit }}, 3.18);
 
 // ---------- 3.10 reveal ----------
-tl.fromTo("#flash", {{ opacity:.6 }}, {{ opacity:0, duration:F(5), ease:E.exit, immediateRender:false }}, 3.12);
-tl.to("#tint", {{ opacity:0, duration:F(4), ease:E.exit }}, 3.10);
-tl.to("#stage", {{ filter:"saturate(1.04) brightness(1.03)", duration:F(4), ease:E.exit }}, 3.10);
-tl.to("#glow", {{ opacity:.35, duration:F(16), ease:E.soft }}, 3.12);
-tl.fromTo("#ring", {{ opacity:0, scale:1.9 }}, {{ opacity:1, scale:1, duration:F(9), ease:E.snap }}, 3.30);
-tl.to("#ring", {{ scale:1.07, duration:F(9), ease:E.move, yoyo:true, repeat:3 }}, 3.62);
-tl.fromTo("#tag", {{ opacity:0, x:-320 }}, {{ opacity:1, x:0, duration:F(11), ease:E.land }}, 3.62);
-tl.to(["#ring","#tag"], {{ opacity:0, x:-140, duration:F(6), ease:E.throw }}, 4.56);
-tl.to("#glow", {{ opacity:.12, duration:F(8), ease:E.exit }}, 4.56);
+tl.fromTo("#flash", {{ opacity:.6 }}, {{ opacity:0, duration:F(5), ease:E.exit, immediateRender:false }}, 3.31);
+tl.to("#tint", {{ opacity:0, duration:F(4), ease:E.exit }}, 3.3);
+tl.to("#stage", {{ filter:"saturate(1.04) brightness(1.03)", duration:F(4), ease:E.exit }}, 3.3);
+tl.to("#glow", {{ opacity:.35, duration:F(16), ease:E.soft }}, 3.31);
+tl.fromTo("#ring", {{ opacity:0, scale:1.9 }}, {{ opacity:1, scale:1, duration:F(9), ease:E.snap }}, 3.54);
+tl.to("#ring", {{ scale:1.07, duration:F(9), ease:E.move, yoyo:true, repeat:3 }}, 3.98);
+tl.fromTo("#tag", {{ opacity:0, x:-320 }}, {{ opacity:1, x:0, duration:F(11), ease:E.land }}, 3.98);
+tl.to(["#ring","#tag"], {{ opacity:0, x:-140, duration:F(6), ease:E.throw }}, 4.93);
+tl.to("#glow", {{ opacity:.12, duration:F(8), ease:E.exit }}, 4.93);
 
 // ---------- 4.77 4 USB ----------
-tl.fromTo("#usb", {{ opacity:0, x:-300 }}, {{ opacity:1, x:0, duration:F(11), ease:E.land }}, 5.00);
+tl.fromTo("#usb", {{ opacity:0, x:-300 }}, {{ opacity:1, x:0, duration:F(11), ease:E.land }}, 5.36);
 const U = {{ v:0 }};
-tl.to(U, {{ v:4, duration:F(10), ease:E.move, onUpdate:()=>{{ const el=document.getElementById("unum"); if(el) el.textContent=Math.round(U.v); }} }}, 6.00);
-[0,1,2,3].forEach(k => tl.to("#d"+k, {{ background:"#5ab8ff", borderColor:"#5ab8ff", boxShadow:"0 0 24px rgba(90,184,255,.9)", duration:F(3), ease:E.snap }}, 6.02 + k*0.1));
-tl.fromTo("#pring", {{ opacity:0, scale:1.4 }}, {{ opacity:1, scale:1, duration:F(9), ease:E.snap }}, 6.62);
-tl.to(["#usb","#pring"], {{ opacity:0, y:-120, duration:F(6), ease:E.throw }}, 7.20);
+tl.to(U, {{ v:4, duration:F(10), ease:E.move, onUpdate:()=>{{ const el=document.getElementById("unum"); if(el) el.textContent=Math.round(U.v); }} }}, 6.38);
+[0,1,2,3].forEach(k => tl.to("#d"+k, {{ background:"#5ab8ff", borderColor:"#5ab8ff", boxShadow:"0 0 24px rgba(90,184,255,.9)", duration:F(3), ease:E.snap }}, 6.4 + k*0.1));
+tl.fromTo("#pring", {{ opacity:0, scale:1.4 }}, {{ opacity:1, scale:1, duration:F(9), ease:E.snap }}, 7.0);
+tl.to(["#usb","#pring"], {{ opacity:0, y:-120, duration:F(6), ease:E.throw }}, 7.58);
 
 // ---------- 7.37 type-C ----------
-tl.to("#coolglow", {{ opacity:.35, duration:F(10), ease:E.soft }}, 7.37);
-tl.fromTo("#tc", {{ opacity:0, x:300 }}, {{ opacity:1, x:0, duration:F(9), ease:E.snap }}, 7.40);
-tl.fromTo("#tc .b", {{ opacity:0, y:30 }}, {{ opacity:1, y:0, duration:F(8), ease:E.land }}, 7.76);
-tl.to("#tc", {{ opacity:0, x:260, duration:F(6), ease:E.throw }}, 8.14);
+tl.to("#coolglow", {{ opacity:.35, duration:F(10), ease:E.soft }}, 7.75);
+tl.fromTo("#tc", {{ opacity:0, x:300 }}, {{ opacity:1, x:0, duration:F(9), ease:E.snap }}, 7.78);
+tl.fromTo("#tc .b", {{ opacity:0, y:30 }}, {{ opacity:1, y:0, duration:F(8), ease:E.land }}, 8.14);
+tl.to("#tc", {{ opacity:0, x:260, duration:F(6), ease:E.throw }}, 8.52);
 
 // ---------- 8.30 universal soket ----------
-tl.fromTo("#uni .a", {{ opacity:0, y:60 }}, {{ opacity:1, y:0, duration:F(12), ease:E.land }}, 8.86);
-tl.fromTo("#uni", {{ opacity:0 }}, {{ opacity:1, duration:F(6), ease:E.soft }}, 8.86);
-tl.fromTo("#uni .b", {{ opacity:0, scale:1.8 }}, {{ opacity:1, scale:1, duration:F(9), ease:E.snap }}, 9.44);
-tl.fromTo("#globe", {{ opacity:0, y:120 }}, {{ opacity:1, y:0, duration:F(11), ease:E.land }}, 8.60);
-tl.to("#mer", {{ attr:{{ rx:2 }}, duration:.6, ease:E.move, yoyo:true, repeat:1 }}, 8.6);
+tl.fromTo("#uni .a", {{ opacity:0, y:60 }}, {{ opacity:1, y:0, duration:F(12), ease:E.land }}, 9.24);
+tl.fromTo("#uni", {{ opacity:0 }}, {{ opacity:1, duration:F(6), ease:E.soft }}, 9.24);
+tl.fromTo("#uni .b", {{ opacity:0, scale:1.8 }}, {{ opacity:1, scale:1, duration:F(9), ease:E.snap }}, 9.82);
+tl.fromTo("#globe", {{ opacity:0, y:120 }}, {{ opacity:1, y:0, duration:F(11), ease:E.land }}, 8.98);
+tl.to("#mer", {{ attr:{{ rx:2 }}, duration:.6, ease:E.move, yoyo:true, repeat:1 }}, 8.98);
 const G = {{ v:0 }};
-tl.to(G, {{ v:200, duration:1.0, ease:E.move, onUpdate:()=>{{ const el=document.getElementById("gnum"); if(el) el.textContent=Math.round(G.v); }} }}, 8.70);
-tl.to(["#uni","#globe"], {{ opacity:0, y:-120, duration:F(6), ease:E.throw }}, 9.78);
-tl.to("#coolglow", {{ opacity:0, duration:F(8), ease:E.exit }}, 9.78);
+tl.to(G, {{ v:200, duration:1.0, ease:E.move, onUpdate:()=>{{ const el=document.getElementById("gnum"); if(el) el.textContent=Math.round(G.v); }} }}, 9.08);
+tl.to(["#uni","#globe"], {{ opacity:0, y:-120, duration:F(6), ease:E.throw }}, 10.15);
+tl.to("#coolglow", {{ opacity:0, duration:F(8), ease:E.exit }}, 10.15);
 
 // ---------- 9.90 plugs ----------
-[[0,10.26],[1,10.98],[2,11.64],[3,12.20]].forEach(([k,t]) => {{
+[[0,10.66],[1,11.36],[2,12.02],[3,12.58]].forEach(([k,t]) => {{
   tl.fromTo("#p"+k, {{ opacity:0, y:-160 }}, {{ opacity:1, y:0, duration:F(9), ease:E.snap }}, t);
   tl.fromTo("#p"+k+" b", {{ scale:1.8 }}, {{ scale:1, duration:F(7), ease:E.snap, immediateRender:false }}, t + F(5));
 }});
-tl.fromTo("#swap", {{ opacity:0, y:80 }}, {{ opacity:1, y:0, duration:F(8), ease:E.land }}, 13.08);
-tl.to("#swap svg", {{ rotation:180, duration:F(14), ease:E.move }}, 13.12);
-tl.to(["#p0","#p1","#p2","#p3","#swap"], {{ opacity:0, y:-140, duration:F(6), ease:E.throw, stagger:F(1) }}, 13.52);
+tl.fromTo("#swap", {{ opacity:0, y:80 }}, {{ opacity:1, y:0, duration:F(8), ease:E.land }}, 13.46);
+tl.to("#swap svg", {{ rotation:180, duration:F(14), ease:E.move }}, 13.5);
+tl.to(["#p0","#p1","#p2","#p3","#swap"], {{ opacity:0, y:-140, duration:F(6), ease:E.throw, stagger:F(1) }}, 13.89);
 
 // ---------- 13.73 kecil ----------
-tl.fromTo("#st0", {{ opacity:0, x:-260 }}, {{ opacity:1, x:0, duration:F(11), ease:E.land }}, 13.80);
-tl.fromTo("#st1", {{ opacity:0, x:260 }}, {{ opacity:1, x:0, duration:F(11), ease:E.land }}, 14.20);
-tl.fromTo("#kecil", {{ opacity:0, scale:1.5 }}, {{ opacity:1, scale:1, duration:F(9), ease:E.snap }}, 13.80);
-tl.to("#kecil", {{ opacity:0, y:-60, duration:F(5), ease:E.exit }}, 14.46);
-tl.to(["#st0","#st1"], {{ opacity:0, y:-120, duration:F(6), ease:E.throw }}, 15.16);
+tl.fromTo("#st0", {{ opacity:0, x:-260 }}, {{ opacity:1, x:0, duration:F(11), ease:E.land }}, 14.2);
+tl.fromTo("#st1", {{ opacity:0, x:260 }}, {{ opacity:1, x:0, duration:F(11), ease:E.land }}, 14.62);
+tl.fromTo("#kecil", {{ opacity:0, scale:1.5 }}, {{ opacity:1, scale:1, duration:F(9), ease:E.snap }}, 14.2);
+tl.to("#kecil", {{ opacity:0, y:-60, duration:F(5), ease:E.exit }}, 14.88);
+tl.to(["#st0","#st1"], {{ opacity:0, y:-120, duration:F(6), ease:E.throw }}, 15.54);
 
 // ---------- 15.33 gadget b-roll card (J-cut: card lands after the line starts) ----------
-tl.to("#stage", {{ filter:"blur(14px) brightness(.8)", duration:F(9), ease:E.soft }}, 15.86);
-tl.fromTo("#card", {{ opacity:0, y:-260, rotationX:24, rotation:-3 }}, {{ opacity:1, y:0, rotationX:0, rotation:-2, duration:F(12), ease:E.soft }}, 15.86);
-tl.fromTo("#card img", {{ scale:1.0 }}, {{ scale:1.1, duration:1.5, ease:"none" }}, 15.86);
-tl.fromTo("#devs", {{ opacity:0, y:120 }}, {{ opacity:1, y:0, duration:F(10), ease:E.land }}, 16.14);
-tl.fromTo(".bat i", {{ scaleX:.1 }}, {{ scaleX:1, duration:.7, ease:E.move, stagger:F(3) }}, 16.30);
-tl.fromTo("#five", {{ opacity:0, scale:1.4 }}, {{ opacity:1, scale:1, duration:F(8), ease:E.snap }}, 16.72);
-tl.to(["#card","#devs","#five"], {{ opacity:0, y:-160, duration:F(6), ease:E.throw, stagger:F(1) }}, 17.18);
-tl.to("#stage", {{ filter:"blur(0px) brightness(1.03)", duration:F(6), ease:E.exit }}, 17.22);
+tl.to("#stage", {{ filter:"blur(14px) brightness(.8)", duration:F(9), ease:E.soft }}, 16.28);
+tl.fromTo("#card", {{ opacity:0, y:-260, rotationX:24, rotation:-3 }}, {{ opacity:1, y:0, rotationX:0, rotation:-2, duration:F(12), ease:E.soft }}, 16.28);
+tl.fromTo("#card img", {{ scale:1.0 }}, {{ scale:1.1, duration:1.5, ease:"none" }}, 16.28);
+tl.fromTo("#devs", {{ opacity:0, y:120 }}, {{ opacity:1, y:0, duration:F(10), ease:E.land }}, 16.56);
+tl.fromTo(".bat i", {{ scaleX:.1 }}, {{ scaleX:1, duration:.7, ease:E.move, stagger:F(3) }}, 16.71);
+tl.fromTo("#five", {{ opacity:0, scale:1.4 }}, {{ opacity:1, scale:1, duration:F(8), ease:E.snap }}, 17.12);
+tl.to(["#card","#devs","#five"], {{ opacity:0, y:-160, duration:F(6), ease:E.throw, stagger:F(1) }}, 17.58);
+tl.to("#stage", {{ filter:"blur(0px) brightness(1.03)", duration:F(6), ease:E.exit }}, 17.62);
 
 // ---------- 17.33 CTA ----------
-tl.to("#glow", {{ opacity:.35, duration:F(14), ease:E.soft }}, 17.33);
-tl.fromTo("#cta", {{ opacity:0, y:-240 }}, {{ opacity:1, y:0, duration:F(12), ease:E.land }}, 17.36);
-tl.fromTo("#tap", {{ opacity:0, x:260, y:240 }}, {{ opacity:1, x:0, y:0, duration:F(12), ease:E.land }}, 17.86);
-tl.to("#tap", {{ scale:.78, duration:F(3), ease:E.exit }}, 18.26);
-tl.to("#tap", {{ scale:1, duration:F(5), ease:E.land }}, 18.36);
-tl.set("#tapring", {{ opacity:1, scale:.5 }}, 18.32);
-tl.to("#tapring", {{ opacity:0, scale:2.2, duration:F(14), ease:E.soft }}, 18.32);
-tl.fromTo("#btn", {{ scale:1.18 }}, {{ scale:1, duration:F(9), ease:E.snap, immediateRender:false }}, 18.32);
+tl.to("#glow", {{ opacity:.35, duration:F(14), ease:E.soft }}, 17.73);
+tl.fromTo("#cta", {{ opacity:0, y:-240 }}, {{ opacity:1, y:0, duration:F(12), ease:E.land }}, 17.8);
+tl.fromTo("#tap", {{ opacity:0, x:260, y:240 }}, {{ opacity:1, x:0, y:0, duration:F(12), ease:E.land }}, 18.38);
+tl.to("#tap", {{ scale:.78, duration:F(3), ease:E.exit }}, 18.87);
+tl.to("#tap", {{ scale:1, duration:F(5), ease:E.land }}, 18.99);
+tl.set("#tapring", {{ opacity:1, scale:.5 }}, 18.94);
+tl.to("#tapring", {{ opacity:0, scale:2.2, duration:F(14), ease:E.soft }}, 18.94);
+tl.fromTo("#btn", {{ scale:1.18 }}, {{ scale:1, duration:F(9), ease:E.snap, immediateRender:false }}, 18.94);
 
 // ---------- end card (loops into cold open) ----------
 tl.fromTo("#end", {{ opacity:1, y:1920 }}, {{ opacity:1, y:0, duration:F(9), ease:E.land }}, {VID_END - 0.1});

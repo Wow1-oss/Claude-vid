@@ -1,37 +1,37 @@
 [
  {
-  "src": "woman",
-  "in": 8.34,
-  "out": 9.84,
+  "src": "demonstrating2",
+  "in": 8.24,
+  "out": 9.96,
   "t0": 0,
-  "t1": 1.5,
+  "t1": 1.7667,
   "text": "Satu adapter, settle.",
-  "frames": 45
+  "frames": 53
  },
  {
-  "src": "creating",
+  "src": "showcasing2",
   "in": 0.14,
-  "out": 1.74,
-  "t0": 1.5,
-  "t1": 3.1,
+  "out": 1.68,
+  "t0": 1.7667,
+  "t1": 3.3,
   "text": "Travel tapi gadget banyak?",
-  "frames": 48
+  "frames": 46
  },
  {
-  "src": "creating",
-  "in": 2.28,
-  "out": 3.92,
-  "t0": 3.1,
-  "t1": 4.7667,
+  "src": "showcasing2",
+  "in": 2.02,
+  "out": 3.86,
+  "t0": 3.3,
+  "t1": 5.1333,
   "text": "Haa, ni memang kena ada.",
-  "frames": 50
+  "frames": 55
  },
  {
   "src": "creating",
   "in": 4.06,
   "out": 6.64,
-  "t0": 4.7667,
-  "t1": 7.3667,
+  "t0": 5.1333,
+  "t1": 7.7333,
   "text": "Adapter ni ada 4 USB port,",
   "frames": 78
  },
@@ -39,8 +39,8 @@
   "src": "creating",
   "in": 6.84,
   "out": 7.76,
-  "t0": 7.3667,
-  "t1": 8.3,
+  "t0": 7.7333,
+  "t1": 8.6667,
   "text": "2 type C,",
   "frames": 28
  },
@@ -48,8 +48,8 @@
   "src": "creating",
   "in": 8.1,
   "out": 9.68,
-  "t0": 8.3,
-  "t1": 9.9,
+  "t0": 8.6667,
+  "t1": 10.2667,
   "text": "siap ada universal soket.",
   "frames": 48
  },
@@ -57,36 +57,36 @@
   "src": "woman",
   "in": 0.12,
   "out": 3.94,
-  "t0": 9.9,
-  "t1": 13.7333,
+  "t0": 10.2667,
+  "t1": 14.1,
   "text": "Plug UK, EU, US, Australia pun boleh tukar-tukar.",
   "frames": 115
  },
  {
-  "src": "woman",
+  "src": "demonstrating2",
   "in": 4.1,
-  "out": 5.7,
-  "t0": 13.7333,
-  "t1": 15.3333,
+  "out": 5.74,
+  "t0": 14.1,
+  "t1": 15.7333,
   "text": "Kecil je, senang masuk beg.",
-  "frames": 48
+  "frames": 49
  },
  {
-  "src": "woman",
-  "in": 6.0,
-  "out": 7.98,
-  "t0": 15.3333,
-  "t1": 17.3333,
+  "src": "demonstrating2",
+  "in": 6.04,
+  "out": 8.02,
+  "t0": 15.7333,
+  "t1": 17.7333,
   "text": "Sesuai untuk yang travel dengan banyak gadget.",
   "frames": 60
  },
  {
-  "src": "woman",
-  "in": 8.34,
-  "out": 9.84,
-  "t0": 17.3333,
-  "t1": 18.8333,
+  "src": "demonstrating2",
+  "in": 8.24,
+  "out": 9.96,
+  "t0": 17.7333,
+  "t1": 19.5,
   "text": "Satu adapter, settle.",
-  "frames": 45
+  "frames": 53
  }
 ]
