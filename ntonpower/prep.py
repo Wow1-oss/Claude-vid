@@ -1,18 +1,22 @@
 """Cut + grade: builds footage.mp4 (1080x1920, 30fps, bt709) from the two raw clips.
 Video and audio cut separately so B-roll-style shots can be offset (no lips visible there)."""
 import json, subprocess
-SEG = [  # label, src, a_in, a_out, v_in, v_out, grade(brightness, gamma, sat, warmth)
- ("hook",    "using",   0.00, 1.98, 0.00, 1.98, "u1"),
- ("problem", "using",   2.08, 3.10, 2.08, 3.10, "u1"),
- ("reveal",  "using",   3.16, 4.62, 3.16, 4.62, "u2"),
- ("ports",   "using",   6.12, 7.58, 6.08, 7.54, "u3"),
- ("devices", "using",   7.66, 9.86, 7.54, 9.74, "u3"),
- ("cord",    "packing", 0.00, 3.04, 0.00, 3.04, "p1"),
- ("pack",    "packing", 3.96, 6.70, 2.20, 4.94, "p1"),
- ("payoff",  "packing", 7.54, 10.00, 7.54, 10.00, "p2"),
+SEG = [  # label, src, a_in, a_out, v_in, v_out, grade
+ ("hook",    "plugs",    0.00, 2.14, 0.00, 2.14, "n1"),
+ ("problem", "plugs",    2.16, 3.22, 2.16, 3.22, "n1"),
+ ("reveal",  "plugs",    3.36, 5.14, 3.36, 5.14, "n2"),
+ ("ports",   "plugs",    6.22, 7.72, 6.22, 7.72, "u3"),
+ ("devices", "plugs",    7.80, 9.90, 7.80, 9.90, "u3"),
+ ("cord",    "packing2", 0.00, 3.14, 0.00, 3.14, "c1"),
+ ("pack",    "packing2", 3.34, 5.02, 3.34, 5.02, "n2"),
+ ("payoff",  "packing2", 6.12, 7.66, 6.12, 7.66, "p2"),
+ ("cta",     "packing2", 8.08, 9.76, 8.08, 9.76, "p2"),
 ]
 # per-shot exposure / WB match (target luma ~115, tame the orange cast, keep skin natural)
 G = {
+ "n1": "eq=brightness=0.0:gamma=1.0:saturation=1.0,colorbalance=rs=-0.02:bs=0.02:rm=-0.02:bm=0.02",
+ "n2": "eq=brightness=-0.01:gamma=0.98:saturation=1.0,colorbalance=rs=-0.02:bs=0.02:rm=-0.02:bm=0.02",
+ "c1": "eq=brightness=0.07:gamma=1.32:saturation=1.0,colorbalance=rs=-0.03:bs=0.04:rm=-0.02:bm=0.03",
  "u1": "eq=brightness=0.03:gamma=1.06:saturation=0.98,colorbalance=rs=-0.03:bs=0.03:rm=-0.02:bm=0.02",
  "u2": "eq=brightness=0.0:gamma=1.0:saturation=1.0,colorbalance=rs=-0.03:bs=0.03:rm=-0.02:bm=0.02",
  "u3": "eq=brightness=0.01:gamma=1.03:saturation=1.0,colorbalance=rs=-0.04:bs=0.04:rm=-0.03:bm=0.03",
@@ -21,8 +25,8 @@ G = {
 }
 LOOK = ("curves=master='0/0.02 0.25/0.23 0.5/0.52 0.75/0.78 1/0.97',"
         "colorbalance=rh=0.02:bh=-0.03:rm=0.01:bm=-0.015,unsharp=5:5:0.45,noise=alls=5:allf=t")
-inputs = ["-i", "src/using.mp4", "-i", "src/packing.mp4"]
-idx = {"using": 0, "packing": 1}
+inputs = ["-i", "src/plugs.mp4", "-i", "src/packing2.mp4"]
+idx = {"plugs": 0, "packing2": 1}
 fc, vl, al, out = [], [], [], 0.0
 cut = []
 for k, (lab, s, ai, ao, vi, vo, g) in enumerate(SEG):

@@ -2,16 +2,16 @@
 import json, os
 
 W = json.load(open("words.json"))
-VID_END = 16.36           # last spoken frame of footage
-TOTAL = 17.56             # + 1.2 s end card
+VID_END = 16.62           # last spoken frame of footage
+TOTAL = 17.82             # + 1.2 s end card
 HAS_CUT = os.path.exists("cut_hook.webm")
 
 # palette (from product + packaging)
 LIGHT, PINK, APRICOT, BLUE, INK = "#fcf2f5", "#ec6f8e", "#f6a55c", "#0071bc", "#2a1a20"
 
-CHUNKS = [3, 3, 4, 3, 2, 4, 2, 2, 3, 3, 3, 2, 2, 3, 4]
+CHUNKS = [3, 3, 4, 3, 3, 4, 2, 2, 3, 3, 2, 2, 2, 2, 4]
 KEY = {"socket", "penyelamat", "2", "plug,", "3", "USB.", "sekaligus.", "1.5", "meter",
-       "gulung,", "luggage.", "berebut", "bawa", "ni."}
+       "gulung", "luggage.", "berebut.", "bawa", "ni."}
 assert sum(CHUNKS) == len(W), (sum(CHUNKS), len(W))
 
 caps_html, caps_js, groups, i = [], [], [], 0
@@ -21,7 +21,7 @@ for gi, g in enumerate(groups):
     s = g[0]["s"]
     nxt = groups[gi + 1][0]["s"] if gi + 1 < len(groups) else VID_END
     e = min(nxt, g[-1]["e"] + 0.3)
-    keyidx = [wi for wi, w in enumerate(g) if w["w"] in KEY and not (w["w"] == "bawa" and gi < 10)]
+    keyidx = [wi for wi, w in enumerate(g) if w["w"] in KEY and not (w["w"] in ("bawa", "ni.") and gi < 10)]
     spans = []
     for wi, w in enumerate(g):
         cls = "w key" if wi in keyidx else "w"
@@ -31,15 +31,15 @@ for gi, g in enumerate(groups):
                     "w": [[f"c{gi}w{wi}", w["s"], wi in keyidx] for wi, w in enumerate(g)]})
 
 SFX = [  # file, start, volume
-    ("whoosh", 0.00, 0.5), ("hit", 0.02, 0.55), ("pop", 1.12, 0.4), ("pop", 1.30, 0.4), ("hit", 1.62, 0.35),
-    ("swish", 1.98, 0.4), ("pop", 2.22, 0.4), ("riser", 2.40, 0.35), ("buzz", 2.62, 0.3),
-    ("boom", 3.00, 0.6), ("chime", 3.02, 0.3), ("pop", 3.90, 0.4),
-    ("swish", 4.46, 0.4), ("tick", 4.56, 0.5), ("tick", 4.70, 0.45), ("tick", 5.12, 0.5), ("tick", 5.26, 0.45),
-    ("tick", 5.40, 0.45), ("whoosh", 5.90, 0.35), ("pop", 6.08, 0.4), ("pop", 6.58, 0.4), ("pop", 7.22, 0.4),
-    ("chime", 7.50, 0.25), ("swish", 8.10, 0.4), ("tick", 8.64, 0.45), ("tick", 8.80, 0.45), ("tick", 8.96, 0.45),
-    ("tick", 9.12, 0.45), ("tick", 9.28, 0.5), ("swish", 11.14, 0.4), ("pop", 11.52, 0.4), ("pop", 12.34, 0.4),
-    ("pop", 13.32, 0.4), ("whoosh", 13.88, 0.35), ("chime", 14.48, 0.3), ("whoosh", 15.00, 0.4),
-    ("click", 15.86, 0.55), ("whoosh", 16.30, 0.45), ("chime", 16.50, 0.35),
+    ("whoosh", 0.0, 0.5), ("hit", 0.02, 0.55), ("pop", 1.34, 0.4), ("pop", 1.58, 0.4), ("hit", 1.88, 0.35),
+    ("swish", 2.14, 0.4), ("pop", 2.38, 0.4), ("riser", 2.57, 0.35), ("buzz", 2.81, 0.3),
+    ("boom", 3.2, 0.6), ("chime", 3.21, 0.3), ("pop", 4.48, 0.4),
+    ("swish", 4.98, 0.4), ("tick", 5.04, 0.5), ("tick", 5.19, 0.45), ("tick", 5.64, 0.5), ("tick", 5.79, 0.45),
+    ("tick", 5.93, 0.45), ("whoosh", 6.46, 0.35), ("pop", 6.58, 0.4), ("pop", 7.02, 0.4), ("pop", 7.64, 0.4),
+    ("chime", 7.89, 0.25), ("swish", 8.56, 0.4), ("tick", 9.1, 0.45), ("tick", 9.27, 0.45), ("tick", 9.43, 0.45),
+    ("tick", 9.6, 0.45), ("tick", 9.77, 0.5), ("swish", 11.7, 0.4), ("pop", 11.81, 0.4), ("pop", 11.88, 0.4),
+    ("pop", 12.86, 0.4), ("whoosh", 13.38, 0.35), ("chime", 14.1, 0.3), ("whoosh", 14.72, 0.4),
+    ("click", 15.82, 0.55), ("whoosh", 16.52, 0.45), ("chime", 16.76, 0.35),
 ]
 sfx_html = "\n".join(
     f'  <audio id="sfx{k}" class="clip" src="audio/{f}.wav" data-start="{t}" data-duration="{min(1.4, round(TOTAL - t, 2))}" data-volume="{v}"></audio>'
@@ -54,7 +54,7 @@ ICON = {
  "hand": '<svg viewBox="0 0 64 80" width="96" height="120"><path d="M24 6a6 6 0 0 1 12 0v30l3-1a6 6 0 0 1 6 2l3-1a6 6 0 0 1 7 4l2-.5a6 6 0 0 1 7 6V60c0 10-8 18-18 18H34c-6 0-11-3-14-8L6 48a6 6 0 0 1 9-8l9 8z" fill="#fff" stroke="#2a1a20" stroke-width="4" stroke-linejoin="round"/></svg>',
 }
 
-cut_tag = ('<video id="cut" class="clip" src="cut_hook.webm" muted data-start="0" data-duration="3.0"></video>'
+cut_tag = ('<video id="cut" class="clip" src="cut_hook.webm" muted data-start="0" data-duration="3.2"></video>'
            if HAS_CUT else "")
 bt_layer = "behind" if HAS_CUT else "front"
 
@@ -176,6 +176,12 @@ html,body{{width:1080px;height:1920px;overflow:hidden;background:#000}}
   background:var(--blue);padding:12px 34px 12px 22px;border-radius:44px}}
 #end .s svg{{flex:0 0 46px}}
 #end .by{{position:absolute;left:0;right:0;margin:0 auto;top:1500px;width:fit-content;font-size:34px;color:rgba(42,26,32,.6)}}
+#disc{{position:absolute;left:0;right:0;margin:0 auto;top:1466px;width:fit-content;max-width:900px;text-align:center;font-size:25px;line-height:1.3;color:rgba(255,255,255,.85);
+  text-shadow:0 1px 3px rgba(0,0,0,.8),0 0 10px rgba(0,0,0,.5)}}
+#end .disc{{position:absolute;left:0;right:0;margin:0 auto;top:1580px;width:fit-content;max-width:900px;text-align:center;font-size:25px;line-height:1.3;color:rgba(42,26,32,.6)}}
+.actual{{position:absolute;font-size:28px;letter-spacing:2px;color:#fff;background:rgba(42,26,32,.75);padding:6px 18px;border-radius:24px}}
+#actB{{left:60px;top:1150px;opacity:0}}
+#end .actual{{left:0;right:0;margin:0 auto;width:fit-content;top:470px;background:var(--pink)}}
 #flash{{position:absolute;inset:0;background:#fff;opacity:0}}
 #bar{{position:absolute;left:0;bottom:0;height:8px;width:1080px;background:var(--apricot);transform-origin:0 50%}}
 </style>
@@ -223,7 +229,6 @@ html,body{{width:1080px;height:1920px;overflow:hidden;background:#000}}
     <div class="track"></div><div class="fill"></div><div class="ticks"></div></div>
 
   <div id="steps">
-    <div id="st0" class="st f-plus-jakarta-sans"><span class="d">{ICON['check']}</span>Guna</div>
     <div id="st1" class="st f-plus-jakarta-sans"><span class="d">{ICON['check']}</span>Gulung</div>
     <div id="st2" class="st f-plus-jakarta-sans"><span class="d">{ICON['check']}</span>Masuk luggage</div>
   </div>
@@ -242,6 +247,8 @@ html,body{{width:1080px;height:1920px;overflow:hidden;background:#000}}
     <div id="btn" class="f-plus-jakarta-sans">{ICON['down']}link below!</div></div></div>
   <div id="tapring"></div><div id="tap">{ICON['hand']}</div>
 
+  <div id="actB" class="actual f-plus-jakarta-sans">ACTUAL PRODUCT PHOTO</div>
+  <div id="disc" class="f-plus-jakarta-sans">Visuals for illustration only. Actual product may differ — please refer to the actual product photo &amp; description.</div>
   <div id="captions">
     {"".join(caps_html)}
   </div>
@@ -253,7 +260,9 @@ html,body{{width:1080px;height:1920px;overflow:hidden;background:#000}}
     <img class="hero" src="img/product_end.png">
     <div class="q f-instrument-serif">Travel must have!</div>
     <div class="s f-plus-jakarta-sans">{ICON['down']}link below!</div>
+    <div class="actual f-plus-jakarta-sans">ACTUAL PRODUCT</div>
     <div class="by f-plus-jakarta-sans">by @Wanderlogika</div>
+    <div class="disc f-plus-jakarta-sans">Actual product may differ from visuals shown. Please refer to the actual product photo &amp; description.</div>
   </div>
   <div id="flash"></div>
   <div id="bar"></div>
@@ -271,101 +280,105 @@ const count = (id, from, to, t, d, dec) => {{
 
 // ---------- camera: per-shot origin + key light that follows the face ----------
 const SHOTS = [ // t, origin, light x, light y
-  [0.00, "52% 34%", 560, 640], [3.00, "45% 40%", 520, 600], [4.46, "62% 55%", 760, 1050],
-  [5.92, "55% 55%", 600, 950], [8.12, "50% 45%", 560, 860], [11.16, "50% 50%", 560, 980], [13.90, "35% 35%", 420, 720] ];
+  [0.0, "52% 34%", 560, 640], [3.2, "45% 40%", 520, 600], [4.98, "62% 55%", 760, 1050],
+  [6.48, "55% 55%", 600, 950], [8.58, "50% 45%", 560, 860], [11.72, "50% 50%", 560, 980], [13.4, "35% 35%", 420, 720] ];
 SHOTS.forEach(([t,o,lx,ly]) => {{
   tl.set("#cam", {{ transformOrigin:o, scale:1, x:0 }}, t);
   tl.set("#light", {{ "--lx": lx+"px", "--ly": ly+"px" }}, t);
 }});
-tl.fromTo("#cam", {{ scale:1.15 }}, {{ scale:1.0, duration:F(10), ease:E.snap, immediateRender:false }}, 0);
-const PUNCH = [[1.30,1.06],[3.90,1.06],[7.44,1.06],[8.64,1.08],[12.34,1.06],[14.48,1.05],[15.86,1.1]];
+tl.fromTo("#cam", {{ scale:1.15 }}, {{ scale:1.0, duration:F(10), ease:E.snap, immediateRender:false }}, 0.0);
+const PUNCH = [[1.58,1.06],[4.48,1.06],[7.82,1.06],[9.1,1.08],[11.88,1.06],[14.1,1.05],[15.82,1.1]];
 PUNCH.forEach(([t,s]) => tl.to("#cam", {{ scale:s, duration:F(7), ease:E.snap }}, t));
-tl.fromTo("#cam", {{ scale:1.1 }}, {{ scale:1.0, duration:F(9), ease:E.snap, immediateRender:false }}, 3.00);
+tl.fromTo("#cam", {{ scale:1.1 }}, {{ scale:1.0, duration:F(9), ease:E.snap, immediateRender:false }}, 3.2);
 
 // ---------- hook: flash + giant words ({bt_layer} the speaker) ----------
-tl.fromTo("#flash", {{ opacity:1 }}, {{ opacity:0, duration:F(7), ease:E.exit }}, 0);
-tl.fromTo("#pov", {{ opacity:0, x:-200 }}, {{ opacity:1, x:0, duration:F(10), ease:E.land }}, 0.10);
-tl.to("#pov", {{ opacity:0, x:-160, duration:F(6), ease:E.exit }}, 1.70);
-tl.fromTo("#bt1", {{ opacity:0, scale:2.2 }}, {{ opacity:1, scale:1, duration:F(8), ease:E.snap }}, 1.10);
-tl.fromTo("#bt2", {{ opacity:0, x:-500 }}, {{ opacity:1, x:0, duration:F(8), ease:E.snap }}, 1.28);
-tl.fromTo("#bt3", {{ opacity:0, scale:1.8, rotation:-6 }}, {{ opacity:1, scale:1, rotation:-4, duration:F(7), ease:E.snap }}, 1.60);
-tl.to(["#bt1","#bt2","#bt3"], {{ opacity:0, y:-80, duration:F(6), ease:E.throw, stagger:F(2) }}, 1.92);
+tl.fromTo("#flash", {{ opacity:1 }}, {{ opacity:0, duration:F(7), ease:E.exit }}, 0.0);
+tl.fromTo("#pov", {{ opacity:0, x:-200 }}, {{ opacity:1, x:0, duration:F(10), ease:E.land }}, 0.12);
+tl.to("#pov", {{ opacity:0, x:-160, duration:F(6), ease:E.exit }}, 1.94);
+tl.fromTo("#bt1", {{ opacity:0, scale:2.2 }}, {{ opacity:1, scale:1, duration:F(8), ease:E.snap }}, 1.32);
+tl.fromTo("#bt2", {{ opacity:0, x:-500 }}, {{ opacity:1, x:0, duration:F(8), ease:E.snap }}, 1.55);
+tl.fromTo("#bt3", {{ opacity:0, scale:1.8, rotation:-6 }}, {{ opacity:1, scale:1, rotation:-4, duration:F(7), ease:E.snap }}, 1.86);
+tl.to(["#bt1","#bt2","#bt3"], {{ opacity:0, y:-80, duration:F(6), ease:E.throw, stagger:F(2) }}, 2.1);
 
 // ---------- problem: cooler mood + chips ----------
-tl.to("#tint", {{ opacity:.6, duration:F(8), ease:E.soft }}, 1.90);
-tl.to("#stage", {{ filter:"saturate(0.72) brightness(0.95)", duration:F(8), ease:E.soft }}, 1.90);
-[["#chip1",1.98],["#chip2",2.20]].forEach(([id,t]) =>
+tl.to("#tint", {{ opacity:.6, duration:F(8), ease:E.soft }}, 2.08);
+tl.to("#stage", {{ filter:"saturate(0.72) brightness(0.95)", duration:F(8), ease:E.soft }}, 2.08);
+[["#chip1",2.14],["#chip2",2.35]].forEach(([id,t]) =>
   tl.fromTo(id, {{ opacity:0, x:-420 }}, {{ opacity:1, x:0, duration:F(9), ease:E.land }}, t));
-tl.fromTo(".chip .strike", {{ scaleX:0 }}, {{ scaleX:1, duration:F(6), ease:E.snap, stagger:F(3) }}, 2.56);
-tl.to(["#chip1","#chip2"], {{ x:(i)=>[-14,12][i], duration:F(2), ease:"none", yoyo:true, repeat:3 }}, 2.66);
-tl.to("#cam", {{ x:9, duration:F(2), ease:"none", yoyo:true, repeat:3 }}, 2.66);
-tl.to(["#chip1","#chip2"], {{ opacity:0, x:-500, duration:F(5), ease:E.throw, stagger:F(2) }}, 2.84);
+tl.fromTo(".chip .strike", {{ scaleX:0 }}, {{ scaleX:1, duration:F(6), ease:E.snap, stagger:F(3) }}, 2.75);
+tl.to(["#chip1","#chip2"], {{ x:(i)=>[-14,12][i], duration:F(2), ease:"none", yoyo:true, repeat:3 }}, 2.86);
+tl.to("#cam", {{ x:9, duration:F(2), ease:"none", yoyo:true, repeat:3 }}, 2.86);
+tl.to(["#chip1","#chip2"], {{ opacity:0, x:-500, duration:F(5), ease:E.throw, stagger:F(2) }}, 3.04);
 
 // ---------- reveal: flash, warm glow, colour back ----------
-tl.fromTo("#flash", {{ opacity:.85 }}, {{ opacity:0, duration:F(6), ease:E.exit, immediateRender:false }}, 3.00);
-tl.set("#tint", {{ opacity:0 }}, 3.00);
-tl.set("#stage", {{ filter:"saturate(1.06) brightness(1.02)" }}, 3.00);
-tl.fromTo("#glow", {{ opacity:.55 }}, {{ opacity:.25, duration:1.2, ease:E.soft, immediateRender:false }}, 3.00);
-tl.fromTo("#label", {{ opacity:0, x:-380 }}, {{ opacity:1, x:0, duration:F(10), ease:E.land }}, 3.30);
-tl.to("#label", {{ opacity:0, x:-300, duration:F(6), ease:E.throw }}, 4.26);
-tl.to("#glow", {{ opacity:0, duration:F(6), ease:E.exit }}, 4.30);
-tl.to("#stage", {{ filter:"saturate(1) brightness(1)", duration:F(6), ease:E.exit }}, 4.30);
+tl.fromTo("#flash", {{ opacity:.85 }}, {{ opacity:0, duration:F(6), ease:E.exit, immediateRender:false }}, 3.2);
+tl.set("#tint", {{ opacity:0 }}, 3.2);
+tl.set("#stage", {{ filter:"saturate(1.06) brightness(1.02)" }}, 3.2);
+tl.fromTo("#glow", {{ opacity:.55 }}, {{ opacity:.25, duration:1.2, ease:E.soft, immediateRender:false }}, 3.2);
+tl.fromTo("#label", {{ opacity:0, x:-380 }}, {{ opacity:1, x:0, duration:F(10), ease:E.land }}, 3.59);
+tl.to("#label", {{ opacity:0, x:-300, duration:F(6), ease:E.throw }}, 4.8);
+tl.to("#glow", {{ opacity:0, duration:F(6), ease:E.exit }}, 4.84);
+tl.to("#stage", {{ filter:"saturate(1) brightness(1)", duration:F(6), ease:E.exit }}, 4.84);
 
 // ---------- feature 1: 2 plug, 3 USB (real product photo) ----------
-tl.set("#broll", {{ opacity:1 }}, 4.46);
-tl.set("#broll", {{ opacity:0 }}, 5.92);
-tl.fromTo("#bimg", {{ scale:1.28, y:-120 }}, {{ scale:1.12, y:-210, duration:1.46, ease:"none" }}, 4.46);
-tl.fromTo("#cntA", {{ opacity:0, y:-160 }}, {{ opacity:1, y:0, duration:F(8), ease:E.snap }}, 4.52);
-count("nA", 0, 2, 4.56, 0.18, 0);
-tl.fromTo("#cntB", {{ opacity:0, y:-160 }}, {{ opacity:1, y:0, duration:F(8), ease:E.snap }}, 5.06);
-count("nB", 0, 3, 5.12, 0.3, 0);
-tl.fromTo("#arA", {{ opacity:0, scaleX:0.05, rotation:69 }}, {{ opacity:1, scaleX:1, rotation:69, duration:F(10), ease:E.soft }}, 4.72);
-tl.fromTo("#arB", {{ opacity:0, scaleX:0.05, rotation:48 }}, {{ opacity:1, scaleX:1, rotation:48, duration:F(10), ease:E.soft }}, 5.30);
-tl.fromTo("#rgA", {{ opacity:0, scale:1.8 }}, {{ opacity:1, scale:1, duration:F(8), ease:E.snap }}, 4.90);
-tl.fromTo("#rgB", {{ opacity:0, scale:1.8 }}, {{ opacity:1, scale:1, duration:F(8), ease:E.snap }}, 5.45);
-tl.to(["#rgA","#rgB"], {{ scale:1.12, duration:F(7), ease:E.move, yoyo:true, repeat:1 }}, 5.62);
-tl.to(["#cntA","#cntB","#arA","#arB","#rgA","#rgB"], {{ opacity:0, y:-120, duration:F(6), ease:E.throw }}, 5.74);
+tl.set("#broll", {{ opacity:1 }}, 4.98);
+tl.set("#broll", {{ opacity:0 }}, 6.48);
+tl.fromTo("#actB", {{ opacity:0, x:-200 }}, {{ opacity:1, x:0, duration:F(8), ease:E.land }}, 5.02);
+tl.set("#actB", {{ opacity:0 }}, 6.48);
+// bed shots: product sits at the bottom, so lift the disclaimer above the captions
+tl.set("#disc", {{ y:-300 }}, 13.40);
+tl.fromTo("#bimg", {{ scale:1.28, y:-120 }}, {{ scale:1.12, y:-210, duration:1.5, ease:"none" }}, 4.98);
+tl.fromTo("#cntA", {{ opacity:0, y:-160 }}, {{ opacity:1, y:0, duration:F(8), ease:E.snap }}, 5.02);
+count("nA", 0, 2, 5.04, 0.18, 0);
+tl.fromTo("#cntB", {{ opacity:0, y:-160 }}, {{ opacity:1, y:0, duration:F(8), ease:E.snap }}, 5.58);
+count("nB", 0, 3, 5.64, 0.3, 0);
+tl.fromTo("#arA", {{ opacity:0, scaleX:0.05, rotation:69 }}, {{ opacity:1, scaleX:1, rotation:69, duration:F(10), ease:E.soft }}, 5.21);
+tl.fromTo("#arB", {{ opacity:0, scaleX:0.05, rotation:48 }}, {{ opacity:1, scaleX:1, rotation:48, duration:F(10), ease:E.soft }}, 5.83);
+tl.fromTo("#rgA", {{ opacity:0, scale:1.8 }}, {{ opacity:1, scale:1, duration:F(8), ease:E.snap }}, 5.4);
+tl.fromTo("#rgB", {{ opacity:0, scale:1.8 }}, {{ opacity:1, scale:1, duration:F(8), ease:E.snap }}, 5.99);
+tl.to(["#rgA","#rgB"], {{ scale:1.12, duration:F(7), ease:E.move, yoyo:true, repeat:1 }}, 6.17);
+tl.to(["#cntA","#cntB","#arA","#arB","#rgA","#rgB"], {{ opacity:0, y:-120, duration:F(6), ease:E.throw }}, 6.29);
 
 // ---------- feature 2: phone, earbuds, laptop ----------
-[["#ic0",6.06],["#ic1",6.56],["#ic2",7.20]].forEach(([id,t]) =>
+[["#ic0",6.57],["#ic1",7.0],["#ic2",7.62]].forEach(([id,t]) =>
   tl.fromTo(id, {{ opacity:0, y:-220 }}, {{ opacity:1, y:0, duration:F(9), ease:E.land }}, t));
-tl.fromTo("#all", {{ opacity:0, scale:1.7 }}, {{ opacity:1, scale:1, duration:F(8), ease:E.snap }}, 7.46);
-tl.to(["#ic0","#ic1","#ic2","#all"], {{ opacity:0, y:-160, duration:F(6), ease:E.throw, stagger:F(1) }}, 7.92);
+tl.fromTo("#all", {{ opacity:0, scale:1.7 }}, {{ opacity:1, scale:1, duration:F(8), ease:E.snap }}, 7.84);
+tl.to(["#ic0","#ic1","#ic2","#all"], {{ opacity:0, y:-160, duration:F(6), ease:E.throw, stagger:F(1) }}, 8.36);
 
 // ---------- feature 3: 1.5 m cord ----------
-tl.fromTo("#ruler", {{ opacity:0, x:-300 }}, {{ opacity:1, x:0, duration:F(10), ease:E.land }}, 8.14);
-tl.fromTo("#ruler .fill", {{ scaleX:0.02 }}, {{ scaleX:1, duration:0.8, ease:E.move }}, 8.60);
-count("nM", 0, 1.5, 8.60, 0.8, 1);
-tl.to("#ruler", {{ opacity:0, x:300, duration:F(6), ease:E.throw }}, 10.95);
+tl.fromTo("#ruler", {{ opacity:0, x:-300 }}, {{ opacity:1, x:0, duration:F(10), ease:E.land }}, 8.6);
+tl.fromTo("#ruler .fill", {{ scaleX:0.02 }}, {{ scaleX:1, duration:0.8, ease:E.move }}, 9.06);
+count("nM", 0, 1.5, 9.06, 0.8, 1);
+tl.to("#ruler", {{ opacity:0, x:300, duration:F(6), ease:E.throw }}, 11.5);
 
 // ---------- feature 4: guna, gulung, masuk luggage + compact size ----------
-[["#st0",11.24],["#st1",12.30],["#st2",13.04]].forEach(([id,t]) =>
+[["#st1",11.86],["#st2",12.48]].forEach(([id,t]) =>
   tl.fromTo(id, {{ opacity:0, x:-420 }}, {{ opacity:1, x:0, duration:F(9), ease:E.land }}, t));
-tl.fromTo("#size", {{ opacity:0, scale:1.6 }}, {{ opacity:1, scale:1, duration:F(9), ease:E.snap }}, 12.34);
-tl.to("#sarc", {{ attr:{{ "stroke-dashoffset":0 }}, duration:0.9, ease:E.move }}, 12.40);
-tl.to("#size svg", {{ rotation:360, duration:1.3, ease:E.move }}, 12.36);
-count("nS", 0, 120, 12.40, 0.9, 0);
-tl.to(["#st0","#st1","#st2","#size"], {{ opacity:0, y:-140, duration:F(6), ease:E.throw, stagger:F(1) }}, 13.70);
+tl.fromTo("#size", {{ opacity:0, scale:1.6 }}, {{ opacity:1, scale:1, duration:F(9), ease:E.snap }}, 11.88);
+tl.to("#sarc", {{ attr:{{ "stroke-dashoffset":0 }}, duration:0.9, ease:E.move }}, 11.93);
+tl.to("#size svg", {{ rotation:360, duration:1.3, ease:E.move }}, 11.9);
+count("nS", 0, 120, 11.93, 0.9, 0);
+tl.to(["#st1","#st2","#size"], {{ opacity:0, y:-140, duration:F(6), ease:E.throw, stagger:F(1) }}, 13.21);
 
 // ---------- payoff: big serif word + sparkles ----------
-tl.fromTo("#glow", {{ opacity:0 }}, {{ opacity:.35, duration:F(14), ease:E.soft, immediateRender:false }}, 13.90);
-tl.fromTo("#pay", {{ opacity:0, y:90, scale:1.3 }}, {{ opacity:1, y:0, scale:1, duration:F(12), ease:E.settle }}, 14.40);
+tl.fromTo("#glow", {{ opacity:0 }}, {{ opacity:.35, duration:F(14), ease:E.soft, immediateRender:false }}, 13.4);
+tl.fromTo("#pay", {{ opacity:0, y:90, scale:1.3 }}, {{ opacity:1, y:0, scale:1, duration:F(12), ease:E.settle }}, 14.0);
 [0,1,2,3,4].forEach(k => {{
-  const t = 14.50 + k*F(3);
+  const t = 14.12 + k*F(3);
   tl.set("#sp"+k, {{ opacity:1, scale:0.6 }}, t);
   tl.to("#sp"+k, {{ opacity:0, scale:2.2, y:-60, duration:F(14), ease:E.soft }}, t);
 }});
-tl.to("#pay", {{ opacity:0, y:-90, duration:F(6), ease:E.throw }}, 15.00);
+tl.to("#pay", {{ opacity:0, y:-90, duration:F(6), ease:E.throw }}, 14.72);
 
 // ---------- CTA: product card + tap ----------
-tl.fromTo("#cta", {{ opacity:0, y:-260 }}, {{ opacity:1, y:0, duration:F(12), ease:E.land }}, 15.04);
-tl.fromTo("#tap", {{ opacity:0, x:240, y:260 }}, {{ opacity:1, x:0, y:0, duration:F(11), ease:E.land }}, 15.44);
-tl.to("#tap", {{ scale:.84, duration:F(3), ease:E.exit }}, 15.80);
-tl.to("#tap", {{ scale:1, duration:F(5), ease:E.land }}, 15.90);
-tl.set("#tapring", {{ opacity:1, scale:.5 }}, 15.86);
-tl.to("#tapring", {{ opacity:0, scale:2.3, duration:F(14), ease:E.soft }}, 15.86);
-tl.fromTo("#btn", {{ scale:1.16 }}, {{ scale:1, duration:F(9), ease:E.snap, immediateRender:false }}, 15.86);
-tl.to("#glow", {{ opacity:0, duration:F(8), ease:E.exit }}, 15.60);
+tl.fromTo("#cta", {{ opacity:0, y:-260 }}, {{ opacity:1, y:0, duration:F(12), ease:E.land }}, 14.76);
+tl.fromTo("#tap", {{ opacity:0, x:240, y:260 }}, {{ opacity:1, x:0, y:0, duration:F(11), ease:E.land }}, 15.26);
+tl.to("#tap", {{ scale:.84, duration:F(3), ease:E.exit }}, 15.74);
+tl.to("#tap", {{ scale:1, duration:F(5), ease:E.land }}, 15.88);
+tl.set("#tapring", {{ opacity:1, scale:.5 }}, 15.82);
+tl.to("#tapring", {{ opacity:0, scale:2.3, duration:F(14), ease:E.soft }}, 15.82);
+tl.fromTo("#btn", {{ scale:1.16 }}, {{ scale:1, duration:F(9), ease:E.snap, immediateRender:false }}, 15.82);
+tl.to("#glow", {{ opacity:0, duration:F(8), ease:E.exit }}, 15.48);
 
 // ---------- end card (loops into the white flash of the hook) ----------
 tl.fromTo("#end", {{ opacity:1, y:1920 }}, {{ opacity:1, y:0, duration:F(8), ease:E.land }}, {VID_END - 0.08});
@@ -374,7 +387,7 @@ tl.fromTo("#end .q", {{ opacity:0, y:70 }}, {{ opacity:1, y:0, duration:F(9), ea
 tl.fromTo("#end .s", {{ opacity:0, y:70 }}, {{ opacity:1, y:0, duration:F(9), ease:E.land }}, {VID_END + 0.24});
 tl.fromTo("#end .by", {{ opacity:0, y:40 }}, {{ opacity:1, y:0, duration:F(9), ease:E.land }}, {VID_END + 0.34});
 tl.to("#end .s", {{ scale:1.06, duration:F(8), ease:E.move, yoyo:true, repeat:1 }}, {VID_END + 0.6});
-tl.set(["#cta","#tap","#captions","#wm"], {{ opacity:0 }}, {VID_END});
+tl.set(["#cta","#tap","#captions","#wm","#disc"], {{ opacity:0 }}, {VID_END});
 tl.to("#end", {{ backgroundColor:"#ffffff", duration:F(6), ease:"none" }}, {TOTAL - 0.2});
 
 // ---------- watermark: 1.0 -> 1.12 -> 1.0, twice every 5 s ----------

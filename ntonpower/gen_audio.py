@@ -42,7 +42,7 @@ save("buzz",norm(bz,0.6))
 d=0.6; tt=t(d); f=300+1500*(tt/d)**2; rs=np.sin(2*np.pi*np.cumsum(f)/SR)*(tt/d)**2*0.4+lp(noise(d),0.3)*(tt/d)**3*0.6
 save("riser",norm(rs,0.6))
 # ---- music: warm lo-fi, 96 bpm, Fmaj7 Em7 Dm7 Cmaj7
-BPM=104; B=60/BPM; DUR=17.6; N=int(SR*DUR); m=np.zeros(N); T=np.arange(N)/SR
+BPM=104; B=60/BPM; DUR=17.9; N=int(SR*DUR); m=np.zeros(N); T=np.arange(N)/SR
 def mid(n): return 440*2**((n-69)/12)
 chords=[[53,57,60,64],[52,55,59,62],[50,53,57,60],[48,52,55,59]]
 bar=4*B
@@ -72,9 +72,9 @@ for b in range(beats):
 # hook intro: filtered for first 0.47s, then full
 # silence before reveal at 3.00
 g=np.ones(N)
-a,b_=int(2.62*SR),int(2.70*SR); g[a:b_]=np.linspace(1,0,b_-a); g[b_:int(3.00*SR)]=0
+a,b_=int(2.82*SR),int(2.90*SR); g[a:b_]=np.linspace(1,0,b_-a); g[b_:int(3.20*SR)]=0
 # cooler/filtered feel during problem: lower gain 1.98-2.62
-g[int(1.98*SR):a]*=0.55
+g[int(2.14*SR):a]*=0.55
 # end fade
 fe=int(0.3*SR); g[-fe:]*=np.linspace(1,0,fe)
 m=m*g
