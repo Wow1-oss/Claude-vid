@@ -38,7 +38,7 @@ SFX = [  # file, start, volume
     ("tick", 5.93, 0.45), ("whoosh", 6.46, 0.35), ("pop", 6.58, 0.4), ("pop", 7.02, 0.4), ("pop", 7.64, 0.4),
     ("chime", 7.89, 0.25), ("swish", 8.56, 0.4), ("tick", 9.1, 0.45), ("tick", 9.27, 0.45), ("tick", 9.43, 0.45),
     ("tick", 9.6, 0.45), ("tick", 9.77, 0.5), ("swish", 11.7, 0.4), ("pop", 11.81, 0.4), ("pop", 11.88, 0.4),
-    ("pop", 12.86, 0.4), ("whoosh", 13.38, 0.35), ("chime", 14.1, 0.3), ("whoosh", 14.72, 0.4),
+    ("pop", 12.86, 0.4), ("whoosh", 13.38, 0.35), ("whoosh", 14.72, 0.4),
     ("click", 15.82, 0.55), ("whoosh", 16.52, 0.45), ("chime", 16.76, 0.35),
 ]
 sfx_html = "\n".join(
@@ -237,10 +237,6 @@ html,body{{width:1080px;height:1920px;overflow:hidden;background:#000}}
       stroke-dasharray="829" stroke-dashoffset="829" transform="rotate(-90 150 150)"/></svg>
     <div class="v f-anton"><span id="nS">0</span></div><div class="u f-plus-jakarta-sans">MM · COMPACT</div></div>
 
-  <div id="pay"><div class="a f-instrument-serif">Lega.</div></div>
-  <div id="sp0" class="spark" style="left:640px;top:250px"></div><div id="sp1" class="spark" style="left:990px;top:300px"></div>
-  <div id="sp2" class="spark" style="left:700px;top:480px"></div><div id="sp3" class="spark" style="left:960px;top:500px"></div>
-  <div id="sp4" class="spark" style="left:820px;top:220px"></div>
 
   <div id="cta"><img src="img/product.png"><div class="info"><div class="brand f-plus-jakarta-sans">NTONPOWER</div>
     <div class="name f-plus-jakarta-sans">Travel Extension Lead</div><div class="tag f-instrument-serif">Travel must have!</div>
@@ -362,13 +358,6 @@ tl.to(["#st1","#st2","#size"], {{ opacity:0, y:-140, duration:F(6), ease:E.throw
 
 // ---------- payoff: big serif word + sparkles ----------
 tl.fromTo("#glow", {{ opacity:0 }}, {{ opacity:.35, duration:F(14), ease:E.soft, immediateRender:false }}, 13.4);
-tl.fromTo("#pay", {{ opacity:0, y:90, scale:1.3 }}, {{ opacity:1, y:0, scale:1, duration:F(12), ease:E.settle }}, 14.0);
-[0,1,2,3,4].forEach(k => {{
-  const t = 14.12 + k*F(3);
-  tl.set("#sp"+k, {{ opacity:1, scale:0.6 }}, t);
-  tl.to("#sp"+k, {{ opacity:0, scale:2.2, y:-60, duration:F(14), ease:E.soft }}, t);
-}});
-tl.to("#pay", {{ opacity:0, y:-90, duration:F(6), ease:E.throw }}, 14.72);
 
 // ---------- CTA: product card + tap ----------
 tl.fromTo("#cta", {{ opacity:0, y:-260 }}, {{ opacity:1, y:0, duration:F(12), ease:E.land }}, 14.76);
