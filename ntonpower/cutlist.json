@@ -1,0 +1,74 @@
+[
+ {
+  "label": "hook",
+  "src": "using",
+  "a_in": 0.0,
+  "a_out": 1.98,
+  "v_in": 0.0,
+  "out_start": 0.0,
+  "out_end": 1.98
+ },
+ {
+  "label": "problem",
+  "src": "using",
+  "a_in": 2.08,
+  "a_out": 3.1,
+  "v_in": 2.08,
+  "out_start": 1.98,
+  "out_end": 3.0
+ },
+ {
+  "label": "reveal",
+  "src": "using",
+  "a_in": 3.16,
+  "a_out": 4.62,
+  "v_in": 3.16,
+  "out_start": 3.0,
+  "out_end": 4.46
+ },
+ {
+  "label": "ports",
+  "src": "using",
+  "a_in": 6.12,
+  "a_out": 7.58,
+  "v_in": 6.08,
+  "out_start": 4.46,
+  "out_end": 5.92
+ },
+ {
+  "label": "devices",
+  "src": "using",
+  "a_in": 7.66,
+  "a_out": 9.86,
+  "v_in": 7.54,
+  "out_start": 5.92,
+  "out_end": 8.12
+ },
+ {
+  "label": "cord",
+  "src": "packing",
+  "a_in": 0.0,
+  "a_out": 3.04,
+  "v_in": 0.0,
+  "out_start": 8.12,
+  "out_end": 11.16
+ },
+ {
+  "label": "pack",
+  "src": "packing",
+  "a_in": 3.96,
+  "a_out": 6.7,
+  "v_in": 2.2,
+  "out_start": 11.16,
+  "out_end": 13.9
+ },
+ {
+  "label": "payoff",
+  "src": "packing",
+  "a_in": 7.54,
+  "a_out": 10.0,
+  "v_in": 7.54,
+  "out_start": 13.9,
+  "out_end": 16.36
+ }
+]

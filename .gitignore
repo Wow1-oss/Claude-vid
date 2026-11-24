@@ -10,3 +10,14 @@ edit/work-*/
 edit/.render.*/
 edit/.hyperframes/
 edit/renders/
+ntonpower/snaps/
+ntonpower/a.wav
+ntonpower/src/*.wav
+ntonpower/seg_hook.mp4
+ntonpower/cut.log
+ntonpower/words_raw.json
+ntonpower/.hyperframes/
+ntonpower/.render.*/
+ntonpower/renders/
+ntonpower/render.mp4
+ntonpower/footage.mp4
