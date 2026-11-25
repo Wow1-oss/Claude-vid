@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="ms" data-resolution="portrait">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1080, height=1920" />
+<link rel="stylesheet" href="fonts/fonts.css">
+<script src="vendor/gsap.min.js"></script>
+<style>
+:root{--pink:#ff2d7a;--pinkL:#ffc2d8;--yel:#ffe94a;--grn:#2fd17a;--grnL:#c9f7d6;--ink:#1d1b1a;--blue:#2f6fe4}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#000}
+#root{position:relative;width:1080px;height:1920px;overflow:hidden;font-family:"F Titan One",sans-serif}
+#ground{position:absolute;inset:0;background:radial-gradient(120% 80% at 50% 40%,#f3e6d6,#cdb79f)}
+#cam{position:absolute;inset:0;transform-origin:50% 38%}
+#stage{position:absolute;inset:0;overflow:hidden}
+#stage video{position:absolute;inset:0;width:1080px;height:1920px;object-fit:cover}
+#warm{position:absolute;inset:0;mix-blend-mode:soft-light;opacity:.5;
+  background:radial-gradient(700px 800px at 55% 30%,rgba(255,236,214,.8),rgba(255,236,214,0) 70%)}
+#vig{position:absolute;inset:0;background:radial-gradient(130% 95% at 50% 42%,rgba(0,0,0,0) 58%,rgba(40,20,10,.35) 100%)}
+#dim{position:absolute;inset:0;background:#20140e;opacity:0}
+
+/* sticker captions */
+.cap{position:absolute;left:0;right:0;margin:0 auto;width:fit-content;text-align:center;opacity:0}
+.ln{display:block;width:fit-content;margin:0 auto 10px;opacity:0}
+.st{display:inline-block;font-size:64px;line-height:1.08;color:var(--ink);background:#fff;padding:8px 28px 16px;border-radius:26px;
+  box-shadow:0 10px 0 rgba(29,27,26,.16),0 18px 40px rgba(60,30,10,.25);border:5px solid #fff}
+.st.big{font-size:84px}
+.st.hl{background:var(--yel);border-color:#fff}
+.st.pk{background:var(--pinkL);border-color:#fff}
+.st.gr{background:var(--grnL);border-color:#fff}
+.w{display:inline-block;margin:0 8px}
+
+/* stickers / icons */
+.ic{position:absolute;opacity:0}
+.burst{width:170px;height:170px}
+#burst1{left:70px;top:330px}
+#burst2{left:300px;top:560px}
+#burst3{left:250px;top:1000px}
+#shield{left:70px;top:600px;width:280px;height:340px}
+#diag{left:716px;top:250px;width:330px}
+.box{border-radius:30px;padding:18px 16px 16px;text-align:center;border:6px solid #fff;box-shadow:0 14px 34px rgba(60,30,10,.3);opacity:0}
+.box b{display:block;font-size:46px;color:var(--ink);font-weight:400}
+.box i{display:block;font-family:"F Permanent Marker";font-style:normal;font-size:32px;color:#3a2d28;margin-top:2px}
+.box .ar{font-family:"F Archivo Black";font-size:64px;line-height:1;display:block;margin:4px 0}
+#dk{background:#ffb3cd}
+#pr{background:#bff3cc;margin-top:96px}
+#darrow{position:absolute;left:135px;top:236px;width:60px;height:96px}
+#hosp{left:90px;top:780px;width:280px;height:280px}
+#ring{position:absolute;left:30px;top:30px;width:220px;height:220px;border-radius:50%;border:10px solid var(--pink);opacity:0}
+#okc{left:770px;top:640px;width:150px;height:150px}
+
+/* B-roll card: contoh bil -> 0% instalment */
+#broll{position:absolute;left:70px;top:330px;width:940px;height:900px;opacity:0}
+#bill{position:absolute;inset:0;background:#fffdf8;border-radius:44px;border:8px solid #fff;
+  box-shadow:0 40px 90px rgba(40,20,10,.45);overflow:hidden}
+#billhead{height:150px;background:linear-gradient(90deg,#ff2d7a,#ff6a9e);display:flex;align-items:center;gap:22px;padding:0 44px;color:#fff;font-size:54px}
+#billhead svg{flex:0 0 92px}
+#ex{position:absolute;right:40px;top:176px;font-family:"F Permanent Marker";font-size:36px;color:#c4245f}
+#rows{position:absolute;left:52px;right:52px;top:250px;font-family:"F Archivo Black";color:#5a4a42;font-size:34px}
+.row{display:flex;justify-content:space-between;padding:14px 0;border-bottom:3px dashed #eadfd6;opacity:0}
+#total{position:absolute;left:52px;right:52px;top:520px;display:flex;justify-content:space-between;align-items:center;font-family:"F Archivo Black";color:var(--ink)}
+#total span{font-size:40px}
+#amt{font-size:84px;position:relative}
+#strike{position:absolute;left:-10px;top:46px;height:12px;width:0;background:var(--pink);border-radius:6px}
+#cal{position:absolute;left:46px;top:640px;width:230px;height:230px;opacity:0}
+#plan{position:absolute;left:300px;right:46px;top:650px;opacity:0}
+#plan .m{font-family:"F Archivo Black";font-size:40px;color:#5a4a42}
+#plan .v{font-family:"F Archivo Black";font-size:96px;line-height:1;color:var(--ink)}
+#plan .v small{font-size:44px}
+#segs{display:flex;gap:7px;margin-top:16px}
+#segs i{flex:1 1 0;height:26px;border-radius:8px;background:#efe6de}
+#segs i.on{background:var(--grn)}
+#tnc{position:absolute;left:0;right:0;bottom:-58px;text-align:center;font-family:"F Archivo Black";font-size:26px;color:#fff;opacity:.85}
+
+/* end card */
+#end{position:absolute;left:0;right:0;top:620px;text-align:center;opacity:0}
+#end .p{display:inline-block;font-size:120px;color:var(--ink);background:var(--yel);padding:10px 50px 26px;border-radius:40px;border:8px solid #fff;box-shadow:0 20px 50px rgba(0,0,0,.35)}
+#end .n{display:block;font-family:"F Permanent Marker";font-size:58px;color:#fff;margin-bottom:18px;text-shadow:0 4px 18px rgba(0,0,0,.5)}
+#fbtn{position:relative;margin:40px auto 0;width:fit-content;font-size:56px;color:#fff;background:var(--pink);padding:18px 54px 26px;border-radius:60px;border:6px solid #fff}
+#flash{position:absolute;inset:0;background:#fff;opacity:0}
+#fbtn{display:grid}#fbtn span{grid-area:1/1;text-align:center}
+</style>
+</head>
+<body>
+<div id="root" data-composition-id="main" data-start="0" data-duration="10.24" data-width="1080" data-height="1920">
+  <div id="ground" class="clip" data-start="0" data-duration="10.24"></div>
+  <div id="cam">
+    <div id="stage">
+      <video id="vid" class="clip" src="footage_cut.mp4" data-start="0" data-duration="10.24" data-has-audio="true"></video>
+      <div id="warm"></div>
+      <div id="vig"></div>
+      <div id="dim"></div>
+    </div>
+  </div>
+
+  <!-- icons -->
+  <svg id="burst1" class="ic burst" viewBox="0 0 170 170"><g stroke="#ffd60a" stroke-width="16" stroke-linecap="round"><path d="M40 150 L10 120"/><path d="M70 120 L40 60"/><path d="M110 110 L100 30"/><path d="M140 125 L160 70"/></g></svg>
+  <svg id="burst2" class="ic burst" viewBox="0 0 170 170"><g stroke="#ff2d7a" stroke-width="15" stroke-linecap="round"><path d="M30 120 L8 92"/><path d="M62 96 L44 40"/><path d="M100 90 L104 18"/><path d="M132 104 L160 56"/></g></svg>
+  <svg id="burst3" class="ic burst" viewBox="0 0 170 170"><g stroke="#ffd60a" stroke-width="15" stroke-linecap="round"><path d="M30 120 L8 92"/><path d="M62 96 L44 40"/><path d="M100 90 L104 18"/><path d="M132 104 L160 56"/></g></svg>
+  <svg id="shield" class="ic" viewBox="0 0 280 340">
+    <g id="shCard"><rect x="20" y="190" width="240" height="150" rx="20" fill="#2f6fe4" stroke="#fff" stroke-width="8"/><rect x="20" y="222" width="240" height="26" fill="#173f8f"/><rect x="48" y="270" width="54" height="40" rx="8" fill="#f2c14e"/><rect x="140" y="286" width="96" height="12" rx="6" fill="#bcd3ff"/></g>
+    <g id="shSh"><path d="M140 10 L240 46 V120 C240 180 196 216 140 236 C84 216 40 180 40 120 V46 Z" fill="#ff2d7a" stroke="#fff" stroke-width="10"/><rect x="122" y="70" width="36" height="110" rx="10" fill="#fff"/><rect x="85" y="107" width="110" height="36" rx="10" fill="#fff"/></g>
+  </svg>
+  <div id="diag" class="ic">
+    <div id="dk" class="box"><b>Deductible</b><span class="ar" style="color:#c4245f">&#8593;</span><i>(lebih tinggi)</i></div>
+    <svg id="darrow" viewBox="0 0 60 96"><path id="darP" d="M30 4 V70" stroke="#ff2d7a" stroke-width="14" stroke-linecap="round" fill="none" stroke-dasharray="70" stroke-dashoffset="70"/><path id="darH" d="M8 62 L30 90 L52 62 Z" fill="#ff2d7a" opacity="0"/></svg>
+    <div id="pr" class="box"><b>Premium</b><span class="ar" style="color:#0f8a4a">&#8595;</span><i>(lebih rendah)</i></div>
+  </div>
+  <div id="hosp" class="ic">
+    <div id="ring"></div>
+    <svg viewBox="0 0 280 280" width="280" height="280"><rect x="40" y="90" width="200" height="160" rx="18" fill="#fff" stroke="#2f6fe4" stroke-width="10"/><rect x="95" y="30" width="90" height="80" rx="14" fill="#fff" stroke="#2f6fe4" stroke-width="10"/><rect x="131" y="44" width="18" height="52" rx="5" fill="#ff2d7a"/><rect x="114" y="61" width="52" height="18" rx="5" fill="#ff2d7a"/><g fill="#5aa0ff"><rect x="64" y="120" width="34" height="30" rx="6"/><rect x="123" y="120" width="34" height="30" rx="6"/><rect x="182" y="120" width="34" height="30" rx="6"/><rect x="64" y="170" width="34" height="30" rx="6"/><rect x="182" y="170" width="34" height="30" rx="6"/></g><rect x="118" y="186" width="44" height="64" rx="6" fill="#2f6fe4"/></svg>
+  </div>
+  <svg id="okc" class="ic" viewBox="0 0 150 150"><circle cx="75" cy="75" r="66" fill="#2fd17a" stroke="#fff" stroke-width="10"/><path id="tick" d="M42 78 L66 102 L110 54" stroke="#fff" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" fill="none" stroke-dasharray="100" stroke-dashoffset="100"/></svg>
+
+  <!-- B-roll card -->
+  <div id="broll">
+    <div id="bill">
+      <div id="billhead"><svg viewBox="0 0 92 92" width="92" height="92"><circle cx="46" cy="46" r="42" fill="#fff"/><rect x="38" y="20" width="16" height="52" rx="4" fill="#ff2d7a"/><rect x="20" y="38" width="52" height="16" rx="4" fill="#ff2d7a"/></svg>Bil Hospital</div>
+      <div id="ex">*contoh</div>
+      <div id="rows">
+        <div class="row"><span>Wad &amp; rawatan</span><span>RM 9,200</span></div>
+        <div class="row"><span>Pembedahan</span><span>RM 5,100</span></div>
+        <div class="row"><span>Ubat &amp; ujian</span><span>RM 1,500</span></div>
+      </div>
+      <div id="total"><span>JUMLAH</span><div id="amt">RM 15,800<div id="strike"></div></div></div>
+      <svg id="cal" viewBox="0 0 230 230"><rect x="10" y="26" width="210" height="194" rx="26" fill="#fff" stroke="#1d1b1a" stroke-width="9"/><rect x="10" y="26" width="210" height="58" rx="26" fill="#ff2d7a" stroke="#1d1b1a" stroke-width="9"/><g fill="#1d1b1a"><rect x="56" y="8" width="16" height="44" rx="8"/><rect x="108" y="8" width="16" height="44" rx="8"/><rect x="160" y="8" width="16" height="44" rx="8"/></g><text x="115" y="170" text-anchor="middle" font-family="F Archivo Black" font-size="84" fill="#ff2d7a">0%</text><text x="115" y="206" text-anchor="middle" font-family="F Permanent Marker" font-size="30" fill="#1d1b1a">Instalment</text></svg>
+      <div id="plan"><div class="m">12 bulan &#215;</div><div class="v">RM <span id="mon">0</span><small>/bln</small></div><div id="segs"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+    </div>
+    <div id="tnc">*Tertakluk kelulusan &amp; terma bank</div>
+  </div>
+
+  <!-- captions -->
+  <div id="c1" class="cap" style="top:1130px">
+    <div class="ln" id="c1a"><span class="st">Guna credit card untuk</span></div>
+    <div class="ln" id="c1b"><span class="st hl big">medical protection?</span></div>
+  </div>
+  <div id="c2" class="cap" style="top:1150px">
+    <div class="ln" id="c2a"><span class="st">Eh,</span></div>
+    <div class="ln" id="c2b"><span class="st hl big">boleh rupanya!</span></div>
+  </div>
+  <div id="c3" class="cap" style="top:1150px">
+    <div class="ln" id="c3a"><span class="st">Select</span></div>
+    <div class="ln" id="c3b"><span class="st pk big">deductible tinggi,</span></div>
+  </div>
+  <div id="c4" class="cap" style="top:1150px">
+    <div class="ln" id="c4a"><span class="st">premium boleh jadi</span></div>
+    <div class="ln" id="c4b"><span class="st hl big">rendah.</span></div>
+  </div>
+  <div id="c5" class="cap" style="top:1180px">
+    <div class="ln" id="c5a"><span class="st">Masuk</span></div>
+    <div class="ln" id="c5b"><span class="st hl big">hospital,</span></div>
+  </div>
+  <div id="c6" class="cap" style="top:1330px">
+    <div class="ln" id="c6a"><span class="st">consider</span></div>
+    <div class="ln" id="c6b"><span class="st hl big">0% instalment</span></div>
+  </div>
+  <div id="c7" class="cap" style="top:1150px">
+    <div class="ln" id="c7a"><span class="st">if entitled dan</span></div>
+    <div class="ln" id="c7b"><span class="st gr big">mampu bayar.</span></div>
+  </div>
+
+  <div id="end"><span class="n">nantikan</span><span class="p">PART 2</span><div id="fbtn"><span id="fb1">+ Follow</span><span id="fb2" style="opacity:0">&#10003; Following</span></div></div>
+  <div id="flash"></div>
+
+  <audio id="music" class="clip" src="audio/music.wav" data-start="0" data-duration="10.24" data-volume="0.22"></audio>
+  <audio id="sfx0" class="clip" src="audio/whoosh.wav" data-start="0" data-duration="0.45" data-volume="0.5"></audio>
+  <audio id="sfx1" class="clip" src="audio/pop.wav" data-start="1.16" data-duration="0.12" data-volume="0.5"></audio>
+  <audio id="sfx2" class="clip" src="audio/swish.wav" data-start="2.12" data-duration="0.25" data-volume="0.4"></audio>
+  <audio id="sfx3" class="clip" src="audio/chime.wav" data-start="2.54" data-duration="1.2" data-volume="0.3"></audio>
+  <audio id="sfx4" class="clip" src="audio/whoosh.wav" data-start="3.24" data-duration="0.45" data-volume="0.4"></audio>
+  <audio id="sfx5" class="clip" src="audio/pop.wav" data-start="3.62" data-duration="0.12" data-volume="0.45"></audio>
+  <audio id="sfx6" class="clip" src="audio/swish.wav" data-start="4.08" data-duration="0.25" data-volume="0.4"></audio>
+  <audio id="sfx7" class="clip" src="audio/hit.wav" data-start="5.42" data-duration="0.5" data-volume="0.6"></audio>
+  <audio id="sfx8" class="clip" src="audio/buzz.wav" data-start="5.98" data-duration="0.35" data-volume="0.22"></audio>
+  <audio id="sfx9" class="clip" src="audio/whoosh.wav" data-start="6.94" data-duration="0.45" data-volume="0.55"></audio>
+  <audio id="sfx10" class="clip" src="audio/click.wav" data-start="7.22" data-duration="0.06" data-volume="0.55"></audio>
+  <audio id="sfx11" class="clip" src="audio/tick.wav" data-start="7.6" data-duration="0.03" data-volume="0.45"></audio>
+  <audio id="sfx12" class="clip" src="audio/tick.wav" data-start="7.8" data-duration="0.03" data-volume="0.45"></audio>
+  <audio id="sfx13" class="clip" src="audio/tick.wav" data-start="8.0" data-duration="0.03" data-volume="0.45"></audio>
+  <audio id="sfx14" class="clip" src="audio/swish.wav" data-start="8.2" data-duration="0.25" data-volume="0.4"></audio>
+  <audio id="sfx15" class="clip" src="audio/chime.wav" data-start="8.42" data-duration="1.1" data-volume="0.3"></audio>
+  <audio id="sfx16" class="clip" src="audio/pop.wav" data-start="9.56" data-duration="0.12" data-volume="0.5"></audio>
+  <audio id="sfx17" class="clip" src="audio/click.wav" data-start="9.92" data-duration="0.06" data-volume="0.6"></audio>
+</div>
+
+<script>
+const FPS = 30, F = n => n / FPS;
+const E = {land:"power3.out",soft:"power2.out",snap:"expo.out",settle:"back.out(1.15)",exit:"power2.in",throw:"power4.in",move:"power2.inOut"};
+const tl = gsap.timeline({paused:true});
+const Q = s => document.querySelector(s);
+
+// ---- camera: punch-in on every cut, hook strongest
+gsap.set("#cam",{scale:1.14});
+tl.to("#cam",{scale:1.05,duration:2.05,ease:"none"},0);
+tl.to("#cam",{scale:1.0,y:0,duration:F(8),ease:E.snap},2.1);
+tl.to("#cam",{scale:1.10,y:-10,duration:F(7),ease:E.snap},3.22);           // jump cut 1
+tl.to("#cam",{scale:1.02,y:0,duration:F(9),ease:E.snap},4.86);
+tl.to("#cam",{scale:1.08,duration:F(6),ease:E.snap},5.42);                  // "rendah" punch
+tl.to("#cam",{scale:1.14,duration:F(6),ease:E.snap},5.83);                  // jump cut 2
+tl.to("#cam",{scale:1.06,duration:F(6),ease:E.snap},6.71);                  // jump cut 3
+tl.to("#cam",{scale:1.04,duration:F(9),ease:E.move},8.2);
+tl.to("#cam",{scale:1.12,duration:F(7),ease:E.snap},9.02);                  // "mampu bayar"
+tl.to("#cam",{scale:1.18,duration:0.7,ease:"none"},9.54);                    // end card push
+
+// ---- caption helper: line pops (scale 1.25->1 snap), exits fast
+function capIn(lineSel,t,rot){
+  tl.fromTo(lineSel,{opacity:0,scale:1.35,y:30,rotation:rot*1.6},{opacity:1,scale:1,y:0,rotation:rot,duration:F(8),ease:E.snap},t);
+}
+function capShow(capSel,t0,t1){
+  tl.set(capSel,{opacity:1},t0);
+  tl.to(capSel,{opacity:0,y:40,scale:.92,duration:F(6),ease:E.exit},t1);
+  tl.set(capSel,{opacity:0,y:0,scale:1},t1+F(7));
+}
+// hook: word-by-word on line 1
+tl.set("#c1",{opacity:1},0);
+capIn("#c1a",0.0,-2);
+capIn("#c1b",1.16,2);
+tl.to("#c1",{opacity:0,x:-120,duration:F(6),ease:E.exit},2.04);
+tl.set("#c1",{opacity:0,x:0},2.3);
+
+capShow("#c2",2.12,3.18); capIn("#c2a",2.12,-3); capIn("#c2b",2.22,2);
+capShow("#c3",3.30,4.78); capIn("#c3a",3.30,-2); capIn("#c3b",3.60,2);
+capShow("#c4",4.86,5.86); capIn("#c4a",4.86,-2); capIn("#c4b",5.42,-3);
+capShow("#c5",5.98,6.82); capIn("#c5a",5.98,-3); capIn("#c5b",6.14,2);
+capShow("#c6",6.90,8.18); capIn("#c6a",6.90,-2); capIn("#c6b",7.20,1);
+capShow("#c7",8.22,9.52); capIn("#c7a",8.22,-2); capIn("#c7b",9.02,-2);
+
+// ---- bursts (enter from offset, not from 0)
+function burst(sel,t,dur,dx){
+  tl.fromTo(sel,{opacity:0,scale:1.6,x:dx,y:20},{opacity:1,scale:1,x:0,y:0,duration:F(7),ease:E.snap},t);
+  tl.to(sel,{opacity:1,scale:1.06,duration:F(5),yoyo:true,repeat:3,ease:"sine.inOut"},t+F(8));
+  tl.to(sel,{opacity:0,y:-30,duration:F(6),ease:E.exit},t+dur);
+}
+burst("#burst1",0.05,1.9,-60);
+burst("#burst2",2.16,1.0,-40);
+burst("#burst3",8.30,1.15,-40);
+
+// ---- shield + card (deductible)
+tl.fromTo("#shield",{opacity:0,x:-260,rotation:-14},{opacity:1,x:0,rotation:-6,duration:F(11),ease:E.land},3.30);
+tl.fromTo("#shSh",{y:-60,opacity:0},{y:0,opacity:1,duration:F(8),ease:E.snap,immediateRender:false},3.60);
+tl.to("#shield",{rotation:4,duration:0.6,ease:E.move},4.0);
+tl.to("#shield",{opacity:0,x:-200,duration:F(7),ease:E.exit},4.62);
+
+// ---- diagram: deductible up -> premium down
+tl.set("#diag",{opacity:1},4.05);
+tl.fromTo("#dk",{opacity:0,x:260,rotation:6},{opacity:1,x:0,rotation:-2,duration:F(10),ease:E.land},4.08);
+tl.fromTo("#dk .ar",{y:20},{y:-8,duration:0.4,ease:E.move,yoyo:true,repeat:3},4.4);
+tl.to("#darP",{attr:{"stroke-dashoffset":0},duration:F(8),ease:E.land},4.92);
+tl.to("#darH",{opacity:1,duration:F(3)},5.15);
+tl.fromTo("#pr",{opacity:0,scale:1.7,rotation:-8},{opacity:1,scale:1,rotation:2,duration:F(8),ease:E.settle},5.42);
+tl.fromTo("#pr .ar",{y:-10},{y:10,duration:0.3,ease:E.move,yoyo:true,repeat:1},5.55);
+tl.to("#diag",{opacity:0,x:320,duration:F(7),ease:E.throw},5.80);
+
+// ---- hospital icon
+tl.fromTo("#hosp",{opacity:0,y:120,rotation:-10},{opacity:1,y:0,rotation:-4,duration:F(10),ease:E.land},5.98);
+tl.fromTo("#ring",{opacity:.9,scale:1},{opacity:0,scale:1.7,duration:0.34,ease:E.soft,immediateRender:false},6.14);
+tl.fromTo("#ring",{opacity:.9,scale:1},{opacity:0,scale:1.7,duration:0.45,ease:E.soft,immediateRender:false},6.5);
+tl.to("#hosp",{opacity:0,x:-220,duration:F(6),ease:E.exit},6.86);
+
+// ---- B-roll card (J-cut: enters just after "consider" starts)
+tl.to("#stage",{filter:"blur(14px) brightness(.78)",duration:0.3,ease:E.soft},6.96);
+tl.fromTo("#broll",{opacity:0,y:700,rotation:6},{opacity:1,y:0,rotation:-1.5,duration:F(12),ease:E.soft},6.96);
+document.querySelectorAll(".row").forEach((r,i)=>{tl.fromTo(r,{opacity:0,x:80},{opacity:1,x:0,duration:F(7),ease:E.land},7.0+i*F(3));});
+tl.to("#strike",{width:"104%",duration:F(6),ease:E.snap},7.22);
+tl.to("#amt",{color:"#b9aaa2",duration:F(6)},7.22);
+tl.fromTo("#cal",{opacity:0,scale:2.4,rotation:-20},{opacity:1,scale:1,rotation:-6,duration:F(8),ease:E.snap},7.22);
+tl.fromTo("#plan",{opacity:0,x:120},{opacity:1,x:0,duration:F(10),ease:E.land},7.40);
+const cnt={v:0};
+tl.to(cnt,{v:1317,duration:0.55,ease:"power2.out",onUpdate:()=>{Q("#mon").textContent=Math.round(cnt.v).toLocaleString("en-US");}},7.45);
+document.querySelectorAll("#segs i").forEach((s,i)=>{tl.set(s,{backgroundColor:"#2fd17a"},7.5+i*0.05);});
+tl.fromTo("#tnc",{opacity:0,y:20},{opacity:.85,y:0,duration:F(8),ease:E.land},7.5);
+tl.to("#broll",{opacity:0,y:-900,rotation:-6,duration:F(7),ease:E.throw},8.06);
+tl.to("#stage",{filter:"blur(0px) brightness(1)",duration:F(7),ease:E.exit},8.06);
+
+tl.fromTo("#flash",{opacity:0},{opacity:.55,duration:F(1)},6.96); tl.to("#flash",{opacity:0,duration:F(3)},6.96+F(1));
+
+// ---- OK check
+tl.fromTo("#okc",{opacity:0,scale:2.2,rotation:-30},{opacity:1,scale:1,rotation:0,duration:F(8),ease:E.snap},8.42);
+tl.to("#tick",{attr:{"stroke-dashoffset":0},duration:F(8),ease:E.land},8.5);
+tl.to("#okc",{opacity:0,y:-40,duration:F(6),ease:E.exit},9.4);
+
+// ---- end card (loops back into hook)
+tl.to("#dim",{opacity:.5,duration:F(6),ease:E.soft},9.54);
+tl.set("#end",{opacity:1},9.56);
+tl.fromTo("#end .n",{opacity:0,y:-60},{opacity:1,y:0,duration:F(7),ease:E.land},9.56);
+tl.fromTo("#end .p",{opacity:0,scale:2.2,rotation:-8},{opacity:1,scale:1,rotation:-3,duration:F(7),ease:E.snap},9.58);
+tl.fromTo("#fbtn",{opacity:0,y:120},{opacity:1,y:0,duration:F(7),ease:E.land},9.66);
+tl.to("#fbtn",{scale:.9,duration:F(3),ease:E.exit},9.92);
+tl.to("#fbtn",{scale:1,backgroundColor:"#2fd17a",duration:F(5),ease:E.snap},10.02);
+tl.set("#fb1",{opacity:0},10.02); tl.set("#fb2",{opacity:1},10.02);
+
+window.__timelines = window.__timelines || {};
+window.__timelines['main'] = tl;
+</script>
+</body>
+</html>
