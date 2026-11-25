@@ -1,0 +1,23 @@
+1
+00:00:00,000 --> 00:00:00,900
+Lagi satu,
+
+2
+00:00:01,000 --> 00:00:02,240
+set auto-debit insurance
+
+3
+00:00:02,260 --> 00:00:03,000
+kat credit card,
+
+4
+00:00:03,020 --> 00:00:04,800
+takdelah terlupa bayar premium.
+
+5
+00:00:04,960 --> 00:00:06,300
+Ingat sale Shopee,
+
+6
+00:00:06,460 --> 00:00:07,800
+premium sendiri boleh lupa.

@@ -1,0 +1,6 @@
+@font-face{font-family:"F Titan One";src:url("titan-one-400-normal.woff2") format("woff2");font-weight:400;font-style:normal;font-display:block}
+.f-titan-one{font-family:"F Titan One";font-weight:400;font-style:normal}
+@font-face{font-family:"F Permanent Marker";src:url("permanent-marker-400-normal.woff2") format("woff2");font-weight:400;font-style:normal;font-display:block}
+.f-permanent-marker{font-family:"F Permanent Marker";font-weight:400;font-style:normal}
+@font-face{font-family:"F Archivo Black";src:url("archivo-black-400-normal.woff2") format("woff2");font-weight:400;font-style:normal;font-display:block}
+.f-archivo-black{font-family:"F Archivo Black";font-weight:400;font-style:normal}

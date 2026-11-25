@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="ms" data-resolution="portrait">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1080, height=1920" />
+<link rel="stylesheet" href="fonts/fonts.css">
+<script src="vendor/gsap.min.js"></script>
+<style>
+:root{--pink:#ff2d7a;--pinkL:#ffc2d8;--yel:#ffe94a;--grn:#2fd17a;--grnL:#c9f7d6;--ink:#1d1b1a;--blue:#2f6fe4}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#000}
+#root{position:relative;width:1080px;height:1920px;overflow:hidden;font-family:"F Titan One",sans-serif}
+#ground{position:absolute;inset:0;background:radial-gradient(120% 80% at 50% 40%,#f3e6d6,#cdb79f)}
+#cam{position:absolute;inset:0;transform-origin:50% 38%}
+#stage{position:absolute;inset:0;overflow:hidden}
+#stage video{position:absolute;inset:0;width:1080px;height:1920px;object-fit:cover}
+#warm{position:absolute;inset:0;mix-blend-mode:soft-light;opacity:.5;
+  background:radial-gradient(700px 800px at 55% 30%,rgba(255,236,214,.8),rgba(255,236,214,0) 70%)}
+#vig{position:absolute;inset:0;background:radial-gradient(130% 95% at 50% 42%,rgba(0,0,0,0) 58%,rgba(40,20,10,.35) 100%)}
+#dim{position:absolute;inset:0;background:#20140e;opacity:0}
+
+/* sticker captions */
+.cap{position:absolute;left:0;right:0;margin:0 auto;width:fit-content;text-align:center;opacity:0}
+.ln{display:block;width:fit-content;margin:0 auto 10px;opacity:0}
+.st{display:inline-block;font-size:64px;line-height:1.08;color:var(--ink);background:#fff;padding:8px 28px 16px;border-radius:26px;
+  box-shadow:0 10px 0 rgba(29,27,26,.16),0 18px 40px rgba(60,30,10,.25);border:5px solid #fff}
+.st.big{font-size:84px}
+.st.hl{background:var(--yel);border-color:#fff}
+.st.pk{background:var(--pinkL);border-color:#fff}
+.st.gr{background:var(--grnL);border-color:#fff}
+
+/* icons */
+.ic{position:absolute;opacity:0}
+.burst{width:170px;height:170px}
+#burst1{left:830px;top:250px}
+#burst2{left:120px;top:520px}
+#burst3{left:780px;top:300px}
+#stamp{left:60px;top:300px;font-size:76px;color:#fff;background:var(--pink);padding:6px 30px 14px;border-radius:22px;border:7px solid #fff;box-shadow:0 14px 34px rgba(60,30,10,.3)}
+#calico{left:60px;top:300px;width:230px;height:230px}
+#bag{left:60px;top:560px;width:250px;height:280px}
+#bubble{left:180px;top:330px;width:240px;height:210px}
+#clip{left:60px;top:560px;width:240px;height:290px}
+.qm{position:absolute;font-family:"F Archivo Black";font-size:150px;color:var(--pink);opacity:0;-webkit-text-stroke:6px #fff;paint-order:stroke fill}
+#q1{left:270px;top:440px}#q2{left:20px;top:400px}#q3{left:290px;top:720px}
+
+/* B-roll: auto-debit app card */
+#broll{position:absolute;left:80px;top:300px;width:920px;height:690px;opacity:0}
+#app{position:absolute;inset:0;background:#fffdf8;border-radius:44px;border:8px solid #fff;box-shadow:0 40px 90px rgba(40,20,10,.45);overflow:hidden}
+#apphead{height:140px;background:linear-gradient(90deg,#2f6fe4,#5b8ff0);display:flex;align-items:center;gap:22px;padding:0 40px;color:#fff;font-size:50px}
+#apphead svg{flex:0 0 96px}
+#ex{position:absolute;right:40px;top:160px;font-family:"F Permanent Marker";font-size:34px;color:#2f6fe4}
+#tog{position:absolute;left:44px;right:44px;top:210px;display:flex;justify-content:space-between;align-items:center;font-family:"F Archivo Black";font-size:40px;color:var(--ink)}
+#sw{position:relative;width:150px;height:80px;border-radius:40px;background:#d9cfc6}
+#knob{position:absolute;left:8px;top:8px;width:64px;height:64px;border-radius:50%;background:#fff;box-shadow:0 4px 10px rgba(0,0,0,.25)}
+#months{position:absolute;left:44px;right:44px;top:330px;display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.mo{height:96px;border-radius:20px;background:#f2ebe4;display:flex;align-items:center;justify-content:center;gap:10px;font-family:"F Archivo Black";font-size:32px;color:#8a7a70}
+.mo svg{flex:0 0 34px;opacity:0}
+#paid{position:absolute;left:44px;right:44px;top:560px;height:96px;border-radius:26px;background:var(--grnL);display:flex;align-items:center;gap:20px;padding:0 26px;font-family:"F Archivo Black";font-size:36px;color:#0d6b39;opacity:0}
+#paid svg{flex:0 0 64px}
+#shield2{position:absolute;right:-30px;top:-70px;width:200px;height:220px;opacity:0}
+
+/* end card */
+#end{position:absolute;left:0;right:0;top:1060px;text-align:center;opacity:0}
+#end .p{display:inline-block;font-size:96px;color:var(--ink);background:var(--yel);padding:10px 46px 24px;border-radius:36px;border:8px solid #fff;box-shadow:0 20px 50px rgba(0,0,0,.35)}
+#end .n{display:block;font-family:"F Permanent Marker";font-size:54px;color:#fff;margin-bottom:14px;text-shadow:0 4px 18px rgba(0,0,0,.5)}
+#fbtn{position:relative;margin:34px auto 0;width:fit-content;font-size:54px;color:#fff;background:var(--pink);padding:16px 52px 24px;border-radius:60px;border:6px solid #fff;display:grid}
+#fbtn span{grid-area:1/1;text-align:center}
+#flash{position:absolute;inset:0;background:#fff;opacity:0}
+</style>
+</head>
+<body>
+<div id="root" data-composition-id="main" data-start="0" data-duration="8.63" data-width="1080" data-height="1920">
+  <div id="ground" class="clip" data-start="0" data-duration="8.63"></div>
+  <div id="cam">
+    <div id="stage">
+      <video id="vid" class="clip" src="footage_cut.mp4" data-start="0" data-duration="8.63" data-has-audio="true"></video>
+      <div id="warm"></div>
+      <div id="vig"></div>
+      <div id="dim"></div>
+    </div>
+  </div>
+
+  <svg id="burst1" class="ic burst" viewBox="0 0 170 170"><g stroke="#ffd60a" stroke-width="16" stroke-linecap="round"><path d="M40 150 L10 120"/><path d="M70 120 L40 60"/><path d="M110 110 L100 30"/><path d="M140 125 L160 70"/></g></svg>
+  <svg id="burst2" class="ic burst" viewBox="0 0 170 170"><g stroke="#ff2d7a" stroke-width="15" stroke-linecap="round"><path d="M30 120 L8 92"/><path d="M62 96 L44 40"/><path d="M100 90 L104 18"/><path d="M132 104 L160 56"/></g></svg>
+  <svg id="burst3" class="ic burst" viewBox="0 0 170 170"><g stroke="#ffd60a" stroke-width="15" stroke-linecap="round"><path d="M30 120 L8 92"/><path d="M62 96 L44 40"/><path d="M100 90 L104 18"/><path d="M132 104 L160 56"/></g></svg>
+  <div id="stamp" class="ic">PART 2</div>
+  <svg id="calico" class="ic" viewBox="0 0 230 230"><rect x="10" y="26" width="210" height="194" rx="26" fill="#fff" stroke="#1d1b1a" stroke-width="9"/><rect x="10" y="26" width="210" height="58" rx="26" fill="#ff2d7a" stroke="#1d1b1a" stroke-width="9"/><g fill="#1d1b1a"><rect x="56" y="8" width="16" height="44" rx="8"/><rect x="108" y="8" width="16" height="44" rx="8"/><rect x="160" y="8" width="16" height="44" rx="8"/></g><g id="sync" fill="none" stroke="#2f6fe4" stroke-width="13" stroke-linecap="round"><path d="M70 150 A46 46 0 0 1 150 118"/><path d="M160 156 A46 46 0 0 1 80 188"/></g><path d="M140 100 L160 122 L134 128 Z" fill="#2f6fe4"/><path d="M90 206 L70 184 L96 178 Z" fill="#2f6fe4"/></svg>
+  <svg id="bubble" class="ic" viewBox="0 0 240 210"><circle cx="40" cy="190" r="12" fill="#fff" stroke="#1d1b1a" stroke-width="6"/><circle cx="70" cy="160" r="18" fill="#fff" stroke="#1d1b1a" stroke-width="6"/><ellipse cx="140" cy="80" rx="96" ry="72" fill="#fff" stroke="#1d1b1a" stroke-width="8"/><g fill="none" stroke="#ff2d7a" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"><path d="M88 50 H104 L118 104 H178 L190 64 H110"/></g><circle cx="126" cy="122" r="9" fill="#ff2d7a"/><circle cx="170" cy="122" r="9" fill="#ff2d7a"/></svg>
+  <svg id="bag" class="ic" viewBox="0 0 250 280"><path d="M80 90 C80 30 170 30 170 90" fill="none" stroke="#1d1b1a" stroke-width="14" stroke-linecap="round"/><path d="M30 80 H220 L205 262 H45 Z" fill="#ff6a2b" stroke="#fff" stroke-width="10" stroke-linejoin="round"/><text x="125" y="200" text-anchor="middle" font-family="F Archivo Black" font-size="96" fill="#fff">%</text><g id="tag"><rect x="150" y="10" width="96" height="52" rx="14" fill="#ffe94a" stroke="#1d1b1a" stroke-width="6" transform="rotate(12 198 36)"/><text x="198" y="48" text-anchor="middle" font-family="F Titan One" font-size="28" fill="#1d1b1a" transform="rotate(12 198 36)">SALE</text></g></svg>
+  <svg id="clip" class="ic" viewBox="0 0 240 290"><rect x="20" y="40" width="200" height="240" rx="26" fill="#fff" stroke="#1d1b1a" stroke-width="9"/><rect x="78" y="18" width="84" height="46" rx="14" fill="#ff8fb5" stroke="#1d1b1a" stroke-width="8"/><path d="M120 100 L180 122 V162 C180 198 154 220 120 232 C86 220 60 198 60 162 V122 Z" fill="#ff2d7a"/><rect x="110" y="132" width="20" height="66" rx="6" fill="#fff"/><rect x="87" y="155" width="66" height="20" rx="6" fill="#fff"/></svg>
+  <div id="q1" class="qm">?</div><div id="q2" class="qm">?</div><div id="q3" class="qm">?</div>
+
+  <!-- B-roll: auto-debit -->
+  <div id="broll">
+    <div id="app">
+      <div id="apphead"><svg viewBox="0 0 96 96" width="96" height="96"><rect x="4" y="18" width="88" height="60" rx="12" fill="#fff"/><rect x="4" y="32" width="88" height="12" fill="#173f8f"/><rect x="16" y="54" width="20" height="14" rx="4" fill="#f2c14e"/></svg>Auto-Debit Premium</div>
+      <div id="ex">*contoh</div>
+      <div id="tog"><span>Insurans Perubatan</span><div id="sw"><div id="knob"></div></div></div>
+      <div id="months">
+        <div class="mo"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="16" fill="#2fd17a"/><path d="M9 18 L15 24 L26 11" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round"/></svg>JAN</div>
+        <div class="mo"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="16" fill="#2fd17a"/><path d="M9 18 L15 24 L26 11" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round"/></svg>FEB</div>
+        <div class="mo"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="16" fill="#2fd17a"/><path d="M9 18 L15 24 L26 11" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round"/></svg>MAC</div>
+        <div class="mo"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="16" fill="#2fd17a"/><path d="M9 18 L15 24 L26 11" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round"/></svg>APR</div>
+        <div class="mo"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="16" fill="#2fd17a"/><path d="M9 18 L15 24 L26 11" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round"/></svg>MEI</div>
+        <div class="mo"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="16" fill="#2fd17a"/><path d="M9 18 L15 24 L26 11" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round"/></svg>JUN</div>
+        <div class="mo"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="16" fill="#2fd17a"/><path d="M9 18 L15 24 L26 11" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round"/></svg>JUL</div>
+        <div class="mo"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="16" fill="#2fd17a"/><path d="M9 18 L15 24 L26 11" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round"/></svg>OGO</div>
+      </div>
+      <div id="paid"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="30" fill="#2fd17a"/><path d="M17 33 L28 44 L48 22" stroke="#fff" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>Premium dibayar automatik</div>
+    </div>
+    <svg id="shield2" viewBox="0 0 200 220"><path d="M100 8 L184 38 V100 C184 152 148 186 100 206 C52 186 16 152 16 100 V38 Z" fill="#ff2d7a" stroke="#fff" stroke-width="10"/><rect x="86" y="58" width="28" height="90" rx="8" fill="#fff"/><rect x="55" y="89" width="90" height="28" rx="8" fill="#fff"/><circle cx="160" cy="176" r="34" fill="#2fd17a" stroke="#fff" stroke-width="8"/><path d="M144 177 L156 189 L176 166" stroke="#fff" stroke-width="9" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </div>
+
+  <!-- captions -->
+  <div id="c1" class="cap" style="top:1180px"><div class="ln" id="c1a"><span class="st hl big">Lagi satu,</span></div></div>
+  <div id="c2" class="cap" style="top:1130px">
+    <div class="ln" id="c2a"><span class="st">set</span></div>
+    <div class="ln" id="c2b"><span class="st hl big">auto-debit</span></div>
+    <div class="ln" id="c2c"><span class="st">insurance</span></div>
+  </div>
+  <div id="c3" class="cap" style="top:1160px">
+    <div class="ln" id="c3a"><span class="st">kat</span></div>
+    <div class="ln" id="c3b"><span class="st hl big">credit card!</span></div>
+  </div>
+  <div id="c4" class="cap" style="top:1160px">
+    <div class="ln" id="c4a"><span class="st">Takdelah</span></div>
+    <div class="ln" id="c4b"><span class="st hl big">terlupa</span></div>
+    <div class="ln" id="c4c"><span class="st">bayar premium.</span></div>
+  </div>
+  <div id="c5" class="cap" style="top:1160px">
+    <div class="ln" id="c5a"><span class="st">Ingat</span></div>
+    <div class="ln" id="c5b"><span class="st hl big">sale Shopee,</span></div>
+  </div>
+  <div id="c6" class="cap" style="top:1160px">
+    <div class="ln" id="c6a"><span class="st">premium sendiri</span></div>
+    <div class="ln" id="c6b"><span class="st pk big">boleh lupa.</span></div>
+  </div>
+
+  <div id="end"><span class="n">simpan tips ni</span><span class="p">SET &amp; TENANG</span><div id="fbtn"><span id="fb1">+ Follow</span><span id="fb2" style="opacity:0">&#10003; Following</span></div></div>
+  <div id="flash"></div>
+
+  <audio id="music" class="clip" src="audio/music.wav" data-start="0" data-duration="8.63" data-volume="0.22"></audio>
+  <audio id="sfx0" class="clip" src="audio/whoosh.wav" data-start="0" data-duration="0.45" data-volume="0.45"></audio>
+  <audio id="sfx1" class="clip" src="audio/hit.wav" data-start="0.06" data-duration="0.5" data-volume="0.5"></audio>
+  <audio id="sfx2" class="clip" src="audio/pop.wav" data-start="1.28" data-duration="0.12" data-volume="0.5"></audio>
+  <audio id="sfx3" class="clip" src="audio/chime.wav" data-start="2.44" data-duration="0.6" data-volume="0.3"></audio>
+  <audio id="sfx4" class="clip" src="audio/whoosh.wav" data-start="3.04" data-duration="0.45" data-volume="0.55"></audio>
+  <audio id="sfx5" class="clip" src="audio/click.wav" data-start="3.32" data-duration="0.06" data-volume="0.6"></audio>
+  <audio id="sfx6" class="clip" src="audio/tick.wav" data-start="3.55" data-duration="0.03" data-volume="0.45"></audio>
+  <audio id="sfx7" class="clip" src="audio/tick.wav" data-start="3.71" data-duration="0.03" data-volume="0.45"></audio>
+  <audio id="sfx8" class="clip" src="audio/tick.wav" data-start="3.87" data-duration="0.03" data-volume="0.45"></audio>
+  <audio id="sfx9" class="clip" src="audio/tick.wav" data-start="4.03" data-duration="0.03" data-volume="0.45"></audio>
+  <audio id="sfx10" class="clip" src="audio/chime.wav" data-start="4.30" data-duration="0.55" data-volume="0.3"></audio>
+  <audio id="sfx11" class="clip" src="audio/swish.wav" data-start="4.84" data-duration="0.25" data-volume="0.45"></audio>
+  <audio id="sfx12" class="clip" src="audio/pop.wav" data-start="5.14" data-duration="0.12" data-volume="0.5"></audio>
+  <audio id="sfx13" class="clip" src="audio/click.wav" data-start="5.40" data-duration="0.06" data-volume="0.5"></audio>
+  <audio id="sfx14" class="clip" src="audio/swish.wav" data-start="6.46" data-duration="0.25" data-volume="0.4"></audio>
+  <audio id="sfx15" class="clip" src="audio/hit.wav" data-start="7.20" data-duration="0.5" data-volume="0.6"></audio>
+  <audio id="sfx16" class="clip" src="audio/buzz.wav" data-start="7.24" data-duration="0.35" data-volume="0.2"></audio>
+  <audio id="sfx17" class="clip" src="audio/pop.wav" data-start="7.84" data-duration="0.12" data-volume="0.5"></audio>
+  <audio id="sfx18" class="clip" src="audio/click.wav" data-start="8.24" data-duration="0.06" data-volume="0.6"></audio>
+</div>
+
+<script>
+const FPS = 30, F = n => n / FPS;
+const E = {land:"power3.out",soft:"power2.out",snap:"expo.out",settle:"back.out(1.15)",exit:"power2.in",throw:"power4.in",move:"power2.inOut"};
+const tl = gsap.timeline({paused:true});
+
+// ---- camera
+gsap.set("#cam",{scale:1.14});
+tl.to("#cam",{scale:1.05,duration:0.95,ease:"none"},0);
+tl.to("#cam",{scale:1.0,duration:F(8),ease:E.snap},1.0);
+tl.to("#cam",{scale:1.08,duration:F(7),ease:E.snap},2.44);
+tl.to("#cam",{scale:1.12,duration:F(6),ease:E.snap},3.02);   // jump cut 1 (under B-roll)
+tl.to("#cam",{scale:1.03,duration:F(6),ease:E.snap},4.88);   // jump cut 2
+tl.to("#cam",{scale:1.10,duration:F(7),ease:E.snap},5.34);
+tl.to("#cam",{scale:1.0,duration:F(8),ease:E.snap},6.46);
+tl.to("#cam",{scale:1.13,duration:F(6),ease:E.snap},7.20);   // "lupa" punch
+tl.to("#cam",{x:14,duration:F(2),yoyo:true,repeat:3,ease:"sine.inOut"},7.22);
+tl.to("#cam",{scale:1.0,x:0,duration:F(9),ease:E.move},7.82);
+tl.to("#cam",{scale:1.06,duration:0.6,ease:"none"},8.03);
+
+// ---- captions
+function capIn(sel,t,rot){tl.fromTo(sel,{opacity:0,scale:1.35,y:30,rotation:rot*1.6},{opacity:1,scale:1,y:0,rotation:rot,duration:F(8),ease:E.snap},t);}
+function capShow(sel,t0,t1){tl.set(sel,{opacity:1},t0);tl.to(sel,{opacity:0,y:40,scale:.92,duration:F(4),ease:E.exit},t1);tl.set(sel,{opacity:0,y:0,scale:1},t1+F(5));}
+capShow("#c1",0.0,0.92);  capIn("#c1a",0.0,-3);
+capShow("#c2",1.0,2.16);  capIn("#c2a",1.0,-2); capIn("#c2b",1.28,2); capIn("#c2c",1.8,-1);
+capShow("#c3",2.26,2.96); capIn("#c3a",2.26,-3); capIn("#c3b",2.44,2);
+capShow("#c4",3.04,4.80); capIn("#c4a",3.04,-2); capIn("#c4b",3.52,2); capIn("#c4c",3.98,-1);
+capShow("#c5",4.96,6.32); capIn("#c5a",4.96,-2); capIn("#c5b",5.34,2);
+capShow("#c6",6.46,7.80); capIn("#c6a",6.46,-2); capIn("#c6b",7.20,-3);
+tl.to("#c6b",{x:10,duration:F(2),yoyo:true,repeat:3,ease:"sine.inOut"},7.26);
+
+// ---- bursts
+function burst(sel,t,dur,dx){
+  tl.fromTo(sel,{opacity:0,scale:1.6,x:dx,y:20},{opacity:1,scale:1,x:0,y:0,duration:F(7),ease:E.snap},t);
+  tl.to(sel,{scale:1.06,duration:F(5),yoyo:true,repeat:3,ease:"sine.inOut"},t+F(8));
+  tl.to(sel,{opacity:0,y:-30,duration:F(6),ease:E.exit},t+dur);
+}
+burst("#burst1",0.04,0.85,60);
+burst("#burst2",2.44,0.5,-40);
+burst("#burst3",7.86,0.7,60);
+
+// ---- PART 2 stamp (hook)
+tl.fromTo("#stamp",{opacity:0,scale:2.6,rotation:-18},{opacity:1,scale:1,rotation:-8,duration:F(7),ease:E.snap},0.04);
+tl.fromTo("#flash",{opacity:0},{opacity:.5,duration:F(1)},0.06); tl.to("#flash",{opacity:0,duration:F(3)},0.06+F(1));
+tl.to("#stamp",{opacity:0,x:-200,duration:F(6),ease:E.exit},0.9);
+
+// ---- auto-debit calendar icon
+tl.fromTo("#calico",{opacity:0,x:-220,rotation:-14},{opacity:1,x:0,rotation:-5,duration:F(10),ease:E.land},1.28);
+tl.fromTo("#sync",{rotation:0,transformOrigin:"115px 153px"},{rotation:360,duration:0.9,ease:E.move},1.5);
+tl.to("#calico",{opacity:0,x:-200,duration:F(6),ease:E.exit},2.2);
+
+// ---- B-roll auto-debit app (J/L: enters just after "takdelah" starts, out on cut 2)
+tl.to("#stage",{filter:"blur(14px) brightness(.8)",duration:0.3,ease:E.soft},3.06);
+tl.fromTo("#broll",{opacity:0,y:700,rotation:6},{opacity:1,y:0,rotation:-1.5,duration:F(12),ease:E.soft},3.06);
+tl.to("#knob",{x:70,duration:F(6),ease:E.snap},3.32);
+tl.to("#sw",{backgroundColor:"#2fd17a",duration:F(6)},3.32);
+document.querySelectorAll(".mo").forEach((m,i)=>{
+  const t=3.50+i*0.08;
+  tl.to(m,{backgroundColor:"#c9f7d6",color:"#0d6b39",duration:F(4)},t);
+  tl.fromTo(m.querySelector("svg"),{opacity:0,scale:1.8},{opacity:1,scale:1,duration:F(5),ease:E.snap},t);
+});
+tl.fromTo("#paid",{opacity:0,y:60},{opacity:1,y:0,duration:F(9),ease:E.land},4.22);
+tl.fromTo("#shield2",{opacity:0,scale:2,rotation:-20},{opacity:1,scale:1,rotation:8,duration:F(8),ease:E.settle},4.30);
+tl.to("#broll",{opacity:0,y:-900,rotation:-6,duration:F(6),ease:E.throw},4.72);
+tl.to("#stage",{filter:"blur(0px) brightness(1)",duration:F(6),ease:E.exit},4.72);
+
+// ---- sale Shopee
+tl.fromTo("#bag",{opacity:0,y:200,rotation:12},{opacity:1,y:0,rotation:-4,duration:F(10),ease:E.land},5.14);
+tl.fromTo("#bubble",{opacity:0,scale:1.6,x:-40,y:40},{opacity:1,scale:1,x:0,y:0,duration:F(8),ease:E.snap},5.40);
+tl.to("#tag",{y:-6,duration:F(5),yoyo:true,repeat:3,ease:"sine.inOut"},5.6);
+tl.to(["#bag","#bubble"],{opacity:0,x:-240,duration:F(6),ease:E.exit},6.30);
+
+// ---- premium sendiri boleh lupa
+tl.fromTo("#clip",{opacity:0,x:-240,rotation:-12},{opacity:1,x:0,rotation:-4,duration:F(10),ease:E.land},6.50);
+["#q1","#q2","#q3"].forEach((q,i)=>{tl.fromTo(q,{opacity:0,scale:2.4,rotation:[-20,15,-10][i]},{opacity:1,scale:1,rotation:[12,-14,8][i],duration:F(6),ease:E.snap},7.20+i*F(3));});
+tl.to("#clip",{rotation:6,duration:F(2),yoyo:true,repeat:5,ease:"sine.inOut"},7.22);
+tl.to(["#clip","#q1","#q2","#q3"],{opacity:0,y:-60,duration:F(6),ease:E.exit},7.74);
+
+// ---- end card
+tl.to("#dim",{opacity:.35,duration:F(6),ease:E.soft},7.84);
+tl.set("#end",{opacity:1},7.84);
+tl.fromTo("#end .n",{opacity:0,y:-50},{opacity:1,y:0,duration:F(7),ease:E.land},7.84);
+tl.fromTo("#end .p",{opacity:0,scale:2.2,rotation:-8},{opacity:1,scale:1,rotation:-3,duration:F(7),ease:E.snap},7.86);
+tl.fromTo("#fbtn",{opacity:0,y:120},{opacity:1,y:0,duration:F(7),ease:E.land},7.96);
+tl.to("#fbtn",{scale:.9,duration:F(3),ease:E.exit},8.20);
+tl.to("#fbtn",{scale:1,backgroundColor:"#2fd17a",duration:F(5),ease:E.snap},8.30);
+tl.set("#fb1",{opacity:0},8.30); tl.set("#fb2",{opacity:1},8.30);
+
+window.__timelines = window.__timelines || {};
+window.__timelines['main'] = tl;
+</script>
+</body>
+</html>
