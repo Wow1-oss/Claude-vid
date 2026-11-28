@@ -1,6 +1,6 @@
 import numpy as np, soundfile as sf
 from scipy.signal import butter, sosfilt
-SR=44100; DUR=15.0; N=int(SR*DUR); rng=np.random.default_rng(11)
+SR=44100; DUR=13.0; N=int(SR*DUR); rng=np.random.default_rng(11)
 BPM=120; B=60/BPM
 def T(d): return np.arange(int(SR*d))/SR
 def bp(x,lo,hi): return sosfilt(butter(2,[lo,hi],'band',fs=SR,output='sos'),x)
@@ -31,7 +31,7 @@ def glock(f,d=0.6):
 drums=np.zeros(N); keys=np.zeros(N); bs=np.zeros(N); mel=np.zeros(N)
 # D  Bm  G  A   (bar = 2s)
 prog=[(62,[62,66,69]),(59,[59,62,66]),(55,[55,59,62]),(57,[57,61,64])]
-END=14.0
+END=12.0
 nb=int(END/B)
 for b in range(nb):
     t=b*B
@@ -49,7 +49,7 @@ for bar in range(int(END/2)):
 # glock hook (D major pentatonic), plays bars 1-6
 hook=[(0,74),(0.5,76),(1.0,78),(1.5,81),(2.25,78),(3.0,76),(3.5,74)]
 for rep in (2,6,10):
-    for dt,n in hook: add(mel,glock(mid(n+12)),rep+dt,0.16)
+    for dt,n in [h for h in hook if rep+h[0]<END-0.3]: add(mel,glock(mid(n+12)),rep+dt,0.16)
 # final chord at 14.0 (button hit already earlier); ring to end
 for p in [50,62,66,69,74]:
     add(keys,pluck(mid(p+12),1.0)*0+glock(mid(p+12),1.0)*0.6,END,0.12)
@@ -57,7 +57,7 @@ add(bs,bass(mid(38),1.0),END,0.4); add(drums,kick(),END,1.0)
 music=drums*0.9+keys+bs+mel
 # duck before reveal (silence before punch): 4.6-5.0
 g=np.ones(N); t=np.arange(N)/SR
-g[(t>4.6)&(t<5.0)]=0.15; g=np.convolve(g,np.ones(800)/800,'same')
+g[(t>3.6)&(t<4.0)]=0.15; g=np.convolve(g,np.ones(800)/800,'same')
 fade=np.clip((DUR-t)/0.4,0,1); music*=g*fade
 # ---------- SFX
 def noise(d): return rng.standard_normal(int(SR*d))
@@ -85,16 +85,16 @@ def boom():
 def ding():
     tt=T(1.0); return norm(sum(np.sin(2*np.pi*fr*tt)*np.exp(-tt*4)*a for fr,a in [(1975,1),(2637,.6),(3951,.25)]),0.55)
 S=np.zeros(N)
-ev=[(0.0,thud(),.7),(0.5,whoosh(0.3,800,6000),.35),(1.0,pop(),.5),(0.25,whoosh(1.2,300,2500),.18),
-    (2.28,rip(),.6),(2.55,whoosh(0.3,600,5000),.35),(3.0,whoosh(0.3,600,5000),.35)]
-ev+=[(3.25+i*0.15,tick(),.55) for i in range(5)]
-ev+=[(4.05,whoosh(0.25,1000,7000),.25),(4.4,riser(),.55),(4.78,rip(),.6),(5.0,boom(),.75),(5.05,stamp(),.7),
-     (5.35,whoosh(0.3,800,6000),.3),(5.6,thud(),.55),(6.0,whoosh(0.45,300,3000),.3),(6.45,tick(),.4),(6.75,stamp(),.75),
-     (7.78,rip(),.6),(8.05,thud(),.65),(8.35,whoosh(0.3,600,5000),.35),(8.75,pop(),.45),(9.1,pop(),.45),
-     (9.3,whoosh(1.0,300,2500),.18),(10.28,rip(),.6),(10.55,thud(),.65),(10.8,thud(),.55),(11.05,pop(),.5),
-     (11.3,stamp(),.6),(11.3,ding(),.6),(11.45,whoosh(0.25,1000,6000),.25)]
-ev+=[(11.65+i*0.15,tick(),.45) for i in range(3)]
-ev+=[(12.6,whoosh(1.1,300,2500),.15)]
+ev=[(0.0,thud(),.7),(0.4,whoosh(0.3,800,6000),.35),(0.8,pop(),.5),(0.2,whoosh(1.0,300,2500),.18),
+    (1.78,rip(),.6),(2.05,whoosh(0.3,600,5000),.35),(2.4,whoosh(0.3,600,5000),.35)]
+ev+=[(2.62+i*0.12,tick(),.55) for i in range(5)]
+ev+=[(3.25,whoosh(0.25,1000,7000),.25),(3.4,riser(),.55),(3.78,rip(),.6),(4.0,boom(),.75),(4.05,stamp(),.7),
+     (4.3,whoosh(0.3,800,6000),.3),(4.5,thud(),.55),(4.75,whoosh(0.45,300,3000),.3),(5.2,tick(),.4),(5.5,stamp(),.75),
+     (6.28,rip(),.6),(6.55,thud(),.65),(6.8,whoosh(0.3,600,5000),.35),(7.1,pop(),.45),(7.4,pop(),.45),
+     (7.55,whoosh(0.85,300,2500),.18),(8.28,rip(),.6),(8.55,thud(),.65),(8.8,thud(),.55),(9.05,pop(),.5),
+     (9.3,stamp(),.6),(9.3,ding(),.6),(9.45,whoosh(0.25,1000,6000),.25)]
+ev+=[(9.65+i*0.15,tick(),.45) for i in range(3)]
+ev+=[(11.2,whoosh(0.6,1500,7000),.12)]
 for t0,x,gn in ev: add(S,x,t0,gn)
 mix=music*0.55+S*0.6
 mix=np.tanh(mix*1.2)/1.2

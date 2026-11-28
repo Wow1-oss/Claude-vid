@@ -1,7 +1,7 @@
 """Build index.html for the Wanderlogika launch video (HyperFrames + GSAP)."""
 import json, random
 R = json.load(open("regions.json"))
-DUR = 15.0
+DUR = 13.0
 rnd = random.Random(42)
 
 def torn(w, h, amp=9, step=26, top=True, bottom=True):
@@ -193,72 +193,72 @@ function fly(el,t,d,keys){{ tl.set(el,{{opacity:1,x:keys[0][0]-46,y:keys[0][1]-4
   keys.slice(1).forEach((k,i)=>tl.to(el,{{x:k[0]-46,y:k[1]-46,rotation:k[2],duration:step,ease:"none"}},t+step*i));
   tl.set(el,{{opacity:0}},t+d); }}
 const KT={kt}, KB={kb};
-// ===== S1 HOOK 0.00-2.50
+// ===== S1 HOOK 0.00-2.00
 slam("#Lh1",0.0,1.5);
-wipe("#Lh2",0.5);
-slideY("#Lh3",1.0);
-tl.to("#cam",{{scale:1.0,duration:2.2,ease:E.move}},0.1);
-tl.fromTo("#bandTop",{{y:-26}},{{y:0,duration:2.4,ease:E.move}},0);
-tl.fromTo("#bandBot",{{y:30}},{{y:0,duration:2.4,ease:E.move}},0);
-tl.fromTo("#mTopP",{{attr:{{"stroke-dashoffset":1}}}},{{attr:{{"stroke-dashoffset":0}},duration:2.0,ease:E.soft}},0.2);
-fly("#planeTop",0.2,2.0,KT);
-tl.fromTo("#pinTop",{{scale:2.2,opacity:0}},{{scale:1,opacity:1,duration:F(8),ease:E.snap}},2.15);
-// ===== S2 PROBLEM 2.50-5.00
-rip("#rp1",2.25,"#s1","#s2");
-tl.set("#cam",{{scale:1.0,transformOrigin:"50% 55%"}},2.56);
-slideX("#Lp1",2.55,-760);
-slideX("#Lp2",3.0,860);
+wipe("#Lh2",0.4);
+slideY("#Lh3",0.8);
+tl.to("#cam",{{scale:1.0,duration:1.75,ease:E.move}},0.08);
+tl.fromTo("#bandTop",{{y:-26}},{{y:0,duration:1.95,ease:E.move}},0);
+tl.fromTo("#bandBot",{{y:30}},{{y:0,duration:1.95,ease:E.move}},0);
+tl.fromTo("#mTopP",{{attr:{{"stroke-dashoffset":1}}}},{{attr:{{"stroke-dashoffset":0}},duration:1.55,ease:E.soft}},0.15);
+fly("#planeTop",0.15,1.55,KT);
+tl.fromTo("#pinTop",{{scale:2.2,opacity:0}},{{scale:1,opacity:1,duration:F(8),ease:E.snap}},1.65);
+// ===== S2 PROBLEM 2.00-4.00
+rip("#rp1",1.75,"#s1","#s2");
+tl.set("#cam",{{scale:1.0,transformOrigin:"50% 55%"}},2.06);
+slideX("#Lp1",2.05,-760);
+slideX("#Lp2",2.4,860);
 ["#Ln1","#Ln2","#Ln3","#Ln4","#Ln5"].forEach((n,i)=>{{
-  tl.to(n,{{scale:1.22,rotation:[-6,5,-4,6,-5][i],duration:F(5),ease:E.snap}},3.25+i*0.15);
-  tl.to(n,{{scale:1,rotation:0,duration:F(9),ease:E.land}},3.25+i*0.15+F(5)); }});
-wipe("#Lp3",4.05,F(10));
-tl.to("#cam",{{scale:1.07,duration:2.4,ease:E.move}},2.56);
-tl.to("#bandTop",{{y:18,duration:2.4,ease:E.move}},2.56);
-tl.to("#bandBot",{{y:-22,duration:2.4,ease:E.move}},2.56);
-// ===== S3 REVEAL 5.00-8.00
-rip("#rp2",4.75,"#s2","#s3");
-tl.set("#cam",{{scale:1.0,transformOrigin:"78% 45%"}},5.06);
+  tl.to(n,{{scale:1.22,rotation:[-6,5,-4,6,-5][i],duration:F(5),ease:E.snap}},2.62+i*0.12);
+  tl.to(n,{{scale:1,rotation:0,duration:F(9),ease:E.land}},2.62+i*0.12+F(5)); }});
+wipe("#Lp3",3.25,F(10));
+tl.to("#cam",{{scale:1.07,duration:1.9,ease:E.move}},2.06);
+tl.to("#bandTop",{{y:18,duration:1.9,ease:E.move}},2.06);
+tl.to("#bandBot",{{y:-22,duration:1.9,ease:E.move}},2.06);
+// ===== S3 REVEAL 4.00-6.50
+rip("#rp2",3.75,"#s2","#s3");
+tl.set("#cam",{{scale:1.0,transformOrigin:"78% 45%"}},4.06);
 gsap.set("#Lcov",{{clipPath:"inset(100% 0% 0% 0%)"}});
-slam("#Lr1",5.05,2.2);
-wipe("#Lr2",5.35);
-slam("#Lr3",5.6,1.5);
-slideY("#Lr4",5.75,30);
-tl.to("#Lcov",{{clipPath:"inset(0% 0% 0% 0%)",duration:F(12),ease:E.soft}},5.85);
-tl.set("#gleam",{{opacity:1}},6.4);
-tl.fromTo("#gleam",{{x:0}},{{x:1100,duration:F(16),ease:E.move}},6.4);
-tl.set("#gleam",{{opacity:0}},6.4+F(16));
-tl.fromTo("#stamp",{{scale:2.0,rotation:-4,opacity:0}},{{scale:1,rotation:-12,opacity:.92,duration:F(7),ease:E.snap}},6.75);
-tl.to("#cam",{{scale:1.09,duration:1.65,ease:E.move}},6.3);
-tl.to("#bandTop",{{y:-10,duration:2.9,ease:E.move}},5.06);
-tl.to("#bandBot",{{y:16,duration:2.9,ease:E.move}},5.06);
-// ===== S4 BUNDLE 8.00-10.50
-rip("#rp3",7.75,"#s3","#s4");
-tl.set("#cam",{{scale:1.07,transformOrigin:"50% 45%"}},8.06);
-slam("#Lb1",8.05,1.5);
-slideX("#Lb2",8.35,-1000);
-[["#Lc1",8.75,-1.5],["#Lc2",9.1,1.5]].forEach(([c,t,r])=>{{
+slam("#Lr1",4.05,2.2);
+wipe("#Lr2",4.3);
+slam("#Lr3",4.5,1.5);
+slideY("#Lr4",4.65,30);
+tl.to("#Lcov",{{clipPath:"inset(0% 0% 0% 0%)",duration:F(12),ease:E.soft}},4.75);
+tl.set("#gleam",{{opacity:1}},5.2);
+tl.fromTo("#gleam",{{x:0}},{{x:1100,duration:F(16),ease:E.move}},5.2);
+tl.set("#gleam",{{opacity:0}},5.2+F(16));
+tl.fromTo("#stamp",{{scale:2.0,rotation:-4,opacity:0}},{{scale:1,rotation:-12,opacity:.92,duration:F(7),ease:E.snap}},5.5);
+tl.to("#cam",{{scale:1.09,duration:1.3,ease:E.move}},5.2);
+tl.to("#bandTop",{{y:-10,duration:2.4,ease:E.move}},4.06);
+tl.to("#bandBot",{{y:16,duration:2.4,ease:E.move}},4.06);
+// ===== S4 BUNDLE 6.50-8.50
+rip("#rp3",6.25,"#s3","#s4");
+tl.set("#cam",{{scale:1.07,transformOrigin:"50% 45%"}},6.56);
+slam("#Lb1",6.55,1.5);
+slideX("#Lb2",6.8,-1000);
+[["#Lc1",7.1,-1.5],["#Lc2",7.4,1.5]].forEach(([c,t,r])=>{{
   tl.to(c,{{scale:1.045,y:-14,rotation:r,filter:"drop-shadow(0 24px 24px rgba(0,0,0,.32))",duration:F(8),ease:E.snap}},t);
-  tl.to(c,{{scale:1,y:0,rotation:0,filter:"drop-shadow(0 0px 0px rgba(0,0,0,0))",duration:F(12),ease:E.land}},t+0.7); }});
-tl.fromTo("#pstamp",{{scale:1.8,rotation:0,opacity:0}},{{scale:1,rotation:8,opacity:1,duration:F(7),ease:E.snap}},9.3);
-tl.to("#cam",{{scale:1.0,duration:2.4,ease:E.move}},8.06);
-tl.fromTo("#mBotP",{{attr:{{"stroke-dashoffset":1}}}},{{attr:{{"stroke-dashoffset":0}},duration:1.0,ease:E.soft}},9.3);
-fly("#planeBot",9.3,1.0,KB);
-tl.to("#bandBot",{{y:0,duration:2.4,ease:E.move}},8.06);
-// ===== S5 CTA 10.50-15.00
-rip("#rp4",10.25,"#s4","#s5");
-tl.set("#botPath",{{opacity:0}},10.56);
-tl.set("#cam",{{scale:1.0,transformOrigin:"50% 40%"}},10.56);
-slam("#Lt1",10.55,1.4);
-slam("#Lt2",10.8,1.6);
-tl.fromTo("#Lpr",{{scale:1.3,opacity:0}},{{scale:1,opacity:1,duration:F(8),ease:E.snap}},11.05);
-tl.to("#Lbtn",{{scale:1.06,duration:F(6),ease:E.snap}},11.3);
-tl.to("#Lbtn",{{scale:1.03,duration:F(14),ease:E.settle}},11.3+F(6));
-slideY("#url",11.45,36);
-document.querySelectorAll(".tw").forEach((w,i)=>slideY(w,11.65+i*0.15,40));
-tl.set("#shine",{{opacity:1}},13.2);
-tl.fromTo("#shine",{{x:-140}},{{x:900,duration:0.6,ease:E.move}},13.2);
-tl.set("#shine",{{opacity:0}},13.8);
-tl.to("#cam",{{scale:1.035,duration:4.3,ease:"none"}},10.6);
+  tl.to(c,{{scale:1,y:0,rotation:0,filter:"drop-shadow(0 0px 0px rgba(0,0,0,0))",duration:F(12),ease:E.land}},t+0.6); }});
+tl.fromTo("#pstamp",{{scale:1.8,rotation:0,opacity:0}},{{scale:1,rotation:8,opacity:1,duration:F(7),ease:E.snap}},7.6);
+tl.to("#cam",{{scale:1.0,duration:1.9,ease:E.move}},6.56);
+tl.fromTo("#mBotP",{{attr:{{"stroke-dashoffset":1}}}},{{attr:{{"stroke-dashoffset":0}},duration:0.85,ease:E.soft}},7.55);
+fly("#planeBot",7.55,0.85,KB);
+tl.to("#bandBot",{{y:0,duration:1.9,ease:E.move}},6.56);
+// ===== S5 CTA 8.50-13.00
+rip("#rp4",8.25,"#s4","#s5");
+tl.set("#botPath",{{opacity:0}},8.56);
+tl.set("#cam",{{scale:1.0,transformOrigin:"50% 40%"}},8.56);
+slam("#Lt1",8.55,1.4);
+slam("#Lt2",8.8,1.6);
+tl.fromTo("#Lpr",{{scale:1.3,opacity:0}},{{scale:1,opacity:1,duration:F(8),ease:E.snap}},9.05);
+tl.to("#Lbtn",{{scale:1.06,duration:F(6),ease:E.snap}},9.3);
+tl.to("#Lbtn",{{scale:1.03,duration:F(14),ease:E.settle}},9.3+F(6));
+slideY("#url",9.45,36);
+document.querySelectorAll(".tw").forEach((w,i)=>slideY(w,9.65+i*0.15,40));
+tl.set("#shine",{{opacity:1}},11.2);
+tl.fromTo("#shine",{{x:-140}},{{x:900,duration:0.6,ease:E.move}},11.2);
+tl.set("#shine",{{opacity:0}},11.8);
+tl.to("#cam",{{scale:1.035,duration:4.3,ease:"none"}},8.6);
 tl.to("#root",{{opacity:1,duration:0.01}},{DUR - 0.01});
 window.__timelines = window.__timelines || {{}};
 window.__timelines['main'] = tl;

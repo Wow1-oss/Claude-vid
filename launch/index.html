@@ -47,8 +47,8 @@ html,body{width:1080px;height:1920px;overflow:hidden;background:var(--cream)}
 </style>
 </head>
 <body>
-<div id="root" data-composition-id="main" data-start="0" data-duration="15.0" data-width="1080" data-height="1920">
- <div id="ground" class="clip" data-start="0" data-duration="15.0"></div>
+<div id="root" data-composition-id="main" data-start="0" data-duration="13.0" data-width="1080" data-height="1920">
+ <div id="ground" class="clip" data-start="0" data-duration="13.0"></div>
  <div id="bandTop" class="band">
   <svg width="1080" height="330" style="position:absolute;left:0;top:0;overflow:visible">
    <defs><mask id="mTop"><path id="mTopP" d="M-60 230 Q520 -10 1140 170" stroke="#fff" stroke-width="16" fill="none" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/></mask></defs>
@@ -148,7 +148,7 @@ html,body{width:1080px;height:1920px;overflow:hidden;background:var(--cream)}
 <div class="sheet" style="background-color:#FFD326;clip-path:polygon(0px 19px,29px 20px,58px 2px,92px 19px,118px 8px,137px 12px,177px 19px,212px 20px,245px 17px,275px 3px,298px 3px,335px 1px,366px 8px,403px 12px,436px 2px,462px 22px,497px 12px,533px 18px,553px 21px,587px 10px,621px 8px,660px 17px,693px 4px,734px 10px,774px 1px,795px 3px,817px 7px,852px 8px,893px 20px,931px 6px,964px 12px,985px 7px,1016px 11px,1038px 21px,1060px 14px,1080px 13px,1080px 3141px,1048px 3142px,1030px 3159px,996px 3147px,963px 3143px,935px 3146px,905px 3146px,880px 3139px,850px 3142px,816px 3153px,796px 3159px,768px 3149px,745px 3147px,719px 3144px,684px 3141px,642px 3157px,615px 3148px,590px 3150px,565px 3155px,545px 3154px,518px 3146px,494px 3141px,472px 3153px,440px 3153px,404px 3149px,373px 3149px,348px 3159px,307px 3149px,266px 3155px,240px 3159px,210px 3141px,176px 3150px,145px 3141px,117px 3141px,81px 3143px,54px 3151px,23px 3156px,0px 3158px)"></div></div>
 <div id="rp4" class="rip"><div class="fiber" style="clip-path:polygon(0px 13px,41px 7px,88px 18px,112px 25px,143px 21px,173px 24px,214px 5px,248px 13px,270px 4px,299px 12px,332px 16px,366px 9px,403px 4px,451px 19px,479px 9px,522px 14px,562px 8px,605px 10px,643px 25px,680px 21px,720px 18px,741px 12px,788px 20px,829px 15px,869px 15px,894px 16px,931px 22px,956px 18px,977px 25px,1000px 0px,1029px 4px,1069px 11px,1080px 24px,1080px 3177px,1040px 3198px,1015px 3195px,986px 3183px,951px 3192px,926px 3176px,897px 3191px,855px 3181px,817px 3182px,780px 3195px,753px 3185px,727px 3175px,698px 3192px,672px 3182px,643px 3191px,597px 3179px,570px 3197px,531px 3190px,484px 3179px,437px 3179px,409px 3193px,369px 3191px,337px 3193px,303px 3195px,268px 3176px,229px 3196px,192px 3185px,165px 3183px,130px 3183px,108px 3189px,68px 3197px,27px 3200px,0px 3176px)"></div>
 <div class="sheet" style="background-color:#085BE5;clip-path:polygon(0px 9px,40px 19px,70px 4px,111px 7px,145px 20px,165px 13px,196px 16px,236px 20px,258px 19px,280px 20px,322px 9px,352px 21px,393px 20px,432px 0px,464px 2px,506px 6px,547px 12px,577px 21px,616px 10px,638px 2px,660px 10px,684px 4px,720px 17px,752px 17px,774px 19px,813px 18px,844px 2px,878px 4px,899px 7px,923px 6px,947px 17px,988px 7px,1023px 0px,1057px 15px,1076px 3px,1080px 9px,1080px 3149px,1041px 3145px,1015px 3157px,975px 3154px,942px 3155px,921px 3157px,885px 3147px,857px 3148px,828px 3148px,794px 3155px,770px 3143px,731px 3158px,702px 3145px,682px 3148px,663px 3148px,633px 3147px,611px 3153px,581px 3157px,558px 3147px,538px 3149px,500px 3150px,470px 3150px,451px 3150px,413px 3144px,386px 3142px,350px 3147px,331px 3152px,311px 3138px,271px 3158px,230px 3159px,202px 3143px,166px 3138px,133px 3151px,91px 3152px,52px 3140px,25px 3145px,0px 3148px)"></div></div>
- <audio id="mix" class="clip" src="audio/mix.wav" data-start="0" data-duration="15.0" data-volume="1"></audio>
+ <audio id="mix" class="clip" src="audio/mix.wav" data-start="0" data-duration="13.0" data-volume="1"></audio>
 </div>
 <script>
 const FPS = 30, F = n => n / FPS;
@@ -173,73 +173,73 @@ function fly(el,t,d,keys){ tl.set(el,{opacity:1,x:keys[0][0]-46,y:keys[0][1]-46,
   keys.slice(1).forEach((k,i)=>tl.to(el,{x:k[0]-46,y:k[1]-46,rotation:k[2],duration:step,ease:"none"},t+step*i));
   tl.set(el,{opacity:0},t+d); }
 const KT=[[-60, 230, -22], [37, 193, -19], [134, 162, -16], [232, 136, -13], [331, 117, -10], [430, 103, -6], [530, 95, -3], [630, 93, 0], [731, 97, 4], [832, 106, 7], [934, 122, 10], [1037, 143, 13], [1140, 170, 16]], KB=[[-60, 1830, -16], [43, 1802, -14], [146, 1779, -12], [248, 1760, -9], [349, 1746, -7], [450, 1736, -4], [550, 1730, -2], [650, 1729, 1], [749, 1732, 3], [848, 1740, 6], [946, 1752, 8], [1043, 1769, 11], [1140, 1790, 14]];
-// ===== S1 HOOK 0.00-2.50
+// ===== S1 HOOK 0.00-2.00
 slam("#Lh1",0.0,1.5);
-wipe("#Lh2",0.5);
-slideY("#Lh3",1.0);
-tl.to("#cam",{scale:1.0,duration:2.2,ease:E.move},0.1);
-tl.fromTo("#bandTop",{y:-26},{y:0,duration:2.4,ease:E.move},0);
-tl.fromTo("#bandBot",{y:30},{y:0,duration:2.4,ease:E.move},0);
-tl.fromTo("#mTopP",{attr:{"stroke-dashoffset":1}},{attr:{"stroke-dashoffset":0},duration:2.0,ease:E.soft},0.2);
-fly("#planeTop",0.2,2.0,KT);
-tl.fromTo("#pinTop",{scale:2.2,opacity:0},{scale:1,opacity:1,duration:F(8),ease:E.snap},2.15);
-// ===== S2 PROBLEM 2.50-5.00
-rip("#rp1",2.25,"#s1","#s2");
-tl.set("#cam",{scale:1.0,transformOrigin:"50% 55%"},2.56);
-slideX("#Lp1",2.55,-760);
-slideX("#Lp2",3.0,860);
+wipe("#Lh2",0.4);
+slideY("#Lh3",0.8);
+tl.to("#cam",{scale:1.0,duration:1.75,ease:E.move},0.08);
+tl.fromTo("#bandTop",{y:-26},{y:0,duration:1.95,ease:E.move},0);
+tl.fromTo("#bandBot",{y:30},{y:0,duration:1.95,ease:E.move},0);
+tl.fromTo("#mTopP",{attr:{"stroke-dashoffset":1}},{attr:{"stroke-dashoffset":0},duration:1.55,ease:E.soft},0.15);
+fly("#planeTop",0.15,1.55,KT);
+tl.fromTo("#pinTop",{scale:2.2,opacity:0},{scale:1,opacity:1,duration:F(8),ease:E.snap},1.65);
+// ===== S2 PROBLEM 2.00-4.00
+rip("#rp1",1.75,"#s1","#s2");
+tl.set("#cam",{scale:1.0,transformOrigin:"50% 55%"},2.06);
+slideX("#Lp1",2.05,-760);
+slideX("#Lp2",2.4,860);
 ["#Ln1","#Ln2","#Ln3","#Ln4","#Ln5"].forEach((n,i)=>{
-  tl.to(n,{scale:1.22,rotation:[-6,5,-4,6,-5][i],duration:F(5),ease:E.snap},3.25+i*0.15);
-  tl.to(n,{scale:1,rotation:0,duration:F(9),ease:E.land},3.25+i*0.15+F(5)); });
-wipe("#Lp3",4.05,F(10));
-tl.to("#cam",{scale:1.07,duration:2.4,ease:E.move},2.56);
-tl.to("#bandTop",{y:18,duration:2.4,ease:E.move},2.56);
-tl.to("#bandBot",{y:-22,duration:2.4,ease:E.move},2.56);
-// ===== S3 REVEAL 5.00-8.00
-rip("#rp2",4.75,"#s2","#s3");
-tl.set("#cam",{scale:1.0,transformOrigin:"78% 45%"},5.06);
+  tl.to(n,{scale:1.22,rotation:[-6,5,-4,6,-5][i],duration:F(5),ease:E.snap},2.62+i*0.12);
+  tl.to(n,{scale:1,rotation:0,duration:F(9),ease:E.land},2.62+i*0.12+F(5)); });
+wipe("#Lp3",3.25,F(10));
+tl.to("#cam",{scale:1.07,duration:1.9,ease:E.move},2.06);
+tl.to("#bandTop",{y:18,duration:1.9,ease:E.move},2.06);
+tl.to("#bandBot",{y:-22,duration:1.9,ease:E.move},2.06);
+// ===== S3 REVEAL 4.00-6.50
+rip("#rp2",3.75,"#s2","#s3");
+tl.set("#cam",{scale:1.0,transformOrigin:"78% 45%"},4.06);
 gsap.set("#Lcov",{clipPath:"inset(100% 0% 0% 0%)"});
-slam("#Lr1",5.05,2.2);
-wipe("#Lr2",5.35);
-slam("#Lr3",5.6,1.5);
-slideY("#Lr4",5.75,30);
-tl.to("#Lcov",{clipPath:"inset(0% 0% 0% 0%)",duration:F(12),ease:E.soft},5.85);
-tl.set("#gleam",{opacity:1},6.4);
-tl.fromTo("#gleam",{x:0},{x:1100,duration:F(16),ease:E.move},6.4);
-tl.set("#gleam",{opacity:0},6.4+F(16));
-tl.fromTo("#stamp",{scale:2.0,rotation:-4,opacity:0},{scale:1,rotation:-12,opacity:.92,duration:F(7),ease:E.snap},6.75);
-tl.to("#cam",{scale:1.09,duration:1.65,ease:E.move},6.3);
-tl.to("#bandTop",{y:-10,duration:2.9,ease:E.move},5.06);
-tl.to("#bandBot",{y:16,duration:2.9,ease:E.move},5.06);
-// ===== S4 BUNDLE 8.00-10.50
-rip("#rp3",7.75,"#s3","#s4");
-tl.set("#cam",{scale:1.07,transformOrigin:"50% 45%"},8.06);
-slam("#Lb1",8.05,1.5);
-slideX("#Lb2",8.35,-1000);
-[["#Lc1",8.75,-1.5],["#Lc2",9.1,1.5]].forEach(([c,t,r])=>{
+slam("#Lr1",4.05,2.2);
+wipe("#Lr2",4.3);
+slam("#Lr3",4.5,1.5);
+slideY("#Lr4",4.65,30);
+tl.to("#Lcov",{clipPath:"inset(0% 0% 0% 0%)",duration:F(12),ease:E.soft},4.75);
+tl.set("#gleam",{opacity:1},5.2);
+tl.fromTo("#gleam",{x:0},{x:1100,duration:F(16),ease:E.move},5.2);
+tl.set("#gleam",{opacity:0},5.2+F(16));
+tl.fromTo("#stamp",{scale:2.0,rotation:-4,opacity:0},{scale:1,rotation:-12,opacity:.92,duration:F(7),ease:E.snap},5.5);
+tl.to("#cam",{scale:1.09,duration:1.3,ease:E.move},5.2);
+tl.to("#bandTop",{y:-10,duration:2.4,ease:E.move},4.06);
+tl.to("#bandBot",{y:16,duration:2.4,ease:E.move},4.06);
+// ===== S4 BUNDLE 6.50-8.50
+rip("#rp3",6.25,"#s3","#s4");
+tl.set("#cam",{scale:1.07,transformOrigin:"50% 45%"},6.56);
+slam("#Lb1",6.55,1.5);
+slideX("#Lb2",6.8,-1000);
+[["#Lc1",7.1,-1.5],["#Lc2",7.4,1.5]].forEach(([c,t,r])=>{
   tl.to(c,{scale:1.045,y:-14,rotation:r,filter:"drop-shadow(0 24px 24px rgba(0,0,0,.32))",duration:F(8),ease:E.snap},t);
-  tl.to(c,{scale:1,y:0,rotation:0,filter:"drop-shadow(0 0px 0px rgba(0,0,0,0))",duration:F(12),ease:E.land},t+0.7); });
-tl.fromTo("#pstamp",{scale:1.8,rotation:0,opacity:0},{scale:1,rotation:8,opacity:1,duration:F(7),ease:E.snap},9.3);
-tl.to("#cam",{scale:1.0,duration:2.4,ease:E.move},8.06);
-tl.fromTo("#mBotP",{attr:{"stroke-dashoffset":1}},{attr:{"stroke-dashoffset":0},duration:1.0,ease:E.soft},9.3);
-fly("#planeBot",9.3,1.0,KB);
-tl.to("#bandBot",{y:0,duration:2.4,ease:E.move},8.06);
-// ===== S5 CTA 10.50-15.00
-rip("#rp4",10.25,"#s4","#s5");
-tl.set("#botPath",{opacity:0},10.56);
-tl.set("#cam",{scale:1.0,transformOrigin:"50% 40%"},10.56);
-slam("#Lt1",10.55,1.4);
-slam("#Lt2",10.8,1.6);
-tl.fromTo("#Lpr",{scale:1.3,opacity:0},{scale:1,opacity:1,duration:F(8),ease:E.snap},11.05);
-tl.to("#Lbtn",{scale:1.06,duration:F(6),ease:E.snap},11.3);
-tl.to("#Lbtn",{scale:1.03,duration:F(14),ease:E.settle},11.3+F(6));
-slideY("#url",11.45,36);
-document.querySelectorAll(".tw").forEach((w,i)=>slideY(w,11.65+i*0.15,40));
-tl.set("#shine",{opacity:1},13.2);
-tl.fromTo("#shine",{x:-140},{x:900,duration:0.6,ease:E.move},13.2);
-tl.set("#shine",{opacity:0},13.8);
-tl.to("#cam",{scale:1.035,duration:4.3,ease:"none"},10.6);
-tl.to("#root",{opacity:1,duration:0.01},14.99);
+  tl.to(c,{scale:1,y:0,rotation:0,filter:"drop-shadow(0 0px 0px rgba(0,0,0,0))",duration:F(12),ease:E.land},t+0.6); });
+tl.fromTo("#pstamp",{scale:1.8,rotation:0,opacity:0},{scale:1,rotation:8,opacity:1,duration:F(7),ease:E.snap},7.6);
+tl.to("#cam",{scale:1.0,duration:1.9,ease:E.move},6.56);
+tl.fromTo("#mBotP",{attr:{"stroke-dashoffset":1}},{attr:{"stroke-dashoffset":0},duration:0.85,ease:E.soft},7.55);
+fly("#planeBot",7.55,0.85,KB);
+tl.to("#bandBot",{y:0,duration:1.9,ease:E.move},6.56);
+// ===== S5 CTA 8.50-13.00
+rip("#rp4",8.25,"#s4","#s5");
+tl.set("#botPath",{opacity:0},8.56);
+tl.set("#cam",{scale:1.0,transformOrigin:"50% 40%"},8.56);
+slam("#Lt1",8.55,1.4);
+slam("#Lt2",8.8,1.6);
+tl.fromTo("#Lpr",{scale:1.3,opacity:0},{scale:1,opacity:1,duration:F(8),ease:E.snap},9.05);
+tl.to("#Lbtn",{scale:1.06,duration:F(6),ease:E.snap},9.3);
+tl.to("#Lbtn",{scale:1.03,duration:F(14),ease:E.settle},9.3+F(6));
+slideY("#url",9.45,36);
+document.querySelectorAll(".tw").forEach((w,i)=>slideY(w,9.65+i*0.15,40));
+tl.set("#shine",{opacity:1},11.2);
+tl.fromTo("#shine",{x:-140},{x:900,duration:0.6,ease:E.move},11.2);
+tl.set("#shine",{opacity:0},11.8);
+tl.to("#cam",{scale:1.035,duration:4.3,ease:"none"},8.6);
+tl.to("#root",{opacity:1,duration:0.01},12.99);
 window.__timelines = window.__timelines || {};
 window.__timelines['main'] = tl;
 </script>
