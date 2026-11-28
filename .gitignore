@@ -10,3 +10,10 @@ edit/work-*/
 edit/.render.*/
 edit/.hyperframes/
 edit/renders/
+launch/preview/render_draft.mp4
+launch/snaps/
+launch/insp/
+launch/render.log
+launch/audio/premix.wav
+launch/__pycache__/
+launch/.hyperframes/

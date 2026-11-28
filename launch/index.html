@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en" data-resolution="portrait">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1080, height=1920" />
+<link rel="stylesheet" href="fonts/fonts.css">
+<script src="vendor/gsap.min.js"></script>
+<style>
+:root{--cream:#F7F0DF;--blue:#085BE5;--yellow:#FFD326;--pink:#F83C92;--ink:#171717}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;overflow:hidden;background:var(--cream)}
+#root{position:relative;width:1080px;height:1920px;overflow:hidden;font-family:"F Dm Sans",sans-serif}
+#ground{position:absolute;inset:0;background:url(img/paper.jpg) center/cover}
+.band{position:absolute;left:0;width:1080px}
+#bandTop{top:0;height:330px}
+#bandBot{top:1560px;height:360px}
+.strip{position:absolute;left:-40px;width:1160px}
+#cam{position:absolute;inset:0;transform-origin:50% 40%}
+.scene{position:absolute;left:0;width:1080px;opacity:0}
+.cardwrap{position:absolute;inset:0;filter:drop-shadow(0 18px 22px rgba(23,23,23,.28))}
+.card{position:absolute;left:0;top:0;width:1080px;overflow:hidden;background:var(--cream)}
+.plate{position:absolute;left:0;top:0;width:1080px;height:1350px}
+.lift{position:absolute;display:block}
+#Lc1,#Lc2,#Lbtn{filter:drop-shadow(0 0 0 rgba(0,0,0,0))}
+.tape{position:absolute;width:190px;height:52px;opacity:.82;background:repeating-linear-gradient(90deg,rgba(255,255,255,.18) 0 6px,transparent 6px 12px)}
+.tape.t1{left:-30px;top:-16px;background-color:var(--yellow);rotate:-14deg}
+.tape.t2{right:-30px;top:-14px;background-color:var(--pink);rotate:12deg}
+#s5 .tape{display:none}
+#gleamBox{position:absolute;overflow:hidden;pointer-events:none}
+#gleam{position:absolute;top:-10%;left:-60%;width:40%;height:120%;opacity:0;
+  background:linear-gradient(100deg,rgba(255,255,255,0) 0%,rgba(255,255,255,.55) 50%,rgba(255,255,255,0) 100%)}
+#stamp{position:absolute;width:240px;height:240px;opacity:0;mix-blend-mode:multiply}
+#pstamp{position:absolute;width:200px;height:150px;opacity:0;filter:drop-shadow(0 6px 8px rgba(0,0,0,.25))}
+.rip{position:absolute;left:0;top:0;width:1080px;height:3200px}
+.rip .fiber{position:absolute;left:0;top:0;width:1080px;height:3200px;background:#fffaf0}
+.rip .sheet{position:absolute;left:0;top:20px;width:1080px;height:3160px;
+  background-image:url(img/paper.jpg);background-size:1080px 1920px;background-blend-mode:multiply}
+#ctaPanel{position:absolute;left:100px;top:1338px;width:840px;text-align:center}
+#url{display:inline-block;font-size:30px;color:var(--blue);background:#fff;padding:10px 22px;border-radius:40px;
+  border:3px solid var(--blue);opacity:0;letter-spacing:-.2px}
+#tag{margin-top:18px;font-size:56px;line-height:1.08;color:var(--ink);text-transform:uppercase}
+.tw{display:inline-block;margin:0 8px;opacity:0}
+#shine{position:absolute;left:0;top:0;width:120px;height:105px;opacity:0;mix-blend-mode:screen;
+  background:linear-gradient(100deg,rgba(255,255,255,0),rgba(255,255,255,.7),rgba(255,255,255,0))}
+#btnBox{position:absolute;overflow:hidden;border-radius:16px;pointer-events:none}
+.pl{position:absolute;left:0;top:0;width:92px;height:92px}
+</style>
+</head>
+<body>
+<div id="root" data-composition-id="main" data-start="0" data-duration="15.0" data-width="1080" data-height="1920">
+ <div id="ground" class="clip" data-start="0" data-duration="15.0"></div>
+ <div id="bandTop" class="band">
+  <svg width="1080" height="330" style="position:absolute;left:0;top:0;overflow:visible">
+   <defs><mask id="mTop"><path id="mTopP" d="M-60 230 Q520 -10 1140 170" stroke="#fff" stroke-width="16" fill="none" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/></mask></defs>
+   <path d="M-60 230 Q520 -10 1140 170" stroke="#085BE5" stroke-width="5" fill="none" stroke-dasharray="4 14" stroke-linecap="round" mask="url(#mTop)"/>
+  </svg>
+  <div id="pinTop" style="position:absolute;left:968px;top:40px;opacity:0"><svg viewBox="0 0 40 52" width="56" height="73"><path fill="#F83C92" d="M20 0C9 0 0 9 0 20c0 15 20 32 20 32s20-17 20-32C40 9 31 0 20 0z"/><circle cx="20" cy="19" r="8" fill="#F7F0DF"/></svg></div>
+  <div id="planeTop" class="pl" style="opacity:0"><svg viewBox="0 0 100 100" width="92" height="92"><path fill="#085BE5" d="M95 46c0-4-4-6-8-6H62L38 6h-9l13 34H20l-8-10H5l5 18-5 18h7l8-10h22L29 94h9l24-34h25c4 0 8-2 8-6z"/></svg></div>
+ </div>
+ <div id="bandBot" class="band">
+  <div class="strip" style="top:150px;height:240px;background:#085BE5;clip-path:polygon(0px 10px,26px 3px,57px 8px,93px 4px,111px 0px,136px 11px,167px 9px,205px 4px,231px 4px,272px 12px,292px 13px,320px 12px,360px 0px,383px 2px,401px 10px,436px 1px,472px 6px,496px 3px,534px 1px,564px 5px,602px 12px,628px 10px,662px 5px,687px 2px,721px 4px,746px 1px,787px 14px,827px 10px,855px 8px,896px 15px,930px 13px,956px 7px,978px 6px,1014px 8px,1052px 5px,1087px 13px,1127px 9px,1160px 9px,1160px 240px,0px 240px);rotate:-2.5deg"></div>
+  <div class="strip" style="top:120px;left:560px;width:620px;height:120px;background:#F83C92;clip-path:polygon(0px 2px,21px 2px,50px 11px,83px 1px,114px 2px,135px 8px,163px 10px,182px 9px,213px 7px,239px 10px,261px 11px,277px 11px,313px 1px,349px 6px,370px 7px,390px 11px,417px 9px,440px 6px,463px 3px,490px 6px,507px 12px,533px 10px,567px 4px,591px 7px,612px 2px,620px 11px,620px 113px,596px 118px,573px 115px,540px 114px,511px 112px,490px 110px,454px 112px,429px 118px,397px 118px,366px 114px,331px 113px,302px 119px,286px 110px,251px 112px,219px 115px,186px 117px,156px 120px,130px 116px,101px 112px,73px 114px,47px 120px,20px 120px,0px 117px);rotate:4deg"></div>
+  <div class="strip" style="top:96px;left:-30px;width:300px;height:58px;background:#FFD326;opacity:.9;rotate:-6deg"></div>
+ </div>
+ <svg id="botPath" width="1080" height="1920" style="position:absolute;left:0;top:0;overflow:visible">
+  <defs><mask id="mBot"><path id="mBotP" d="M-60 1830 Q560 1650 1140 1790" stroke="#fff" stroke-width="16" fill="none" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/></mask></defs>
+  <path d="M-60 1830 Q560 1650 1140 1790" stroke="#F7F0DF" stroke-width="5" fill="none" stroke-dasharray="4 14" stroke-linecap="round" mask="url(#mBot)"/>
+ </svg>
+ <div id="planeBot" class="pl" style="opacity:0"><svg viewBox="0 0 100 100" width="92" height="92"><path fill="#F7F0DF" d="M95 46c0-4-4-6-8-6H62L38 6h-9l13 34H20l-8-10H5l5 18-5 18h7l8-10h22L29 94h9l24-34h25c4 0 8-2 8-6z"/></svg></div>
+ <div id="cam">
+  <div id="s1" class="scene" style="top:285px;height:1350px">
+ <div class="cardwrap"><div class="card" style="height:1350px;clip-path:polygon(0px 6px,16px 2px,36px 7px,66px 8px,83px 4px,100px 2px,126px 0px,146px 6px,172px 2px,200px 7px,216px 7px,246px 3px,265px 9px,288px 1px,305px 8px,333px 7px,364px 5px,400px 3px,427px 7px,456px 8px,483px 6px,500px 2px,521px 1px,542px 1px,563px 6px,586px 3px,606px 2px,641px 6px,670px 2px,700px 1px,724px 9px,753px 5px,783px 8px,814px 2px,831px 3px,852px 2px,887px 8px,909px 6px,933px 8px,958px 2px,979px 5px,1000px 5px,1034px 4px,1054px 9px,1080px 1px,1080px 1350px,1062px 1344px,1030px 1346px,1013px 1347px,977px 1345px,941px 1342px,925px 1344px,895px 1345px,874px 1344px,856px 1346px,831px 1341px,797px 1348px,771px 1348px,737px 1342px,715px 1344px,687px 1349px,655px 1345px,624px 1345px,608px 1347px,592px 1342px,558px 1343px,536px 1349px,502px 1341px,485px 1346px,468px 1343px,436px 1349px,411px 1345px,390px 1342px,365px 1348px,338px 1343px,319px 1347px,282px 1344px,258px 1345px,240px 1348px,217px 1345px,196px 1348px,179px 1344px,159px 1342px,126px 1349px,105px 1344px,85px 1349px,50px 1345px,24px 1343px,0px 1348px)">
+  <img class="plate" src="img/hook_plate.jpg">
+  <img id="Lh1" class="lift" src="img/L_h1.png" style="left:40px;top:85px;width:640px;height:285px">
+<img id="Lh2" class="lift" src="img/L_h2.png" style="left:40px;top:368px;width:832px;height:178px">
+<img id="Lh3" class="lift" src="img/L_h3.png" style="left:52px;top:546px;width:600px;height:72px">
+  
+ </div></div>
+ <div class="tape t1"></div><div class="tape t2"></div>
+</div><div id="s2" class="scene" style="top:285px;height:1350px">
+ <div class="cardwrap"><div class="card" style="height:1350px;clip-path:polygon(0px 1px,25px 4px,50px 7px,79px 9px,97px 4px,120px 8px,141px 2px,165px 4px,187px 2px,222px 4px,255px 5px,272px 9px,305px 9px,340px 8px,359px 4px,379px 4px,396px 3px,432px 2px,464px 4px,488px 9px,524px 5px,555px 1px,577px 9px,604px 5px,635px 1px,663px 5px,697px 1px,732px 1px,752px 5px,781px 2px,799px 8px,820px 5px,849px 4px,876px 5px,911px 2px,942px 2px,966px 6px,987px 3px,1019px 1px,1044px 9px,1080px 1px,1080px 1348px,1059px 1342px,1025px 1342px,1002px 1349px,969px 1344px,940px 1341px,911px 1350px,879px 1347px,849px 1342px,831px 1349px,813px 1345px,792px 1345px,761px 1348px,732px 1348px,707px 1342px,673px 1349px,649px 1348px,633px 1343px,605px 1348px,573px 1345px,549px 1350px,532px 1342px,497px 1345px,464px 1345px,446px 1349px,424px 1342px,392px 1342px,357px 1348px,337px 1349px,305px 1342px,281px 1344px,262px 1342px,228px 1341px,196px 1342px,180px 1343px,157px 1342px,125px 1342px,92px 1348px,60px 1349px,27px 1342px,6px 1343px,0px 1347px)">
+  <img class="plate" src="img/problem_plate.jpg">
+  <img id="Lp1" class="lift" src="img/L_p1.png" style="left:45px;top:88px;width:665px;height:110px">
+<img id="Lp2" class="lift" src="img/L_p2.png" style="left:45px;top:205px;width:750px;height:118px">
+<img id="Lp3" class="lift" src="img/L_p3.png" style="left:55px;top:335px;width:750px;height:75px">
+<img id="Ln1" class="lift" src="img/L_n1.png" style="left:418px;top:785px;width:94px;height:95px">
+<img id="Ln2" class="lift" src="img/L_n2.png" style="left:534px;top:800px;width:92px;height:88px">
+<img id="Ln3" class="lift" src="img/L_n3.png" style="left:645px;top:800px;width:92px;height:95px">
+<img id="Ln4" class="lift" src="img/L_n4.png" style="left:466px;top:872px;width:90px;height:85px">
+<img id="Ln5" class="lift" src="img/L_n5.png" style="left:594px;top:890px;width:90px;height:88px">
+  
+ </div></div>
+ <div class="tape t1"></div><div class="tape t2"></div>
+</div><div id="s3" class="scene" style="top:285px;height:1350px">
+ <div class="cardwrap"><div class="card" style="height:1350px;clip-path:polygon(0px 7px,20px 0px,40px 3px,74px 9px,95px 6px,119px 9px,146px 8px,164px 9px,183px 9px,204px 1px,229px 7px,251px 5px,277px 3px,305px 2px,335px 0px,370px 5px,400px 7px,430px 3px,447px 6px,469px 3px,503px 6px,525px 3px,549px 4px,570px 1px,595px 8px,624px 8px,653px 3px,680px 0px,701px 4px,729px 6px,754px 4px,774px 4px,809px 7px,828px 1px,854px 6px,877px 7px,908px 6px,928px 2px,944px 2px,970px 8px,987px 4px,1016px 2px,1046px 4px,1066px 6px,1080px 7px,1080px 1343px,1062px 1346px,1043px 1341px,1017px 1350px,996px 1342px,971px 1343px,941px 1341px,913px 1341px,879px 1344px,848px 1345px,816px 1345px,781px 1343px,756px 1348px,735px 1344px,704px 1345px,675px 1348px,658px 1347px,637px 1347px,610px 1349px,589px 1344px,559px 1349px,535px 1345px,511px 1348px,486px 1342px,459px 1344px,425px 1343px,402px 1350px,379px 1343px,345px 1341px,321px 1343px,294px 1345px,274px 1348px,249px 1350px,227px 1344px,203px 1349px,177px 1349px,149px 1350px,125px 1345px,109px 1344px,90px 1346px,74px 1347px,54px 1347px,22px 1347px,0px 1343px)">
+  <img class="plate" src="img/reveal_plate.jpg">
+  <img id="Lr1" class="lift" src="img/L_r1.png" style="left:45px;top:118px;width:240px;height:110px">
+<img id="Lr2" class="lift" src="img/L_r2.png" style="left:38px;top:222px;width:842px;height:150px">
+<img id="Lr3" class="lift" src="img/L_r3.png" style="left:50px;top:380px;width:440px;height:118px">
+<img id="Lr4" class="lift" src="img/L_r4.png" style="left:58px;top:535px;width:445px;height:112px">
+<img id="Lcov" class="lift cov" src="img/L_cov.png" style="left:566px;top:372px;width:490px;height:772px">
+  <div id="gleamBox" style="left:566px;top:372px;width:490px;height:772px"><div id="gleam"></div></div>
+<div id="stamp" style="left:828px;top:116px">
+ <svg viewBox="0 0 240 240" width="240" height="240"><defs><path id="ring" d="M120 120m-86 0a86 86 0 1 1 172 0a86 86 0 1 1 -172 0"/></defs>
+ <circle cx="120" cy="120" r="112" fill="none" stroke="#F83C92" stroke-width="7"/>
+ <circle cx="120" cy="120" r="66" fill="none" stroke="#F83C92" stroke-width="4"/>
+ <text font-family="F Anton" font-size="25" fill="#F83C92" letter-spacing="3.2"><textPath href="#ring">JUST LAUNCHED &#183; WANDERLOGIKA &#183;</textPath></text>
+ <text x="120" y="138" text-anchor="middle" font-family="F Anton" font-size="56" fill="#F83C92">NEW</text></svg></div>
+ </div></div>
+ <div class="tape t1"></div><div class="tape t2"></div>
+</div><div id="s4" class="scene" style="top:285px;height:1350px">
+ <div class="cardwrap"><div class="card" style="height:1350px;clip-path:polygon(0px 2px,17px 0px,44px 9px,67px 6px,99px 6px,130px 9px,150px 0px,169px 1px,198px 5px,218px 6px,250px 2px,278px 7px,296px 7px,332px 1px,348px 3px,378px 9px,401px 6px,419px 6px,447px 1px,479px 8px,507px 1px,543px 7px,566px 4px,589px 5px,612px 8px,645px 1px,680px 6px,713px 6px,738px 7px,773px 2px,806px 5px,831px 4px,862px 2px,896px 7px,913px 8px,934px 4px,962px 3px,978px 8px,997px 2px,1030px 3px,1064px 6px,1080px 0px,1080px 1341px,1063px 1344px,1037px 1343px,1007px 1344px,981px 1343px,964px 1348px,934px 1347px,906px 1346px,879px 1346px,848px 1347px,818px 1348px,797px 1349px,777px 1349px,751px 1343px,731px 1348px,706px 1343px,670px 1345px,648px 1349px,629px 1348px,609px 1350px,583px 1348px,547px 1345px,517px 1349px,483px 1346px,449px 1345px,424px 1346px,404px 1350px,369px 1346px,336px 1346px,319px 1344px,303px 1349px,275px 1347px,239px 1349px,208px 1345px,175px 1348px,149px 1346px,124px 1342px,88px 1347px,59px 1345px,28px 1341px,9px 1348px,0px 1349px)">
+  <img class="plate" src="img/bundle_plate.jpg">
+  <img id="Lb1" class="lift" src="img/L_b1.png" style="left:36px;top:66px;width:405px;height:88px">
+<img id="Lb2" class="lift" src="img/L_b2.png" style="left:36px;top:145px;width:975px;height:84px">
+<img id="Lc1" class="lift" src="img/L_c1.png" style="left:34px;top:342px;width:495px;height:806px">
+<img id="Lc2" class="lift" src="img/L_c2.png" style="left:552px;top:345px;width:498px;height:803px">
+  <div id="pstamp" style="left:842px;top:1222px"><svg viewBox="0 0 200 150" width="200" height="150">
+ <rect x="4" y="4" width="192" height="142" rx="4" fill="#F7F0DF" stroke="#FFD326" stroke-width="8" stroke-dasharray="2 9" stroke-linecap="round"/>
+ <rect x="20" y="20" width="160" height="110" fill="#085BE5"/>
+ <circle cx="140" cy="48" r="16" fill="#FFD326"/>
+ <path d="M20 130 L70 80 L100 105 L130 75 L180 125 L180 130Z" fill="#F83C92"/>
+ <g transform="translate(46 34) rotate(-18) scale(.5)"><path fill="#F7F0DF" d="M95 46c0-4-4-6-8-6H62L38 6h-9l13 34H20l-8-10H5l5 18-5 18h7l8-10h22L29 94h9l24-34h25c4 0 8-2 8-6z"/></g></svg></div>
+ </div></div>
+ <div class="tape t1"></div><div class="tape t2"></div>
+</div><div id="s5" class="scene" style="top:150px;height:1170px">
+ <div class="cardwrap"><div class="card" style="height:1170px;clip-path:polygon(0px 2px,17px 0px,42px 5px,64px 2px,94px 6px,119px 6px,154px 7px,183px 6px,218px 4px,245px 6px,279px 7px,296px 1px,318px 7px,346px 3px,364px 6px,394px 8px,420px 4px,437px 0px,462px 3px,483px 1px,518px 8px,546px 9px,582px 6px,603px 0px,635px 4px,664px 8px,683px 5px,712px 4px,729px 3px,752px 6px,785px 3px,815px 3px,851px 7px,878px 4px,900px 3px,936px 4px,962px 9px,991px 5px,1015px 2px,1039px 7px,1067px 7px,1080px 5px,1080px 1162px,1055px 1164px,1037px 1161px,1009px 1168px,990px 1165px,963px 1169px,927px 1162px,901px 1169px,869px 1166px,838px 1165px,817px 1162px,781px 1168px,754px 1167px,719px 1165px,685px 1162px,664px 1163px,639px 1162px,613px 1163px,592px 1167px,564px 1161px,538px 1169px,511px 1167px,484px 1165px,459px 1167px,440px 1164px,412px 1168px,381px 1170px,349px 1164px,317px 1167px,288px 1163px,252px 1166px,235px 1165px,207px 1162px,174px 1166px,147px 1166px,116px 1166px,87px 1169px,62px 1161px,39px 1164px,10px 1162px,0px 1162px)">
+  <img class="plate" src="img/cta_plate.jpg">
+  <img id="Lt1" class="lift" src="img/L_t1.png" style="left:80px;top:75px;width:900px;height:125px">
+<img id="Lt2" class="lift" src="img/L_t2.png" style="left:70px;top:190px;width:940px;height:130px">
+<img id="Lpr" class="lift" src="img/L_pr.png" style="left:145px;top:322px;width:790px;height:80px">
+<img id="Lbtn" class="lift" src="img/L_btn.png" style="left:140px;top:1055px;width:800px;height:105px">
+  
+ </div></div>
+ <div class="tape t1"></div><div class="tape t2"></div>
+</div>
+  <div id="btnBox" style="left:140px;top:1205px;width:800px;height:105px"><div id="shine"></div></div>
+ </div>
+ <div id="ctaPanel">
+  <div id="url" class="f-dm-sans">wanderlog.gumroad.com/l/passport-plans-besties</div>
+  <div id="tag" class="f-anton"><span class="tw">Explore more.</span><span class="tw" style="color:#085BE5">Plan smarter.</span><br><span class="tw" style="color:#F83C92">Travel confidently.</span></div>
+ </div>
+ <div id="rp1" class="rip"><div class="fiber" style="clip-path:polygon(0px 10px,29px 19px,70px 23px,91px 2px,129px 24px,177px 19px,209px 3px,246px 23px,279px 18px,324px 1px,366px 8px,396px 4px,431px 15px,473px 4px,496px 23px,533px 6px,578px 4px,611px 7px,639px 0px,681px 23px,720px 4px,752px 9px,789px 17px,820px 7px,864px 5px,895px 13px,922px 15px,958px 26px,986px 25px,1024px 7px,1060px 18px,1080px 1px,1080px 3184px,1046px 3176px,1018px 3179px,981px 3191px,943px 3184px,904px 3181px,866px 3178px,829px 3177px,791px 3192px,758px 3185px,718px 3198px,690px 3181px,664px 3197px,629px 3175px,594px 3176px,551px 3193px,509px 3187px,466px 3181px,437px 3197px,390px 3196px,343px 3178px,303px 3175px,257px 3179px,226px 3179px,205px 3186px,173px 3183px,134px 3185px,91px 3176px,68px 3194px,47px 3177px,11px 3176px,0px 3198px)"></div>
+<div class="sheet" style="background-color:#085BE5;clip-path:polygon(0px 18px,40px 7px,68px 3px,108px 7px,138px 2px,177px 3px,206px 15px,242px 21px,270px 16px,292px 9px,312px 11px,340px 21px,359px 8px,388px 21px,426px 2px,461px 12px,502px 8px,530px 4px,550px 19px,579px 15px,613px 13px,631px 17px,655px 3px,687px 2px,723px 5px,746px 19px,772px 3px,812px 0px,850px 3px,871px 6px,894px 15px,912px 0px,949px 5px,975px 4px,994px 16px,1025px 16px,1054px 17px,1080px 2px,1080px 3149px,1039px 3159px,1003px 3141px,972px 3150px,931px 3159px,901px 3151px,867px 3149px,827px 3158px,807px 3147px,788px 3154px,754px 3148px,729px 3138px,698px 3150px,665px 3158px,630px 3141px,597px 3143px,562px 3155px,533px 3155px,507px 3150px,479px 3158px,450px 3145px,423px 3157px,383px 3159px,345px 3158px,325px 3144px,287px 3148px,255px 3148px,229px 3157px,203px 3145px,167px 3141px,132px 3139px,99px 3152px,67px 3155px,34px 3155px,13px 3141px,0px 3143px)"></div></div>
+<div id="rp2" class="rip"><div class="fiber" style="clip-path:polygon(0px 15px,42px 22px,89px 21px,126px 17px,147px 24px,190px 7px,216px 18px,245px 9px,265px 23px,301px 10px,325px 16px,346px 19px,373px 11px,402px 10px,442px 20px,478px 2px,500px 4px,537px 18px,565px 17px,599px 11px,626px 20px,650px 11px,678px 18px,712px 17px,733px 10px,770px 0px,799px 5px,823px 7px,852px 0px,893px 5px,924px 18px,958px 22px,1000px 2px,1044px 1px,1065px 24px,1080px 15px,1080px 3185px,1040px 3189px,1017px 3199px,988px 3179px,950px 3178px,905px 3198px,862px 3194px,825px 3186px,794px 3192px,764px 3191px,739px 3187px,716px 3187px,671px 3191px,631px 3179px,588px 3194px,564px 3195px,527px 3180px,489px 3195px,447px 3187px,406px 3180px,374px 3176px,338px 3183px,301px 3178px,263px 3196px,241px 3189px,212px 3193px,190px 3187px,161px 3188px,139px 3178px,117px 3178px,73px 3184px,39px 3188px,4px 3179px,0px 3188px)"></div>
+<div class="sheet" style="background-color:#F83C92;clip-path:polygon(0px 18px,34px 7px,63px 3px,83px 2px,122px 8px,157px 11px,179px 5px,208px 10px,238px 3px,265px 6px,293px 7px,326px 17px,359px 1px,379px 15px,404px 16px,438px 20px,477px 7px,509px 3px,535px 21px,570px 9px,602px 21px,628px 8px,665px 18px,699px 18px,735px 15px,765px 14px,793px 8px,820px 4px,843px 21px,873px 5px,894px 2px,932px 2px,969px 18px,1008px 1px,1034px 17px,1055px 8px,1077px 18px,1080px 18px,1080px 3156px,1051px 3151px,1017px 3155px,989px 3154px,953px 3150px,922px 3153px,884px 3150px,846px 3152px,806px 3138px,777px 3154px,749px 3148px,708px 3142px,671px 3157px,647px 3146px,608px 3148px,588px 3141px,549px 3154px,513px 3154px,473px 3157px,445px 3139px,421px 3150px,395px 3159px,376px 3149px,352px 3138px,325px 3159px,285px 3142px,251px 3143px,230px 3154px,192px 3145px,170px 3144px,142px 3160px,122px 3154px,84px 3148px,48px 3148px,28px 3154px,2px 3159px,0px 3143px)"></div></div>
+<div id="rp3" class="rip"><div class="fiber" style="clip-path:polygon(0px 12px,23px 24px,60px 0px,94px 6px,119px 11px,156px 6px,188px 17px,210px 25px,233px 14px,267px 26px,302px 10px,335px 17px,383px 7px,403px 21px,433px 19px,471px 20px,511px 9px,533px 14px,575px 5px,617px 12px,656px 16px,699px 2px,740px 12px,768px 1px,794px 1px,840px 13px,887px 14px,915px 20px,940px 9px,982px 23px,1011px 3px,1042px 23px,1080px 23px,1080px 3190px,1033px 3187px,999px 3176px,965px 3179px,924px 3198px,888px 3179px,852px 3192px,830px 3183px,801px 3184px,769px 3182px,739px 3199px,695px 3191px,648px 3193px,601px 3175px,578px 3183px,548px 3179px,509px 3175px,485px 3184px,443px 3199px,421px 3180px,390px 3190px,355px 3184px,316px 3175px,285px 3180px,249px 3186px,218px 3183px,191px 3197px,150px 3187px,119px 3185px,92px 3193px,59px 3174px,31px 3176px,0px 3197px)"></div>
+<div class="sheet" style="background-color:#FFD326;clip-path:polygon(0px 19px,29px 20px,58px 2px,92px 19px,118px 8px,137px 12px,177px 19px,212px 20px,245px 17px,275px 3px,298px 3px,335px 1px,366px 8px,403px 12px,436px 2px,462px 22px,497px 12px,533px 18px,553px 21px,587px 10px,621px 8px,660px 17px,693px 4px,734px 10px,774px 1px,795px 3px,817px 7px,852px 8px,893px 20px,931px 6px,964px 12px,985px 7px,1016px 11px,1038px 21px,1060px 14px,1080px 13px,1080px 3141px,1048px 3142px,1030px 3159px,996px 3147px,963px 3143px,935px 3146px,905px 3146px,880px 3139px,850px 3142px,816px 3153px,796px 3159px,768px 3149px,745px 3147px,719px 3144px,684px 3141px,642px 3157px,615px 3148px,590px 3150px,565px 3155px,545px 3154px,518px 3146px,494px 3141px,472px 3153px,440px 3153px,404px 3149px,373px 3149px,348px 3159px,307px 3149px,266px 3155px,240px 3159px,210px 3141px,176px 3150px,145px 3141px,117px 3141px,81px 3143px,54px 3151px,23px 3156px,0px 3158px)"></div></div>
+<div id="rp4" class="rip"><div class="fiber" style="clip-path:polygon(0px 13px,41px 7px,88px 18px,112px 25px,143px 21px,173px 24px,214px 5px,248px 13px,270px 4px,299px 12px,332px 16px,366px 9px,403px 4px,451px 19px,479px 9px,522px 14px,562px 8px,605px 10px,643px 25px,680px 21px,720px 18px,741px 12px,788px 20px,829px 15px,869px 15px,894px 16px,931px 22px,956px 18px,977px 25px,1000px 0px,1029px 4px,1069px 11px,1080px 24px,1080px 3177px,1040px 3198px,1015px 3195px,986px 3183px,951px 3192px,926px 3176px,897px 3191px,855px 3181px,817px 3182px,780px 3195px,753px 3185px,727px 3175px,698px 3192px,672px 3182px,643px 3191px,597px 3179px,570px 3197px,531px 3190px,484px 3179px,437px 3179px,409px 3193px,369px 3191px,337px 3193px,303px 3195px,268px 3176px,229px 3196px,192px 3185px,165px 3183px,130px 3183px,108px 3189px,68px 3197px,27px 3200px,0px 3176px)"></div>
+<div class="sheet" style="background-color:#085BE5;clip-path:polygon(0px 9px,40px 19px,70px 4px,111px 7px,145px 20px,165px 13px,196px 16px,236px 20px,258px 19px,280px 20px,322px 9px,352px 21px,393px 20px,432px 0px,464px 2px,506px 6px,547px 12px,577px 21px,616px 10px,638px 2px,660px 10px,684px 4px,720px 17px,752px 17px,774px 19px,813px 18px,844px 2px,878px 4px,899px 7px,923px 6px,947px 17px,988px 7px,1023px 0px,1057px 15px,1076px 3px,1080px 9px,1080px 3149px,1041px 3145px,1015px 3157px,975px 3154px,942px 3155px,921px 3157px,885px 3147px,857px 3148px,828px 3148px,794px 3155px,770px 3143px,731px 3158px,702px 3145px,682px 3148px,663px 3148px,633px 3147px,611px 3153px,581px 3157px,558px 3147px,538px 3149px,500px 3150px,470px 3150px,451px 3150px,413px 3144px,386px 3142px,350px 3147px,331px 3152px,311px 3138px,271px 3158px,230px 3159px,202px 3143px,166px 3138px,133px 3151px,91px 3152px,52px 3140px,25px 3145px,0px 3148px)"></div></div>
+ <audio id="mix" class="clip" src="audio/mix.wav" data-start="0" data-duration="15.0" data-volume="1"></audio>
+</div>
+<script>
+const FPS = 30, F = n => n / FPS;
+const E = { land:"power3.out", soft:"power2.out", snap:"expo.out", settle:"back.out(1.15)", exit:"power2.in", throw:"power4.in", move:"power2.inOut" };
+const tl = gsap.timeline({paused:true});
+const $ = s => document.querySelector(s);
+// ---------- initial states
+gsap.set(["#Lh1","#Lh2","#Lh3","#Lp1","#Lp2","#Lp3","#Lr1","#Lr2","#Lr3","#Lr4","#Lb1","#Lb2","#Lt1","#Lt2","#Lpr"],{opacity:0});
+gsap.set("#s1",{opacity:1});
+gsap.set("#cam",{scale:1.16,transformOrigin:"12% 30%"});
+// rip sheets parked below
+gsap.set(["#rp1","#rp2","#rp3","#rp4"],{y:1960});
+// ---------- helpers
+function slam(el,t,from=1.45){ tl.fromTo(el,{scale:from,opacity:0},{scale:1,opacity:1,duration:F(8),ease:E.snap},t); }
+function slideX(el,t,dx){ tl.fromTo(el,{x:dx,opacity:0},{x:0,opacity:1,duration:F(10),ease:E.land},t); }
+function slideY(el,t,dy=40){ tl.fromTo(el,{y:dy,opacity:0},{y:0,opacity:1,duration:F(10),ease:E.land},t); }
+function wipe(el,t,d=F(9)){ tl.fromTo(el,{clipPath:"inset(0% 100% 0% 0%)",opacity:1},{clipPath:"inset(0% 0% 0% 0%)",opacity:1,duration:d,ease:E.land},t); }
+function rip(r,t,from,to){ tl.fromTo(r,{y:1960},{y:-3300,duration:0.62,ease:E.move},t);
+  tl.set(from,{opacity:0},t+0.31); tl.set(to,{opacity:1},t+0.31); }
+function fly(el,t,d,keys){ tl.set(el,{opacity:1,x:keys[0][0]-46,y:keys[0][1]-46,rotation:keys[0][2]},t);
+  const step=d/(keys.length-1);
+  keys.slice(1).forEach((k,i)=>tl.to(el,{x:k[0]-46,y:k[1]-46,rotation:k[2],duration:step,ease:"none"},t+step*i));
+  tl.set(el,{opacity:0},t+d); }
+const KT=[[-60, 230, -22], [37, 193, -19], [134, 162, -16], [232, 136, -13], [331, 117, -10], [430, 103, -6], [530, 95, -3], [630, 93, 0], [731, 97, 4], [832, 106, 7], [934, 122, 10], [1037, 143, 13], [1140, 170, 16]], KB=[[-60, 1830, -16], [43, 1802, -14], [146, 1779, -12], [248, 1760, -9], [349, 1746, -7], [450, 1736, -4], [550, 1730, -2], [650, 1729, 1], [749, 1732, 3], [848, 1740, 6], [946, 1752, 8], [1043, 1769, 11], [1140, 1790, 14]];
+// ===== S1 HOOK 0.00-2.50
+slam("#Lh1",0.0,1.5);
+wipe("#Lh2",0.5);
+slideY("#Lh3",1.0);
+tl.to("#cam",{scale:1.0,duration:2.2,ease:E.move},0.1);
+tl.fromTo("#bandTop",{y:-26},{y:0,duration:2.4,ease:E.move},0);
+tl.fromTo("#bandBot",{y:30},{y:0,duration:2.4,ease:E.move},0);
+tl.fromTo("#mTopP",{attr:{"stroke-dashoffset":1}},{attr:{"stroke-dashoffset":0},duration:2.0,ease:E.soft},0.2);
+fly("#planeTop",0.2,2.0,KT);
+tl.fromTo("#pinTop",{scale:2.2,opacity:0},{scale:1,opacity:1,duration:F(8),ease:E.snap},2.15);
+// ===== S2 PROBLEM 2.50-5.00
+rip("#rp1",2.25,"#s1","#s2");
+tl.set("#cam",{scale:1.0,transformOrigin:"50% 55%"},2.56);
+slideX("#Lp1",2.55,-760);
+slideX("#Lp2",3.0,860);
+["#Ln1","#Ln2","#Ln3","#Ln4","#Ln5"].forEach((n,i)=>{
+  tl.to(n,{scale:1.22,rotation:[-6,5,-4,6,-5][i],duration:F(5),ease:E.snap},3.25+i*0.15);
+  tl.to(n,{scale:1,rotation:0,duration:F(9),ease:E.land},3.25+i*0.15+F(5)); });
+wipe("#Lp3",4.05,F(10));
+tl.to("#cam",{scale:1.07,duration:2.4,ease:E.move},2.56);
+tl.to("#bandTop",{y:18,duration:2.4,ease:E.move},2.56);
+tl.to("#bandBot",{y:-22,duration:2.4,ease:E.move},2.56);
+// ===== S3 REVEAL 5.00-8.00
+rip("#rp2",4.75,"#s2","#s3");
+tl.set("#cam",{scale:1.0,transformOrigin:"78% 45%"},5.06);
+gsap.set("#Lcov",{clipPath:"inset(100% 0% 0% 0%)"});
+slam("#Lr1",5.05,2.2);
+wipe("#Lr2",5.35);
+slam("#Lr3",5.6,1.5);
+slideY("#Lr4",5.75,30);
+tl.to("#Lcov",{clipPath:"inset(0% 0% 0% 0%)",duration:F(12),ease:E.soft},5.85);
+tl.set("#gleam",{opacity:1},6.4);
+tl.fromTo("#gleam",{x:0},{x:1100,duration:F(16),ease:E.move},6.4);
+tl.set("#gleam",{opacity:0},6.4+F(16));
+tl.fromTo("#stamp",{scale:2.0,rotation:-4,opacity:0},{scale:1,rotation:-12,opacity:.92,duration:F(7),ease:E.snap},6.75);
+tl.to("#cam",{scale:1.09,duration:1.65,ease:E.move},6.3);
+tl.to("#bandTop",{y:-10,duration:2.9,ease:E.move},5.06);
+tl.to("#bandBot",{y:16,duration:2.9,ease:E.move},5.06);
+// ===== S4 BUNDLE 8.00-10.50
+rip("#rp3",7.75,"#s3","#s4");
+tl.set("#cam",{scale:1.07,transformOrigin:"50% 45%"},8.06);
+slam("#Lb1",8.05,1.5);
+slideX("#Lb2",8.35,-1000);
+[["#Lc1",8.75,-1.5],["#Lc2",9.1,1.5]].forEach(([c,t,r])=>{
+  tl.to(c,{scale:1.045,y:-14,rotation:r,filter:"drop-shadow(0 24px 24px rgba(0,0,0,.32))",duration:F(8),ease:E.snap},t);
+  tl.to(c,{scale:1,y:0,rotation:0,filter:"drop-shadow(0 0px 0px rgba(0,0,0,0))",duration:F(12),ease:E.land},t+0.7); });
+tl.fromTo("#pstamp",{scale:1.8,rotation:0,opacity:0},{scale:1,rotation:8,opacity:1,duration:F(7),ease:E.snap},9.3);
+tl.to("#cam",{scale:1.0,duration:2.4,ease:E.move},8.06);
+tl.fromTo("#mBotP",{attr:{"stroke-dashoffset":1}},{attr:{"stroke-dashoffset":0},duration:1.0,ease:E.soft},9.3);
+fly("#planeBot",9.3,1.0,KB);
+tl.to("#bandBot",{y:0,duration:2.4,ease:E.move},8.06);
+// ===== S5 CTA 10.50-15.00
+rip("#rp4",10.25,"#s4","#s5");
+tl.set("#botPath",{opacity:0},10.56);
+tl.set("#cam",{scale:1.0,transformOrigin:"50% 40%"},10.56);
+slam("#Lt1",10.55,1.4);
+slam("#Lt2",10.8,1.6);
+tl.fromTo("#Lpr",{scale:1.3,opacity:0},{scale:1,opacity:1,duration:F(8),ease:E.snap},11.05);
+tl.to("#Lbtn",{scale:1.06,duration:F(6),ease:E.snap},11.3);
+tl.to("#Lbtn",{scale:1.03,duration:F(14),ease:E.settle},11.3+F(6));
+slideY("#url",11.45,36);
+document.querySelectorAll(".tw").forEach((w,i)=>slideY(w,11.65+i*0.15,40));
+tl.set("#shine",{opacity:1},13.2);
+tl.fromTo("#shine",{x:-140},{x:900,duration:0.6,ease:E.move},13.2);
+tl.set("#shine",{opacity:0},13.8);
+tl.to("#cam",{scale:1.035,duration:4.3,ease:"none"},10.6);
+tl.to("#root",{opacity:1,duration:0.01},14.99);
+window.__timelines = window.__timelines || {};
+window.__timelines['main'] = tl;
+</script>
+</body>
+</html>
